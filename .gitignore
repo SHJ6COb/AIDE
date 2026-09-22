@@ -1,0 +1,21 @@
+# Nested repo — has its own .git and .gitignore, managed separately
+PACKITOperationsAgent/
+
+# Local machine settings (not shared)
+.claude/settings.local.json
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS
+Thumbs.db
+.DS_Store
