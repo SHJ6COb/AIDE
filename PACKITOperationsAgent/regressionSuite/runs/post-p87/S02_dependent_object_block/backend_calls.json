@@ -1,0 +1,195 @@
+[
+  {
+    "query": "q1_why_stuck",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087803.962274.4",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001497551\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 49,
+        "emulator_error": null,
+        "at": "2026-08-07T07:30:04.088961+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087803.962274.4",
+        "failed": false,
+        "at": "2026-08-07T07:30:04.092483+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087803.962274.4",
+        "offset": 0,
+        "count": 200,
+        "returned": 49,
+        "at": "2026-08-07T07:30:04.096443+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087803.962274.4",
+        "at": "2026-08-07T07:30:04.117746+00:00"
+      },
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087804.183502.5",
+        "spl": "search index=pdbb sourcetype=Native source=\"*PackITPackagingCockpitMasterData\" \"00000000040001497551\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T07:30:04.188261+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087804.183502.5",
+        "failed": false,
+        "at": "2026-08-07T07:30:04.191275+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087804.183502.5",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T07:30:04.204135+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087804.183502.5",
+        "at": "2026-08-07T07:30:04.208746+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_attempt_count",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087811.096940.6",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001497551\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 49,
+        "emulator_error": null,
+        "at": "2026-08-07T07:30:11.198342+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087811.096940.6",
+        "failed": false,
+        "at": "2026-08-07T07:30:11.204361+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087811.096940.6",
+        "offset": 0,
+        "count": 200,
+        "returned": 49,
+        "at": "2026-08-07T07:30:11.207381+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087811.096940.6",
+        "at": "2026-08-07T07:30:11.228784+00:00"
+      },
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087811.303620.7",
+        "spl": "search index=pdbb sourcetype=Native source=\"*PackITPackagingCockpitMasterData\" \"00000000040001497551\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T07:30:11.309987+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087811.303620.7",
+        "failed": false,
+        "at": "2026-08-07T07:30:11.314076+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087811.303620.7",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T07:30:11.322381+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087811.303620.7",
+        "at": "2026-08-07T07:30:11.329143+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q3_dependent_detail",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087825.494207.8",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001497551\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 49,
+        "emulator_error": null,
+        "at": "2026-08-07T07:30:25.598168+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087825.494207.8",
+        "failed": false,
+        "at": "2026-08-07T07:30:25.601168+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087825.494207.8",
+        "offset": 0,
+        "count": 200,
+        "returned": 49,
+        "at": "2026-08-07T07:30:25.606124+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087825.494207.8",
+        "at": "2026-08-07T07:30:25.636665+00:00"
+      },
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087825.718667.9",
+        "spl": "search index=pdbb sourcetype=Native source=\"*PackITPackagingCockpitMasterData\" \"00000000040001497551\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T07:30:25.728108+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087825.718667.9",
+        "failed": false,
+        "at": "2026-08-07T07:30:25.733068+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087825.718667.9",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T07:30:25.743827+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087825.718667.9",
+        "at": "2026-08-07T07:30:25.755865+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q4_should_i_retrigger",
+    "calls": []
+  }
+]

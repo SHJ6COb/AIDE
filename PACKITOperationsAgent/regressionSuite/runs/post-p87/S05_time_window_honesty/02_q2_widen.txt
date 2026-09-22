@@ -1,0 +1,37 @@
+# 02 q2_widen
+
+## Query (as typed into the app)
+Try the last 7 days then.
+
+## What this turn probes
+Follow-up must re-issue the SAME PS ID with a widened window -- the PS ID exists only in prior conversation prose.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724 (SNR13 028100944104Y), the replication status is currently in an ERROR state on the target system SAPP870110. The error description indicates that the SNR13 is either not found or is marked for deletion, with 100 reprocessing attempts made at the Target System from a single trigger.
+
+Additionally, there are several potential resolutions:
+
+The affected 10- or 13-digit number may not have been created at all on the mentioned SAP system, or a deletion flag may be set.
+To resolve this, either create the missing number or remove the deletion flag. It's also advisable to check for valid cross-plant configuration and plant status.
+If the deletion flag is justified, the recommendation is to delete the Determination Record and inform the PST Team via mServiceHub.
+
+This PS declares no linked Document Info Records, and there are no dependent objects blocking the transfer.
+
+## Observed
+- elapsed: 14.0s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_widen.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001253724
+- [ok  ] contains_all: SNR13
+- [ok  ] contains_all: SAPP870110
+- [ok  ] spl_contains: "00000000040001253724"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -7d
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -7d .. now  ->  100 rows

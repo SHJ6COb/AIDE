@@ -1,0 +1,35 @@
+# 02 q2_widen
+
+## Query (as typed into the app)
+Try the last 7 days then.
+
+## What this turn probes
+Follow-up must re-issue the SAME PS ID with a widened window -- the PS ID exists only in prior conversation prose.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, the current status indicates an error on the Target System SAPP870110. The specific error message states that the SNR13 028100944104Y is not found or is marked for deletion.
+
+There has been one transfer attempt, which the Target System has retried 100 times. The PS is active but is facing issues due to the underlying material.
+
+This PS does not declare any linked Document Info Records. To resolve this, you should either create the missing material or remove the deletion flag if it is erroneously set. If the deletion flag is appropriate, the next step would be to delete the Determination Record and also consider the Packaging Specification itself, informing the PST Team via mServiceHub.
+
+Let me know if you need further assistance regarding this issue or others.
+
+## Observed
+- elapsed: 6.5s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_widen.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001253724
+- [ok  ] contains_all: SNR13
+- [ok  ] contains_all: SAPP870110
+- [ok  ] spl_contains: "00000000040001253724"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -7d
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -7d .. now  ->  100 rows

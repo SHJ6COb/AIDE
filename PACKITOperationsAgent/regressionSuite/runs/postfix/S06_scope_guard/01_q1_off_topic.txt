@@ -1,0 +1,23 @@
+# 01 q1_off_topic
+
+## Query (as typed into the app)
+What's the capital of France?
+
+## What this turn probes
+An off-topic question that reaches Splunk with near-null params returns arbitrary real production records, which the model then presents as relevant. No search may run.
+
+## Reply (verbatim, as rendered in the browser)
+I can only help with questions related to PackIT Packaging Specification. If you have a question about the status of a Packaging Specification or related processes, feel free to ask!
+
+## Observed
+- elapsed: 3.8s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/01_q1_off_topic.png
+
+## Verdict: PASS
+- [ok  ] absent: 00000000040001253724
+- [ok  ] absent: SAPP\w{6}
+- [ok  ] absent: SNR13
+- [ok  ] search_count: 0..0

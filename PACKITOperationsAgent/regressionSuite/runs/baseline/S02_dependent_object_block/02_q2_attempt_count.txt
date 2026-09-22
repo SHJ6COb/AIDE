@@ -1,0 +1,27 @@
+# 02 q2_attempt_count
+
+## Query (as typed into the app)
+How many separate attempts failed there?
+
+## What this turn probes
+48 distinct TransferRecords are in the payload. A wrong count here means the model is estimating from prose rather than reading the data block.
+
+## Reply (verbatim, as rendered in the browser)
+There were no primary records found for PS 00000000040001497551 in the last 15 minutes, which means I cannot provide details on separate failed attempts. This doesn't imply that the PS doesn't exist or didn't experience failures previously; it may simply be that no relevant events were logged in this time window.
+
+You might consider widening the search window or checking specific timestamps for any earlier failures. If you'd like assistance with a broader time frame or specific records, please let me know.
+
+## Observed
+- elapsed: 6.6s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_attempt_count.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: \b48\b  -- not found in reply
+- [ok  ] absent: \b(100|47|49|50)\b
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" | head 200
+    window: -15m .. now  ->  0 rows

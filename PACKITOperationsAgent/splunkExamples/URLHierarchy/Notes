@@ -1,0 +1,22 @@
+Total 4 URL's to be called in sequence 
+Step 1 : To create a search job 
+         Call POST method type with URL https://ews-esz-emea.api.bosch.com/pdmi/splunk/services/search/jobs
+         While calling this URL as usual we need to authenticate and for this we use in Header a ID of name KeyId and its value is in .env file 
+         We also need to provide the body with parameters earliest_time,latest_time and search.
+         Result is the jobid .
+         Example is provided in screenshot .
+Step 2 : To get the Job status
+         Call GET method type with URL https://ews-esz-emea.api.bosch.com/pdmi/splunk/services/search/jobs/"Generated JOB ID in previous query"
+         URL carries the header to authenticate .
+         URL doesnt carried any body 
+         From resulted payload we look upto the key  <s:key name="dispatchState">DONE</s:key> where the status done reflects as search complete and by 
+         looking into the key <s:key name="eventCount">3</s:key> event count > zero means atleast search is success and event count describes how many retries so far 
+Step 3 : To get the job result which is the actual payload with answers for user queries .
+         call GET method type with URL https://ews-esz-emea.api.bosch.com/pdmi/splunk/services/search/v2/jobs/1785822010.106863/results
+         URL carries the header to authenticate .
+         URL doesnt carried any body 
+Step 4 : To delete the JOB
+         call delete method with URL https://ews-esz-emea.api.bosch.com/pdmi/splunk/services/search/jobs/1785774970.100364
+        URL carries the header to authenticate .
+        URL doesnt carried any body 
+Note : the keyword pdbb indicated as the url pointing to production and the keyword pdbb_q points to quality

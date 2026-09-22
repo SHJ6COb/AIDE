@@ -1,0 +1,32 @@
+[project]
+name = "packit-agent"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "google-genai>=0.3",
+    "openai>=1.0",
+    # Only used when LLM_PROVIDER=anthropic (a personal-subscription choice
+    # in `packit-agent init`). Imported lazily in app/core/llm_client.py, so
+    # an existing checkout that predates this line still runs -- see
+    # AnthropicClient's docstring.
+    "anthropic>=0.40",
+    "httpx>=0.27",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+packit-agent = "ui.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "ui*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

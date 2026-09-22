@@ -1,0 +1,38 @@
+# 02 q2_bare_window_reply
+
+## Query (as typed into the app)
+24 hours
+
+## What this turn probes
+THE REGRESSION. A bare window names no PS. Before the rewrite this either parsed to nothing and fell back to 15 minutes again, or relied on turn 1 re-resolving the subject from history -- measured unreliable, and wrong here means answering about a different PS entirely.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, I found that it has an active Packspec Status and is linked to SNR13 028100944104Y. In the last 24 hours, the transfer to Target System SAPP870110 encountered an ERROR due to "SNR13 not found/Mark for deletion". This situation has required 100 reprocessing attempts at the target, which indicates that the target has repeatedly tried to process the same transfer without success, likely due to an issue on that system.
+
+The error message suggests that the SNR13 may either not be created on that system or is marked for deletion. To resolve this, you should either:
+
+Create the missing SNR13 on the mentioned SAP system,
+Remove the deletion flag if it's incorrectly set.
+
+If the deletion flag is indeed accurate, you should delete the Determination Record related to this PS and inform the PST Team via mServiceHub for further assistance.
+
+Also, this PS declares no linked Document Info Records. If you have further questions about specific documents, please provide their document numbers.
+
+## Observed
+- elapsed: 7.9s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_bare_window_reply.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001253724
+- [ok  ] contains_all: 028100944104Y
+- [ok  ] contains_all: SAPP870110
+- [ok  ] spl_contains: "00000000040001253724"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

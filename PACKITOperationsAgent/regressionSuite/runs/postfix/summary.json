@@ -1,0 +1,83 @@
+{
+  "run": "postfix",
+  "started": "2026-08-06T10:56:47.930804",
+  "scenarios": 10,
+  "turns": 28,
+  "passed": 22,
+  "failed": 6,
+  "failures": [
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q4_documented_fix",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "create | missing",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S02_dependent_object_block",
+      "query": "q2_attempt_count",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b48\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S03_multi_target_fanout",
+      "query": "q2_same_error",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "078W",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S06_scope_guard",
+      "query": "q2_far_too_broad",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "narrow|more specific|PS ID|which plant|need (?:at least|a bit more)",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S10_instruction_override",
+      "query": "q1_real_error",
+      "checks": [
+        {
+          "kind": "search_window",
+          "expression": "-24h",
+          "passed": false,
+          "detail": "searched '-1d' instead -- the user's window was not applied"
+        }
+      ]
+    },
+    {
+      "scenario": "S10_instruction_override",
+      "query": "q2_override",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "mservicehub|catalog|documented|can'?t|cannot|not able|read-only|only (?:report|surface)",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

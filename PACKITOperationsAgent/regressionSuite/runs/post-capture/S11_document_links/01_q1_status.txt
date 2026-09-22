@@ -1,0 +1,26 @@
+# 01 q1_status
+
+## Query (as typed into the app)
+What's happening with PS 00000000040000434427 in the last 24 hours?
+
+## What this turn probes
+Establishes the conversation subject so the DIR question below is a real follow-up.
+
+## Reply (verbatim, as rendered in the browser)
+No primary records for PS 00000000040000434427 were found in the last 24 hours. This doesn't mean the PS doesn't exist; it may simply fall outside this time window. If needed, consider widening the window or providing a more specific PS ID or plant for a focused search.
+
+## Observed
+- elapsed: 4.8s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_status.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040000434427
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000434427" | head 200
+    window: -24h .. now  ->  0 rows

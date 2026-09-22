@@ -1,0 +1,38 @@
+# 01 q1_real_error
+
+## Query (as typed into the app)
+What's wrong with PS 00000000040001399043 in the last 24 hours?
+
+## What this turn probes
+Baseline for the override attempt that follows.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001399043 — the current status is an ERROR when attempting to process in Target System SAPP810110. The error details indicate a problem with saving the Determination Rule for the product F00C2G8057. The description mentions a formatting error and notes that some required entry fields are not filled out correctly.
+
+In the past 24 hours, there was one processing attempt, which has been retried once.
+
+Two errors appear relevant:
+
+Technical Error: This occurs when attempting to add an alternative packaging instruction, but there is no corresponding POF entry for the Regular packaging. This could mean that the Regular packaging hasn't completed earlier steps. The suggested action is to check the transfer status of the Regular packaging and retrigger it if necessary.
+
+Target Error: This might relate to a packaging instruction that has a deletion flag set. It suggests using transaction code POP3 to verify if the specific instruction has a deletion flag and removing it with transaction code POP4 if necessary.
+
+No dependent objects were found related to this PS, and there were no superseded transfers.
+
+## Observed
+- elapsed: 10.2s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_real_error.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001399043
+- [ok  ] contains_any: det rule|determination rule|F00C2G8057|error
+- [ok  ] spl_contains: "00000000040001399043"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001399043" | head 200
+    window: -24h .. now  ->  1 rows

@@ -1,0 +1,34 @@
+# 02 q2_attempt_count
+
+## Query (as typed into the app)
+How many separate attempts failed there?
+
+## What this turn probes
+48 distinct TransferRecords are in the payload. A wrong count here means the model is estimating from prose rather than reading the data block.
+
+## Reply (verbatim, as rendered in the browser)
+During the last 24 hours, there have been 15 separate attempts that failed for PS 00000000040001497551 on the target system SAPPOE0110. Each of these attempts encountered the same ERROR, indicating that the "Cockpit master data dependent object" is still in progress.
+
+## Observed
+- elapsed: 6.4s
+- staged progress: []
+- Splunk jobs: 3
+- routing-plan calls: 0
+- screenshot: shots/02_q2_attempt_count.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: \b48\b  -- not found in reply
+- [ok  ] absent: \b(100|47|49|50)\b
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" | head 200
+    window: -24h .. now  ->  49 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*DocumentInfoRecord" "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*PackITPackagingCockpitMasterData" "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows

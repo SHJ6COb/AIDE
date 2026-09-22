@@ -1,0 +1,23 @@
+# 02 q2_far_too_broad
+
+## Query (as typed into the app)
+Show me all the errors.
+
+## What this turn probes
+status=ERROR alone is as broad as the entire pipeline. Must be refused with a request to narrow, not answered with whatever happens to be in the index.
+
+## Reply (verbatim, as rendered in the browser)
+I can't check errors directly or present data. You can review your specific PackIT replication status or any related errors through the Splunk dashboard.
+
+## Observed
+- elapsed: 4.1s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_far_too_broad.png
+
+## Verdict: PASS
+- [ok  ] contains_any: narrow|specific|PS ID|which plant|need (?:at least|a bit more)|identifying
+- [ok  ] absent: 00000000040001253724
+- [ok  ] absent: 00000000040001497551
+- [ok  ] search_count: 0..0

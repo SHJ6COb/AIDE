@@ -1,0 +1,16 @@
+{"api": "splunk.create_job", "sid": "1786003108.416171.1", "spl": "search index=pdbb sourcetype=Native \"00000000040001253724\" | head 200", "earliest": "-24h", "latest": "now", "matched_count": 100, "emulator_error": null, "at": "2026-08-06T07:58:28.517337+00:00"}
+{"api": "splunk.job_status", "sid": "1786003108.416171.1", "failed": false, "at": "2026-08-06T07:58:28.523946+00:00"}
+{"api": "splunk.results", "sid": "1786003108.416171.1", "offset": 0, "count": 200, "returned": 100, "at": "2026-08-06T07:58:28.530038+00:00"}
+{"api": "splunk.delete_job", "sid": "1786003108.416171.1", "at": "2026-08-06T07:58:28.576096+00:00"}
+{"api": "splunk.create_job", "sid": "1786003108.923965.2", "spl": "search index=pdbb sourcetype=Native \"00000000040001497551\" | head 200", "earliest": "-24h", "latest": "now", "matched_count": 49, "emulator_error": null, "at": "2026-08-06T07:58:29.060007+00:00"}
+{"api": "splunk.job_status", "sid": "1786003108.923965.2", "failed": false, "at": "2026-08-06T07:58:29.062986+00:00"}
+{"api": "splunk.results", "sid": "1786003108.923965.2", "offset": 0, "count": 200, "returned": 49, "at": "2026-08-06T07:58:29.067425+00:00"}
+{"api": "splunk.delete_job", "sid": "1786003108.923965.2", "at": "2026-08-06T07:58:29.093371+00:00"}
+{"api": "splunk.create_job", "sid": "1786003109.183296.3", "spl": "search index=pdbb sourcetype=Native source=\"*PackITPackagingCockpitMasterData\" \"00000000040001497551\" | head 200", "earliest": "-24h", "latest": "now", "matched_count": 0, "emulator_error": null, "at": "2026-08-06T07:58:29.189037+00:00"}
+{"api": "splunk.job_status", "sid": "1786003109.183296.3", "failed": false, "at": "2026-08-06T07:58:29.191904+00:00"}
+{"api": "splunk.results", "sid": "1786003109.183296.3", "offset": 0, "count": 200, "returned": 0, "at": "2026-08-06T07:58:29.194899+00:00"}
+{"api": "splunk.delete_job", "sid": "1786003109.183296.3", "at": "2026-08-06T07:58:29.199102+00:00"}
+{"api": "splunk.create_job", "sid": "1786003109.228796.4", "spl": "search index=pdbb sourcetype=Native \"00000000040000434427\" | head 200", "earliest": "-24h", "latest": "now", "matched_count": 2, "emulator_error": null, "at": "2026-08-06T07:58:29.382115+00:00"}
+{"api": "splunk.job_status", "sid": "1786003109.228796.4", "failed": false, "at": "2026-08-06T07:58:29.385078+00:00"}
+{"api": "splunk.results", "sid": "1786003109.228796.4", "offset": 0, "count": 200, "returned": 2, "at": "2026-08-06T07:58:29.389062+00:00"}
+{"api": "splunk.delete_job", "sid": "1786003109.228796.4", "at": "2026-08-06T07:58:29.395162+00:00"}

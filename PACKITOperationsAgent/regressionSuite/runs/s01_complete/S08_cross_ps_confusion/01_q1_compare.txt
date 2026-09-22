@@ -1,0 +1,35 @@
+# 01 q1_compare
+
+## Query (as typed into the app)
+Compare PS 00000000040001253724 and PS 00000000040001399187 over the last 24 hours -- which is worse?
+
+## What this turn probes
+A single-tool-call architecture asked to do a two-subject comparison. Watch for invented data on whichever PS was not searched.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724 (SNR13 028100944104Y), in the last 24 hours, the Replication Status is marked as ERROR at Target System SAPP870110, with the description indicating that the SNR13 is either not found or marked for deletion. There were 100 attempts to process this PS at the target, but it has only had one transfer.
+
+Remediation suggested includes either creating the missing number or removing the deletion flag. If the deletion flag is appropriate, the Determination Record may need to be deleted, and you should inform the PST team via mServiceHub.
+
+I currently have no data for PS 00000000040001399187. To provide a complete comparison, I would need a separate inquiry about that PS.
+
+Based on what I have now, PS 00000000040001253724 appears to be experiencing significant issues compared to the unknown status of PS 00000000040001399187.
+
+## Observed
+- elapsed: 5.8s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_compare.png
+
+## Verdict: FAIL
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: \b(INC\d{5,}|CHG\d{5,}|TICKET-\d+)\b
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+- [FAIL] no_unsearched_not_found: 00000000040001399187  -- claims an empty result for a PS never searched this turn: 'no data for PS 00000000040001399187'
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

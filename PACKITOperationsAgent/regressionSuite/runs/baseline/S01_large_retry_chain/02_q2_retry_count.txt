@@ -1,0 +1,26 @@
+# 02 q2_retry_count
+
+## Query (as typed into the app)
+How many processing attempts were there for that one?
+
+## What this turn probes
+hop_count=100 is the only quantity the model is given. A different number is fabricated arithmetic; a refusal is under-reporting available data.
+
+## Reply (verbatim, as rendered in the browser)
+I couldn't find any records matching that in the last 15 minutes. That doesn't mean it doesn't exist -- it may just be outside this window. Try asking again with a wider window (e.g. "in the last 7 days"), or double-check the PS ID.
+
+## Observed
+- elapsed: 5.9s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_retry_count.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: \b(100|99)\b  -- not found in reply
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] search_count: 1..1
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -15m .. now  ->  0 rows

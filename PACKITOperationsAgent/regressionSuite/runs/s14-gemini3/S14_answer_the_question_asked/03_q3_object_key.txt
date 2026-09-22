@@ -1,0 +1,37 @@
+# 03 q3_object_key
+
+## Query (as typed into the app)
+Can you provide the object key details of this PS?
+
+## What this turn probes
+RCPT, so SUPPLIER is part of the key -- and it was never extracted at all until 2026-08-07, so the live answer could not have included it. Hop counts are not object key fields and are noise here.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000348796 — let me know if you meant a different one — here are the object key details:
+
+PS ID (ps_id): 00000000040000348796
+Determination Record Sequence No (determination_record_seqno): 00002
+Activation Counter (activation_counter): 1
+Change Number (ps_change_number): 00000001
+Determination Type (ps_determination_type): RCPT
+Material (ps_material): F00SC01107
+Plant (ps_plant): 5550
+Supplier (ps_supplier): 0000131512
+Usage (ps_usage): R
+
+## Observed
+- elapsed: 8.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_object_key.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 0000131512
+- [ok  ] contains_all: 00000000040000348796
+- [ok  ] contains_all: RCPT
+- [ok  ] contains_all: 00002
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000348796" | head 200
+    window: -30d .. now  ->  17 rows

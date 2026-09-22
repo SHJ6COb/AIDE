@@ -1,0 +1,21 @@
+# 01 q1_status
+
+## Query (as typed into the app)
+What's happening with PS 00000000040000434427 in the last 24 hours?
+
+## What this turn probes
+Establishes the conversation subject so the DIR question below is a real follow-up.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 0.4s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/01_q1_status.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: 00000000040000434427  -- not found in reply
+- [FAIL] search_count: 1..1  -- observed 0 Splunk job(s): []

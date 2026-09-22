@@ -1,0 +1,48 @@
+[
+  {
+    "query": "q1_status",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786083179.532172.1",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001253724\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:12:59.541134+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786083179.532172.1",
+        "failed": false,
+        "at": "2026-08-07T06:12:59.547230+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786083179.532172.1",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:12:59.553501+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786083179.532172.1",
+        "at": "2026-08-07T06:12:59.560518+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_retry_count",
+    "calls": []
+  },
+  {
+    "query": "q3_ungrounded_plant",
+    "calls": []
+  },
+  {
+    "query": "q4_documented_fix",
+    "calls": []
+  }
+]

@@ -1,0 +1,125 @@
+[
+  {
+    "scenario": "S04_routing_gap",
+    "query": "q1_wrong_target",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "SAPP790110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "0110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "aren'?t configured|not configured|never (?:configured|supposed)|routed to",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "\\b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "spl_contains",
+        "expression": "host=\"*SAPP790110*\"",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "2..2",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "routing_call",
+        "expression": "True",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S04_routing_gap",
+    "query": "q2_where_should_it_go",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SAPP790110 (?:is|was) (?:the )?correct",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S04_routing_gap",
+    "query": "q3_right_target",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "SNR13",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "spl_contains",
+        "expression": "host=\"*SAPP870110*\"",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "routing_call",
+        "expression": "False",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

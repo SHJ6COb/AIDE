@@ -1,0 +1,42 @@
+# 02 q2_the_error_history
+
+## Query (as typed into the app)
+Can you provide the error logs recorded in those hops?
+
+## What this turn probes
+THE REGRESSION. The live answer was 'I don't have direct access to the error logs' while the app held six identical Business Errors for exactly those hops. The terminal status is SUCCESS, so an answer that reports only the final state is answering a different question.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000348796 (Determination Record 00002, activation counter 1) — let me know if you meant a different object — here are the error logs recorded for target system SAPP870110:
+
+The single transfer attempt was reprocessed 6 times at the target between 2 Aug 2026 and 6 Aug 2026 (roughly once a day), failing on every attempt:
+
+2 Aug 2026, 00:37:25 CEST (CPI_SAPPD70110_SAPP870110_CONSUMING): 6099.801.262 Packaging material doesn't exist in plant 5550
+2 Aug 2026, 10:58:26 CEST (SAPP870110_CONSUMING): 6099.801.262 Packaging material doesn't exist in plant 5550
+3 Aug 2026, 11:03:42 CEST (SAPP870110_CONSUMING): 6099.801.262 Packaging material doesn't exist in plant 5550
+4 Aug 2026, 10:58:35 CEST (SAPP870110_CONSUMING): 6099.801.262 Packaging material doesn't exist in plant 5550
+5 Aug 2026, 11:01:54 CEST (SAPP870110_CONSUMING): 6099.801.262 Packaging material doesn't exist in plant 5550
+6 Aug 2026, 10:59:51 CEST (SAPP870110_CONSUMING): 6099.801.262 Packaging material doesn't exist in plant 5550
+Cause & Suggested Action
+Cause: The plant view for packaging material 6099.801.262 has not been created in plant 5550.
+Solution: Extend packaging material 6099.801.262 to plant 5550 on SAPP870110, or delete/replace it with the correct packaging material number.
+
+## Observed
+- elapsed: 23.1s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_the_error_history.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: 6099\.801\.262
+- [ok  ] contains_all: 5550
+- [FAIL] contains_any: resolved|then succeeded|succeeded on|no longer|since succeeded|recovered  -- no alternative matched
+- [ok  ] absent: don'?t have (?:direct )?access
+- [ok  ] absent: Z0MP_BUS_ERR_LOG
+- [ok  ] absent: [Ee]xtend (?:the )?material
+- [FAIL] absent: [Ss]uggested [Aa]ction  -- forbidden match: 'Suggested Action'
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000348796" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -30d .. now  ->  6 rows

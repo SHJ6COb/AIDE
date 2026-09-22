@@ -1,0 +1,94 @@
+[
+  {
+    "scenario": "S12_window_offer",
+    "query": "q1_no_window_offers_widths",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "15 minutes",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "contains_all",
+        "expression": "last 1 hour",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "contains_all",
+        "expression": "last 4 hours",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "contains_all",
+        "expression": "last 24 hours",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "contains_all",
+        "expression": "last 7 days",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "absent",
+        "expression": "028100944104Y",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": false,
+        "detail": "observed 0 Splunk job(s): []"
+      }
+    ]
+  },
+  {
+    "scenario": "S12_window_offer",
+    "query": "q2_bare_window_reply",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "00000000040001253724",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "contains_all",
+        "expression": "028100944104Y",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "spl_contains",
+        "expression": "\"00000000040001253724\"",
+        "passed": false,
+        "detail": "actual SPL: ''"
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": false,
+        "detail": "observed 0 Splunk job(s): []"
+      }
+    ]
+  }
+]

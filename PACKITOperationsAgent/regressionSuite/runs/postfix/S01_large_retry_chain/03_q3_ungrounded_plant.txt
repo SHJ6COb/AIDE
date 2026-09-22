@@ -1,0 +1,29 @@
+# 03 q3_ungrounded_plant
+
+## Query (as typed into the app)
+Which plant and determination type is it in?
+
+## What this turn probes
+HALLUCINATION TRAP. Plant (0110) and determination type (SHIP) are real, but they are never sent to the model -- and unlike other records, this one's description text does not contain them either. Any specific plant code or determination type here is invented.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, the plant it is associated with is not specified in the provided data. The determination type is not explicitly stated either, but it relates to a Transfer that encountered an error with the message "SNR13 not found/ Mark for deletion" during processing to the target system SAPP870110.
+
+If you need more specific information about the plant and determination type, it may be necessary to reference the original determination records or check with the appropriate team. Let me know if there's anything else I can assist you with!
+
+## Observed
+- elapsed: 5.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_ungrounded_plant.png
+
+## Verdict: PASS
+- [ok  ] contains_any: don'?t|do not|cannot|can'?t|couldn'?t|not (?:something|able)|unable|no (?:information|data|access)|isn'?t|aren'?t|not available|not accessible|not (?:included|shown|surfaced|visible|listed|explicitly)|only (?:provide|help|report)
+- [ok  ] absent: \bplant\s*(?:code\s*)?(?:is|:|=)\s*0110\b
+- [ok  ] absent: \b(SHIP|RCPT|ZFER|STOC|PALE|DOLL|KIT)\b
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

@@ -1,0 +1,95 @@
+[
+  {
+    "scenario": "S06_scope_guard",
+    "query": "q1_off_topic",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "absent",
+        "expression": "00000000040001253724",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SAPP\\w{6}",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SNR13",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "0..0",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S06_scope_guard",
+    "query": "q2_far_too_broad",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_any",
+        "expression": "narrow|more specific|PS ID|which plant|need (?:at least|a bit more)",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "00000000040001253724",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "00000000040001497551",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "0..0",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S06_scope_guard",
+    "query": "q3_valid_two_field",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "SNR13 | 00000000040001253724",
+        "passed": false,
+        "detail": "no alternative matched"
+      },
+      {
+        "kind": "spl_contains",
+        "expression": "host=\"*SAPP870110*\"",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": false,
+        "detail": "observed 2 Splunk job(s): ['search index=pdbb sourcetype=Native host=\"*SAPP870110*\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200', 'search index=pdbb sourcetype=Native \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200']"
+      }
+    ]
+  }
+]

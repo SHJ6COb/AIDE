@@ -1,0 +1,10 @@
+[
+  {
+    "query": "q1_no_window",
+    "calls": []
+  },
+  {
+    "query": "q2_widen",
+    "calls": []
+  }
+]

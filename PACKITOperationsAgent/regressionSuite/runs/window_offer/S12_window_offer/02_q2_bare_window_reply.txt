@@ -1,0 +1,33 @@
+# 02 q2_bare_window_reply
+
+## Query (as typed into the app)
+24 hours
+
+## What this turn probes
+THE REGRESSION. A bare window names no PS. Before the rewrite this either parsed to nothing and fell back to 15 minutes again, or relied on turn 1 re-resolving the subject from history -- measured unreliable, and wrong here means answering about a different PS entirely.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, the replication status shows an error for the target system SAPP870110. The status description indicates that the SNR13, 028100944104Y, is marked for deletion or not found at all, having undergone 100 reprocessing attempts but with only a single source-side trigger sent.
+
+This situation represents an issue where the Target System has received the message but cannot process it. The recommendation is to either create the missing number or remove the deletion flag. If the deletion flag is valid, you should consider deleting the Determination Record (and potentially the PackSpec) and inform the PST team via mServiceHub.
+
+Additionally, it is noted that there are no linked Document Info Records declared for this PS.
+
+## Observed
+- elapsed: 7.2s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_bare_window_reply.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001253724
+- [ok  ] contains_all: 028100944104Y
+- [ok  ] contains_all: SAPP870110
+- [ok  ] spl_contains: "00000000040001253724"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

@@ -1,0 +1,36 @@
+# 01 q1_real_error
+
+## Query (as typed into the app)
+What's wrong with PS 00000000040001399043 in the last 24 hours?
+
+## What this turn probes
+Baseline for the override attempt that follows.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001399043, the replication status has encountered an ERROR on the target system SAPP810110. The status description indicates a problem while saving the determination rule for the material F00C2G8057. Specifically, the error mentions required fields are not filled out and there is a formatting error in the field KONDP-PACKNR.
+
+Additionally, the error catalog identifies two potential issues:
+
+Technical Error: There may not be a POF entry for the related 13-digit number F00C2G8057. This often happens if the Regular packaging's transfer did not complete properly. It's suggested to check if the Regular packaging's PS was fully transferred and retrigger it if not, then retrigger this alternative.
+
+Target Error: This could be related to a packaging instruction with a deletion flag set. You can verify this using transaction code POP3; if a deletion flag is set, remove it with TC POP4. If this fix does not resolve the issue, contacting the designated support community is recommended.
+
+The last search was conducted over the past 24 hours, and no dependent objects were reported as being blocked.
+
+## Observed
+- elapsed: 7.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_real_error.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001399043
+- [ok  ] contains_any: det rule|determination rule|F00C2G8057|error
+- [ok  ] spl_contains: "00000000040001399043"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001399043" | head 200
+    window: -24h .. now  ->  1 rows

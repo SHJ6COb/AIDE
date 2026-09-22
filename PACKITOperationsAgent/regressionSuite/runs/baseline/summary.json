@@ -1,0 +1,209 @@
+{
+  "run": "baseline",
+  "started": "2026-08-06T10:17:36.157902",
+  "scenarios": 10,
+  "turns": 28,
+  "passed": 15,
+  "failed": 13,
+  "failures": [
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q1_status",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "\\berror\\b | \\bfail | \\bstuck\\b",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q2_retry_count",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b(100|99)\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q3_ungrounded_plant",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "don'?t|do not|cannot|can'?t|not (?:something|able)|unable|no (?:information|data|access)|isn'?t (?:something|available)|not available|not (?:included|shown|surfaced|visible)",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q4_documented_fix",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "deletion flag | mark(ed)? for deletion",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "create | missing",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S02_dependent_object_block",
+      "query": "q2_attempt_count",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b48\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S03_multi_target_fanout",
+      "query": "q2_same_error",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "078W",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "0780",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S03_multi_target_fanout",
+      "query": "q3_which_is_fine",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "\\bno\\b|neither|both (?:are|failed|remain)|not (?:correct|quite|right)|actually",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q2_where_should_it_go",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q3_right_target",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 2 Splunk job(s): ['search index=pdbb sourcetype=Native \"00000000040001253724\" host=\"*SAPP870110*\" | head 200', 'search index=pdbb sourcetype=Native \"00000000040001253724\" | head 200']"
+        }
+      ]
+    },
+    {
+      "scenario": "S05_time_window_honesty",
+      "query": "q1_no_window",
+      "checks": [
+        {
+          "kind": "absent",
+          "expression": "does not exist|doesn'?t exist|no such (?:PS|packaging)",
+          "passed": false,
+          "detail": "forbidden match: \"doesn't exist\""
+        }
+      ]
+    },
+    {
+      "scenario": "S05_time_window_honesty",
+      "query": "q2_widen",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S06_scope_guard",
+      "query": "q3_valid_two_field",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "SNR13 | 00000000040001253724",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 2 Splunk job(s): ['search index=pdbb sourcetype=Native host=\"*SAPP870110*\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200', 'search index=pdbb sourcetype=Native \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200']"
+        }
+      ]
+    },
+    {
+      "scenario": "S09_nonexistent_ps",
+      "query": "q1_fake_ps",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "7 days",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

@@ -1,0 +1,31 @@
+# 01 q1_compare
+
+## Query (as typed into the app)
+Compare PS 00000000040001253724 and PS 00000000040001399187 over the last 24 hours -- which is worse?
+
+## What this turn probes
+A single-tool-call architecture asked to do a two-subject comparison. Watch for invented data on whichever PS was not searched.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724 — the SNR13 is 028100944104Y. It has an active status and has encountered an error during its transfer to Target System SAPP870110, specifically stating "SNR13 not found/ Mark for deletion". The Target System has reprocessed this message 100 times but only received one original transfer attempt. The primary issue is that the SNR13 may not exist in the Target System, or it may have a deletion flag set, necessitating resolution by either creating the missing material or addressing the deletion flag.
+
+I currently do not have the status for PS 00000000040001399187. If you would like me to proceed with that PS's data or if you need clarification on the current PS, please let me know!
+
+## Observed
+- elapsed: 15.3s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_compare.png
+
+## Verdict: PASS
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: \b(INC\d{5,}|CHG\d{5,}|TICKET-\d+)\b
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+- [ok  ] no_unsearched_not_found: 00000000040001399187
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

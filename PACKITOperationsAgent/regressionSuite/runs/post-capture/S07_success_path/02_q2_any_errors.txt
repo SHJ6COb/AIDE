@@ -1,0 +1,27 @@
+# 02 q2_any_errors
+
+## Query (as typed into the app)
+Any errors at all on that one?
+
+## What this turn probes
+Must stay consistent with the previous turn rather than inventing a caveat error.
+
+## Reply (verbatim, as rendered in the browser)
+I couldn't find any records for PS 00000000040000588527 in the last 24 hours. There are no errors or issues reported, but this could simply be because the PS is outside this search window. Please try a different time frame or verify the PS ID.
+
+## Observed
+- elapsed: 5.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_any_errors.png
+
+## Verdict: PASS
+- [ok  ] contains_any: \bno\b|none|no errors|not (?:any|seeing)|clean|success
+- [ok  ] absent: SNR13
+- [ok  ] absent: T141
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000588527" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  0 rows

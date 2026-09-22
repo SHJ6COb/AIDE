@@ -1,0 +1,32 @@
+# 03 q3_ps_with_no_links
+
+## Query (as typed into the app)
+And what about PS 00000000040001253724 -- any documents linked to that one?
+
+## What this turn probes
+The negative case, which is a real answer rather than a gap: a DIR trigger is optional, so declaring none is normal. Inventing a document number here, or carrying over the two from the previous PS, would both be fabrication.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724 — there are no linked Document Info Records (DIRs) declared. This means the PS does not have any documents associated with it.
+
+In the last 24 hours, the status for this PS on the SAPP870110 target system is marked as an error, specifically stating that the SNR13 028100944104Y is not found or is marked for deletion. There was one transfer attempt, with 100 reprocessing attempts recorded at the target system.
+
+The error suggests that the affected 10- or 13-digit number is either not created in the mentioned SAP system or that a deletion flag has been set at client level. To resolve this, you may need to create the missing number or remove the deletion flag and ensure that the plant status is valid. If the deletion flag is correct, deleting the Determination Record (and considering the PackSpec) might be necessary, and you'd also want to inform the PST Team via mServiceHub.
+
+## Observed
+- elapsed: 6.9s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_ps_with_no_links.png
+
+## Verdict: PASS
+- [ok  ] contains_any: no|none|not (?:any|linked)|doesn'?t (?:have|declare)|no (?:linked|document)
+- [ok  ] absent: 0000000000000000001627019
+- [ok  ] absent: 0000000000000000001507973
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

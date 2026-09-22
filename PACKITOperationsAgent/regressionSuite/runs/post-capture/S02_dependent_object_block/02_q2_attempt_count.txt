@@ -1,0 +1,26 @@
+# 02 q2_attempt_count
+
+## Query (as typed into the app)
+How many separate attempts failed there?
+
+## What this turn probes
+48 distinct TransferRecords are in the payload. A wrong count here means the model is estimating from prose rather than reading the data block.
+
+## Reply (verbatim, as rendered in the browser)
+[TIMEOUT after 240s -- no reply]
+
+## Observed
+- elapsed: 251.1s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_attempt_count.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: \b48\b  -- not found in reply
+- [ok  ] absent: \b(100|47|50)\b
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  0 rows

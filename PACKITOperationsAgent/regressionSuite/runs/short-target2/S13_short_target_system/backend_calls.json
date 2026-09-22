@@ -1,0 +1,74 @@
+[
+  {
+    "query": "q1_short_name_resolves",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087712.646817.1",
+        "spl": "search index=pdbb sourcetype=Native host=\"*SAPP870110*\" \"<d:BusinessStatus>SUCCESS</d:BusinessStatus>\" | head 200",
+        "earliest": "-15m",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T07:28:32.646816+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087712.646817.1",
+        "failed": false,
+        "at": "2026-08-07T07:28:32.651599+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087712.646817.1",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T07:28:32.657116+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087712.646817.1",
+        "at": "2026-08-07T07:28:32.661625+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_no_window_means_default",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087717.941767.2",
+        "spl": "search index=pdbb sourcetype=Native host=\"*SAPPOE0110*\" \"<d:BusinessStatus>SUCCESS</d:BusinessStatus>\" | head 200",
+        "earliest": "-15m",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T07:28:37.943066+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087717.941767.2",
+        "failed": false,
+        "at": "2026-08-07T07:28:37.948697+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087717.941767.2",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T07:28:37.954783+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087717.941767.2",
+        "at": "2026-08-07T07:28:37.960800+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q3_unresolvable_value_never_widens_the_search",
+    "calls": []
+  }
+]

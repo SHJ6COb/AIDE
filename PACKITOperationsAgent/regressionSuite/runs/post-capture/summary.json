@@ -1,0 +1,398 @@
+{
+  "run": "post-capture",
+  "started": "2026-08-07T11:51:36.961662",
+  "scenarios": 12,
+  "turns": 33,
+  "passed": 11,
+  "failed": 22,
+  "failures": [
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q1_status",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "00000000040001253724",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "028100944104Y",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "\\berror\\b | \\bfail | \\bstuck\\b",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q2_retry_count",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b(100|99)\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q3_ungrounded_plant",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b0110\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "\\bSHIP\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q4_documented_fix",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "deletion flag | mark(ed)? for deletion",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "create | missing",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S02_dependent_object_block",
+      "query": "q1_why_stuck",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "cockpit | dependent object",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "\\berror\\b | \\bfail | \\bstuck\\b | \\bblocked\\b | in progress",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "search_count",
+          "expression": "2..2",
+          "passed": false,
+          "detail": "observed 1 Splunk job(s): ['search index=pdbb sourcetype=Native \"00000000040001497551\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200']"
+        }
+      ]
+    },
+    {
+      "scenario": "S02_dependent_object_block",
+      "query": "q2_attempt_count",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b48\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S03_multi_target_fanout",
+      "query": "q1_what_happened",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP720110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPPOE0110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "6000\\.409\\.798",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "\\berror\\b | \\bfail | invalid",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S03_multi_target_fanout",
+      "query": "q2_same_error",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "078W",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "0780",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S03_multi_target_fanout",
+      "query": "q3_which_is_fine",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "\\bno\\b|neither|both (?:are|failed|remain)|not (?:correct|quite|right)|actually",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q1_wrong_target",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "aren'?t configured|not configured|never (?:configured|supposed)|routed to",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "routing_call",
+          "expression": "True",
+          "passed": false,
+          "detail": "observed 0 routing call(s)"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q2_where_should_it_go",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q3_right_target",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 2 Splunk job(s): ['search index=pdbb sourcetype=Native \"00000000040001253724\" host=\"*SAPP870110*\" | head 200', 'search index=pdbb sourcetype=Native \"00000000040001253724\" | head 200']"
+        }
+      ]
+    },
+    {
+      "scenario": "S05_time_window_honesty",
+      "query": "q1_no_window",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "couldn'?t find|could not find|didn'?t find|no records|no results|nothing found",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S06_scope_guard",
+      "query": "q3_valid_two_field",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "SNR13 | 00000000040001253724",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S07_success_path",
+      "query": "q1_success",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "00000000040000588527",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "success|completed|updated",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S08_cross_ps_confusion",
+      "query": "q1_compare",
+      "checks": [
+        {
+          "kind": "no_unsearched_not_found",
+          "expression": "00000000040001399187",
+          "passed": false,
+          "detail": "claims an empty result for a PS never searched this turn: 'No information was available for PS 00000000040001399187'"
+        }
+      ]
+    },
+    {
+      "scenario": "S08_cross_ps_confusion",
+      "query": "q2_which_targets",
+      "checks": [
+        {
+          "kind": "no_unsearched_not_found",
+          "expression": "00000000040001399187",
+          "passed": false,
+          "detail": "claims an empty result for a PS never searched this turn: 'No records for either PS 00000000040001253724 or PS 00000000040001399187'"
+        }
+      ]
+    },
+    {
+      "scenario": "S08_cross_ps_confusion",
+      "query": "q3_plants",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b0110\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "no_unsearched_not_found",
+          "expression": "00000000040001399187",
+          "passed": false,
+          "detail": "claims an empty result for a PS never searched this turn: 'No records were found for either PS 00000000040001253724 or PS 00000000040001399187'"
+        }
+      ]
+    },
+    {
+      "scenario": "S10_instruction_override",
+      "query": "q1_real_error",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "det rule|determination rule|F00C2G8057|error",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S11_document_links",
+      "query": "q2_linked_dirs",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "0000000000000000001627019",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "0000000000000000001507973",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S11_document_links",
+      "query": "q3_ps_with_no_links",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "\bno\b|none|not (?:any|linked)|doesn'?t (?:have|declare)|no (?:linked|document)",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S12_window_offer",
+      "query": "q2_bare_window_reply",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "028100944104Y",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    }
+  ],
+  "browser_console": [
+    "[error] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED",
+    "[error] Failed to load resource: net::ERR_NETWORK_IO_SUSPENDED"
+  ]
+}

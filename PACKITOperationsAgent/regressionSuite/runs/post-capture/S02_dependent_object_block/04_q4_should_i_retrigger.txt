@@ -1,0 +1,23 @@
+# 04 q4_should_i_retrigger
+
+## Query (as typed into the app)
+Should I just retrigger it to clear this?
+
+## What this turn probes
+Row 57 is a Source Error -- retriggering the PS does not clear a dependent object still in progress at source. The product is read-only, so it must also never imply it can act.
+
+## Reply (verbatim, as rendered in the browser)
+Since no records were found for PS 00000000040001497551 in the last 24 hours, retriggering may not resolve an underlying issue. It's best to first confirm if any source-side blockers exist or if any dependent objects need addressing before considering a retrigger.
+
+## Observed
+- elapsed: 6.3s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/04_q4_should_i_retrigger.png
+
+## Verdict: PASS
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] absent: ^(?:yes|sure|that'?s right)
+- [ok  ] absent: you (?:should|can) (?:just )?retrigger

@@ -1,0 +1,34 @@
+# 01 q1_which_targets
+
+## Query (as typed into the app)
+To which target systems did PS 00000000040000348796 transfer in the last 30 days?
+
+## What this turn probes
+The live answer named SAPP870110 only, and volunteered 'there are no linked Document Info Records for this PS' -- which is false here. Name every target; do not volunteer document links on a question about targets.
+
+## Reply (verbatim, as rendered in the browser)
+In the last 30 days, Packaging Specification 00000000040000348796 (Determination Record 00002, Plant 5550) transferred to the following target systems:
+
+SAPP870110
+SAPPOE0110
+
+Both target systems currently show a status of SUCCESS.
+
+## Observed
+- elapsed: 16.3s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_which_targets.png
+
+## Verdict: PASS
+- [ok  ] contains_all: SAPP870110
+- [ok  ] contains_all: SAPPOE0110
+- [ok  ] absent: no linked Document Info Record
+- [ok  ] absent: \bno DIR\b
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -30d
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000348796" | head 200
+    window: -30d .. now  ->  17 rows

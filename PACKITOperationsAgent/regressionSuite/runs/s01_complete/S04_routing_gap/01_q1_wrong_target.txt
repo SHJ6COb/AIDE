@@ -1,0 +1,36 @@
+# 01 q1_wrong_target
+
+## Query (as typed into the app)
+Did PS 00000000040001253724 reach SAPP790110 in the last 24 hours?
+
+## What this turn probes
+The full cross-source path: Splunk miss -> broadened search -> routing plan. The answer must say the transfer was never routed there, NOT that it failed.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, no records were found in the last 24 hours. However, it’s worth noting that this PS is not routed to SAPP790110 at all; it was configured for SAPP870110 instead. If you need information specifically for SAPP790110, please check on a different PS or widen your search criteria.
+
+## Observed
+- elapsed: 5.6s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 1
+- screenshot: shots/01_q1_wrong_target.png
+
+## Verdict: PASS
+- [ok  ] contains_all: SAPP790110
+- [ok  ] contains_all: SAPP870110
+- [ok  ] contains_all: 0110
+- [ok  ] contains_any: aren'?t configured|not configured|never (?:configured|supposed)|routed to
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] spl_contains: host="*SAPP790110*"
+- [ok  ] search_count: 2..2
+- [ok  ] search_window: -24h
+- [ok  ] routing_call: True
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" host="*SAPP790110*" | head 200
+    window: -24h .. now  ->  0 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

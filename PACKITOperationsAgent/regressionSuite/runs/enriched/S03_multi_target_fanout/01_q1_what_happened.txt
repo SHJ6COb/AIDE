@@ -1,0 +1,36 @@
+# 01 q1_what_happened
+
+## Query (as typed into the app)
+What happened to PS 00000000040000434427 in the last 24 hours?
+
+## What this turn probes
+The known failure mode this guards: collapsing a two-target fan-out into a single outcome. Both target systems must appear.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000434427, in the last 24 hours, transfers to both the Target Systems SAPP720110 and SAPPOE0110 encountered errors. The specific error for both systems is "T141 Bom item status Invalid for material 6000.409.798 in plant 0780" for SAPP720110 and "T141 Bom item status Invalid for material 6000.409.798 in plant 078W" for SAPPOE0110.
+
+There have been two transfers attempted, with each system having reprocessed the transfer once.
+
+This issue relates to the packaging material's invalid plant status on the target SAP systems. The recommended solution is to change the packaging material's plant status to 40 (valid) on the mentioned SAP system, or to use a different packaging material in the PackSpec. There are no dependent objects preventing the transfer, and no prior activations have been superseded.
+
+## Observed
+- elapsed: 6.5s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_what_happened.png
+
+## Verdict: PASS
+- [ok  ] contains_all: SAPP720110
+- [ok  ] contains_all: SAPPOE0110
+- [ok  ] contains_all: 6000\.409\.798
+- [ok  ] contains_any: \berror\b | \bfail | invalid
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: \b(INC\d{5,}|CHG\d{5,}|TICKET-\d+)\b
+- [ok  ] spl_contains: "00000000040000434427"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000434427" | head 200
+    window: -24h .. now  ->  2 rows

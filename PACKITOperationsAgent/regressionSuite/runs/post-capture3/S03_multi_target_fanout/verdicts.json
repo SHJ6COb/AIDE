@@ -1,0 +1,107 @@
+[
+  {
+    "scenario": "S03_multi_target_fanout",
+    "query": "q1_what_happened",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "SAPP720110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "SAPPOE0110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "6000\\.409\\.798",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "\\berror\\b | \\bfail | invalid",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "\\b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "\\b(INC\\d{5,}|CHG\\d{5,}|TICKET-\\d+)\\b",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "spl_contains",
+        "expression": "\"00000000040000434427\"",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S03_multi_target_fanout",
+    "query": "q2_same_error",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_any",
+        "expression": "078W",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "0780",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S03_multi_target_fanout",
+    "query": "q3_which_is_fine",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_any",
+        "expression": "\\bno\\b|neither|not (?:correct|quite|right)|actually|both\\b[^.]{0,40}\\b(?:are|failed|remain|reported|show|returned|have)\\b",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "\\byes\\b, (?:one|SAPP)",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

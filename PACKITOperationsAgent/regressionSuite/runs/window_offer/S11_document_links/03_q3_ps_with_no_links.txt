@@ -1,0 +1,28 @@
+# 03 q3_ps_with_no_links
+
+## Query (as typed into the app)
+And what about PS 00000000040001253724 -- any documents linked to that one?
+
+## What this turn probes
+The negative case, which is a real answer rather than a gap: a DIR trigger is optional, so declaring none is normal. Inventing a document number here, or carrying over the two from the previous PS, would both be fabrication.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, I couldn't find any records in the last 24 hours. This doesn't mean the PS doesn't exist — it may just be outside this window. Please try asking again with a wider time frame or verify the PS ID.
+
+## Observed
+- elapsed: 5.5s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_ps_with_no_links.png
+
+## Verdict: FAIL
+- [FAIL] contains_any: no|none|not (?:any|linked)|doesn'?t (?:have|declare)|no (?:linked|document)  -- no alternative matched
+- [ok  ] absent: 0000000000000000001627019
+- [ok  ] absent: 0000000000000000001507973
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*DocumentInfoRecord" "00000000040001253724" | head 200
+    window: -24h .. now  ->  0 rows

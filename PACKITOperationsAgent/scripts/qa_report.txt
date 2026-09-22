@@ -1,0 +1,77 @@
+### Step 1: initial load
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\01_initial_load.png
+
+### Step 2: clicked New conversation
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\02_new_conversation.png
+
+### 03_hi
+**Sent:** 'Hi'
+**Elapsed:** 0.4s
+**Staged-progress observed:** ['Thinking...']
+**Reply (verbatim):** '[This question could not be answered -- the request failed before completing. Please try asking again. If your next question refers back to this one (e.g. "the other one"), restate it in full, since this turn produced nothing to refer back to.]'
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\03_hi.png
+
+### 04_ps_no_window
+**Sent:** "What's the status of PS 00000000040001498023?"
+**Elapsed:** 8.6s
+**Staged-progress observed:** ['Thinking...', 'Interpreting your question...', 'Searching Splunk...', 'Checking error catalog...']
+**Reply (verbatim):** 'I couldn\'t find any records matching that in the last 15 minutes. That doesn\'t mean it doesn\'t exist -- it may just be outside this window. Try asking again with a wider window (e.g. "in the last 7 days"), or double-check the PS ID.'
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\04_ps_no_window.png
+
+### 05_ps_fail_no_window
+**Sent:** 'Why did PS 00000000040000054543 fail?'
+**Elapsed:** 11.4s
+**Staged-progress observed:** ['Thinking...', 'Interpreting your question...', 'Searching Splunk...']
+**Reply (verbatim):** 'Packaging Specification 00000000040000054543 failed during transfer to target system SAPP790110 with the error "SNR13 not found/ Mark for deletion".\n\nSummary: The affected 10- or 13-digit number is either not created at all on system SAPP790110, or a client-level deletion flag is set.\nResponsible Party: Plant\nSolution: Create the missing number or remove the deletion flag (also verify valid X-plant and plant status). If the deletion flag is intended, delete the Determination Record (and consider the PackSpec) and inform the PST Team via mServiceHub.'
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\05_ps_fail_no_window.png
+
+### 06_rich_answer
+**Sent:** 'Show me failed transfers for plant 0580 in the last 7 hours'
+**Elapsed:** 65.2s
+**Staged-progress observed:** ['Interpreting your question...', 'Searching Splunk...']
+**Reply (verbatim):** 'In the last 7 hours, 31 failed transfers were found for plant 0580 (all attempting to replicate to SAPP790110). The failures are split across two distinct issues:\n\nSNR13 not found / Mark for deletion\n\nSummary: The affected 10- or 13-digit number is either not created at all on SAPP790110, or a client-level deletion flag is set.\nResponsible Party: Plant\nSolution: Create the missing number or remove the deletion flag (and check valid X-plant and plant status). If the deletion flag is intended, delete the Determination Record (and consider the PackSpec) and inform the PST Team via mServiceHub.\n\nSNR13 Cross Plant Status Invalid\n\nSummary: The affected 10- or 13-digit number has an invalid X-plant (cross-plant) status on SAPP790110.\nResponsible Party: Plant\nSolution: Change the X-plant status to 40 (valid) on SAPP790110. If the invalid status is correct, delete the Determination Record (and consider deleting the PackSpec if no other DR references it) and inform the PST Team via mServiceHub to cancel the failed transfer.'
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\06_rich_answer.png
+
+### 06b_rich_answer_raw_html
+**Saved raw HTML of last bubble to:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\06_rich_answer_raw.html
+
+### 07_loop_reference
+**Sent:** 'What about the other one at a different plant?'
+**Elapsed:** 20.6s
+**Staged-progress observed:** ['Interpreting your question...', 'Searching Splunk...']
+**Reply (verbatim):** 'For Packaging Specification 00000000040001498023 (searched over the last 7 days), all transfers completed successfully across target systems SAPP990110, SAPPOE0110, and SAPPT00110. The replication status is healthy with no errors found.'
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\07_loop_reference.png
+
+### 08_fake_ps
+**Sent:** 'What about PS 00000000099999999999?'
+**Elapsed:** 9.6s
+**Staged-progress observed:** ['Thinking...', 'Interpreting your question...', 'Searching Splunk...']
+**Reply (verbatim):** 'I couldn\'t find any records matching that in the last 15 minutes. That doesn\'t mean it doesn\'t exist -- it may just be outside this window. Try asking again with a wider window (e.g. "in the last 7 days"), or double-check the PS ID.'
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\08_fake_ps.png
+
+### Step 10a: reload page
+**Message bubbles visible after reload:** 0
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\09_after_reload.png
+
+### 10_second_conversation_hi
+**Sent:** 'Hi'
+**Elapsed:** 2.3s
+**Staged-progress observed:** ['Thinking...', 'Interpreting your question...', "Please provide a Packaging Specification ID, Plant code, Material number, or details about the issue you're looking into!"]
+**Reply (verbatim):** "Hello! I am the PackIT Operations Agent. I can help you check the Replication Status of Packaging Specifications and track data flows through PDMI/Solace.\n\nPlease provide a Packaging Specification ID, Plant code, Material number, or details about the issue you're looking into!"
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\10_second_conversation_hi.png
+
+### Step 10b: sidebar after second conversation
+**First conversation's title before switching away:** 'Hi (Aug 5, 12:02 PM, dca1d0)\n\nnow'
+**All sidebar entries now:** ['Hi (Aug 5, 12:04 PM, bb53f3)\n\nnow', '✕', 'Hi (Aug 5, 12:02 PM, dca1d0)\n\n4 seconds ago', '✕', 'Hi (Aug 5, 11:56 AM, 9cffb7)\n\n6 minutes ago', '✕']
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\11_sidebar_two_conversations.png
+
+### Step 10c: switched back to first conversation
+**Screenshot:** C:\Users\SHJ6COB\Desktop\AIDE\PACKITOperationsAgent\scripts\qa_screenshots\12_switched_back.png
+
+### Step 10e: Report Issue button state
+**Enabled:** False
+
+**Click result:** no popup captured within 3s (TimeoutError) -- likely attempted a mailto: navigation, which Playwright/headless Chromium may not surface as a popup
+
+
+### Console messages captured across the whole session:

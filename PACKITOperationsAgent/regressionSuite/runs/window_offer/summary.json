@@ -1,0 +1,71 @@
+{
+  "run": "window_offer",
+  "started": "2026-08-06T16:24:17.937641",
+  "scenarios": 2,
+  "turns": 5,
+  "passed": 2,
+  "failed": 3,
+  "failures": [
+    {
+      "scenario": "S11_document_links",
+      "query": "q2_linked_dirs",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "0000000000000000001627019",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "0000000000000000001507973",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S11_document_links",
+      "query": "q3_ps_with_no_links",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "\bno\b|none|not (?:any|linked)|doesn'?t (?:have|declare)|no (?:linked|document)",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S12_window_offer",
+      "query": "q1_no_window_offers_widths",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "last 1 hour",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "last 4 hours",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "last 24 hours",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "last 7 days",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

@@ -1,0 +1,35 @@
+# 02 q2_the_error_history
+
+## Query (as typed into the app)
+Can you provide the error logs recorded in those hops?
+
+## What this turn probes
+THE REGRESSION. The live answer was 'I don't have direct access to the error logs' while the app held six identical Business Errors for exactly those hops. The terminal status is SUCCESS, so an answer that reports only the final state is answering a different question.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000348796 (Determination Record 00002, activation counter 1) — let me know if you meant a different one.
+
+Here is the error history recorded for target system SAPP870110:
+
+Attempt history: 6 attempts at target SAPP870110 for 1 transfer trigger, running approximately once per day from 2 Aug 2026 to 6 Aug 2026 (Initial trigger on 2 Aug 2026 at 00:30, followed by 5 daily target reprocessing attempts).
+Error message on all 6 hops: 6099.801.262 Packaging material doesn't exist in plant 5550
+Cause & Solution
+Cause: The plant view for packaging material 6099.801.262 in plant 5550 is not created on SAPP870110.
+Suggested Action: Extend material 6099.801.262 to plant 5550 on SAPP870110, or delete/replace this number with a valid packaging material number.
+
+## Observed
+- elapsed: 13.0s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_the_error_history.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 6099\.801\.262
+- [ok  ] contains_all: 5550
+- [ok  ] absent: don'?t have (?:direct )?access
+- [ok  ] absent: Z0MP_BUS_ERR_LOG
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000348796" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -30d .. now  ->  6 rows

@@ -1,0 +1,1465 @@
+*----------------------------------------------------------------------*
+***INCLUDE /SCWM/LUI_PS_ELEMENTP01 .
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&       Class (Implementation)  lcl_element_grid
+*&---------------------------------------------------------------------*
+*        Text
+*----------------------------------------------------------------------*
+CLASS lcl_dms_grid IMPLEMENTATION.
+**********************************************************************
+* Bosch EWM Packaging Specification                                  *
+**********************************************************************
+* Description:
+* local definition/redefinition for DMS-Grid
+**********************************************************************
+  METHOD init_document_links."redefinition
+    DATA: lv_cp     TYPE xfeld,
+          ls_outtab TYPE z0mp_s_dms_ps_ui_grid,
+          ls_pnodid TYPE ppet_pnodid_li.
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+    gv_object_key = iv_object_key.
+    CLEAR: gt_outtab.
+*1 step one: get all documents linked to this packspec/workstep
+*    IF gv_dokar = z0mp_if_packspec_constants=>gc_dokar_packspec.  "214
+*      lv_cp = abap_true. "search with key+wildcard  "214
+*    ENDIF.  "214
+    IF gv_dokar = z0mp_if_packspec_constants=>gc_dokar_workstep.
+      "convert guid of workstep to id
+      ls_pnodid-pnguid = iv_object_key.
+      ls_pnodid-applobj_type = /scwm/cl_ppelipak_cntl_const=>gc_pak_applobj.
+      ls_pnodid-pntype       = /scwm/cl_ppelipak_cntl_const=>gc_pak_workstep.
+      CALL METHOD /scwm/cl_ppelipak_cntl=>pnodid_check
+        EXPORTING
+          im_applobj_type    = /scwm/cl_ppelipak_cntl_const=>gc_pak_applobj
+          im_existence_only  = ppet_true
+        CHANGING
+          ch_pnodid          = ls_pnodid
+        EXCEPTIONS
+          no_authority       = 1
+          pnodid_check_error = 2
+          OTHERS             = 99.
+      IF sy-subrc NE 0.
+        sy-subrc = sy-subrc.
+      ENDIF.
+      IF ls_pnodid-pname IS NOT INITIAL.
+        gv_object_key = ls_pnodid-pname.
+*        CONCATENATE gv_object_key '________' INTO gv_object_key."214
+      ENDIF.
+    ENDIF.
+
+    CALL METHOD z0mp_cl_dms_grid=>read_dms_links
+      EXPORTING
+        iv_key       = gv_object_key
+        iv_cp        = 'X'  "lv_cp  214
+      IMPORTING
+        et_dms_links = DATA(lt_dms_links).
+
+    LOOP AT lt_dms_links ASSIGNING FIELD-SYMBOL(<fs_link>).
+      CLEAR ls_outtab.
+      MOVE-CORRESPONDING <fs_link> TO ls_outtab.
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+        EXPORTING
+          input  = ls_outtab-document_number
+        IMPORTING
+          output = ls_outtab-document_number.
+      APPEND ls_outtab TO gt_outtab.
+    ENDLOOP.
+    grid_on_data_changed_finished( e_modified = 'X' ). " 5184
+  ENDMETHOD.                    "INIT_DOCUMENT_LINKS
+
+  METHOD grid_on_data_changed.
+    FIELD-SYMBOLS:
+      <ls_dms>   TYPE z0mp_s_dms_ps_ui_grid,
+      <mod_rows> TYPE table.
+    DATA: lv_row           TYPE int4,
+          ls_mod_cell      TYPE lvc_s_modi,
+          ls_error         TYPE bapiret2,
+          lt_charval       TYPE TABLE OF bapi_characteristic_values,
+          ls_document      TYPE bapi_doc_draw2,
+          lt_documentfiles TYPE TABLE OF bapi_doc_files2.
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+* look at all changes per row
+    ASSIGN er_data_changed->mp_mod_rows->* TO <mod_rows>.
+    LOOP AT <mod_rows> ASSIGNING <ls_dms>.
+      IF <ls_dms>-document_type IS  INITIAL.
+        <ls_dms>-document_type = gv_dokar.
+      ENDIF.
+      IF <ls_dms>-document_part IS  INITIAL.
+        <ls_dms>-document_part = '000'. "default
+      ENDIF.
+      IF <ls_dms>-document_version IS INITIAL.
+        <ls_dms>-document_version = '00'. "default
+      ENDIF.
+      IF  <ls_dms>-document_number IS INITIAL .
+        CALL METHOD er_data_changed->add_protocol_entry
+          EXPORTING
+            i_msgid     = '/SCWM/PS_BASICS'
+            i_msgno     = 82
+            i_msgty     = 'E'
+            i_fieldname = 'DOCUMENT_NUMBER'.
+        RETURN.
+      ENDIF.
+
+*->UBM6KOR Defect1516 "Do not allow to add document link if no documents are available
+
+****      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+****        EXPORTING
+****          input  = <ls_dms>-document_number
+****        IMPORTING
+****          output = <ls_dms>-document_number.
+****
+****      CALL FUNCTION 'BAPI_DOCUMENT_GETDETAIL2'
+****        EXPORTING
+****          documenttype         = <ls_dms>-document_type
+****          documentnumber       = <ls_dms>-document_number
+****          documentpart         = <ls_dms>-document_part
+****          documentversion      = <ls_dms>-document_version
+****          getclassification    = abap_true
+****          getdocfiles          = abap_true
+****        IMPORTING
+****          documentdata         = ls_document
+****        TABLES
+****          documentfiles        = lt_documentfiles
+****          characteristicvalues = lt_charval.
+****
+****
+****      IF lt_documentfiles IS INITIAL.
+****        CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+****          EXPORTING
+****            input  = <ls_dms>-document_number
+****          IMPORTING
+****            output = <ls_dms>-document_number.
+*****        MESSAGE w078(z0mp_packspec_ui) WITH <ls_dms>-document_number INTO data(gv_mstext).
+*****        return.
+****        IF e_onf4 = abap_true.
+****          MESSAGE e078(z0mp_packspec_ui) WITH <ls_dms>-document_number DISPLAY LIKE 'I'."INTO DATA(gv_mstext).
+****          CONTINUE.
+****        ELSE.
+****        CALL METHOD er_data_changed->add_protocol_entry
+****          EXPORTING
+****            i_msgid     = 'Z0MP_PACKSPEC_UI'
+****            i_msgno     = 78
+****            i_msgty     = 'A'
+****            i_msgv1     = <ls_dms>-document_number
+****            i_fieldname = 'DOCUMENT_NUMBER'.
+****        RETURN.
+****        ENDIF.
+*****         CONTINUE.
+****
+****
+*****          CALL METHOD er_data_changed->add_protocol_entry
+*****                EXPORTING
+*****                  i_msgid     = 'Z0MP_PACKSPEC_UI'
+*****                  i_msgno     = '069'
+*****                  i_msgty     = 'E'
+*****                  i_msgv1     = 'Label Control'
+*****                  i_fieldname = ls_mod_cell-fieldname
+*****                  i_row_id    = lv_row.
+*****              <fs_outtab>-error = abap_true.
+*****              CONTINUE.
+****      ENDIF.
+
+*<-UBM6KOR Defect1516
+** CKS9FE BREQ0501
+      IF e_onf4 = abap_false."not F4 pressed event
+
+        IF z0mp_s_dms_ps_ui-pds_relevance IS NOT INITIAL
+        AND (     ls_document-wsapplication1 <> 'JPG'
+              AND ls_document-wsapplication1 <> 'PNG').
+          MESSAGE e044(z0mp_packspec_ui).
+        ENDIF.
+
+      ENDIF.
+** CKS9FE BREQ0501
+
+* exclude archive-documents
+      READ TABLE lt_charval ASSIGNING FIELD-SYMBOL(<fs_charval>)
+         WITH KEY charname = z0mp_cl_dms_grid=>gc_eps_archive_flag.
+      IF sy-subrc IS INITIAL AND
+         <fs_charval>-charvalue IS NOT INITIAL.
+        "archiving document: not allowed
+        CALL METHOD er_data_changed->add_protocol_entry
+          EXPORTING
+            i_msgid     = 'Z0MP_PACKSPEC_UI'
+            i_msgno     = 34
+            i_msgty     = 'E'
+            i_msgv1     = <ls_dms>-document_number
+            i_fieldname = 'DOCUMENT_NUMBER'.
+        RETURN.
+      ENDIF.
+*map document to grid-structure
+      IF ls_document IS NOT INITIAL.
+        MOVE-CORRESPONDING ls_document TO <ls_dms>.
+*->     PackIT#4071 - AGR7KOR - Original File name
+        <ls_dms>-filename  = ls_document-docfile1.
+*->     PackIT#4071 - AGR7KOR - Original File name
+      ENDIF.
+*todo: check if entry exists already in gt_outtab
+* create object link
+      CALL METHOD document_change
+        EXPORTING
+          iv_document = <ls_dms>
+        IMPORTING
+          ev_error    = ls_error.
+      IF ls_error-type CA 'EW'.
+        CALL METHOD er_data_changed->add_protocol_entry
+          EXPORTING
+            i_msgid     = ls_error-id
+            i_msgno     = ls_error-number
+            i_msgty     = ls_error-type
+            i_msgv1     = ls_error-message_v1
+            i_msgv2     = ls_error-message_v2
+            i_msgv3     = ls_error-message_v3
+            i_msgv4     = ls_error-message "pass the remote message!
+            i_fieldname = 'DOCUMENT_NUMBER'.
+*          i_row_id    = iv_row.
+      ELSE.
+        CLEAR <ls_dms>-cell_style.
+      ENDIF.
+      CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+        EXPORTING
+          input  = <ls_dms>-document_number
+        IMPORTING
+          output = <ls_dms>-document_number.
+    ENDLOOP.
+
+  ENDMETHOD.                    "grid_on_data_changed
+  METHOD document_change.
+*               importing iv_document type z0mp_s_dms_ps_ui_grid
+*                         iv_delete   type char1,
+
+    DATA: lt_link TYPE TABLE OF bapi_doc_drad,
+          ls_link TYPE bapi_doc_drad,
+          ls_doc  TYPE z0mp_s_dms_ps_ui_grid.
+    DATA: ls_return TYPE bapiret2.
+    DATA:    msg_text(256) TYPE c. "Message text
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+    ls_link-objecttype = gv_object_type.
+    IF gv_dokar <> z0mp_if_packspec_constants=>gc_dokar_packspec.
+      CONCATENATE gv_object_key '________' gc_mask_packindex  gc_mask_werks gc_mask_supplier iv_document-pds_relevance INTO  ls_link-objectkey.
+*      ls_link-objectkey = gv_object_key.  "214
+    ELSE.
+      ls_doc = iv_document.
+      IF ls_doc-packindex IS INITIAL.
+        ls_doc-packindex = gc_mask_packindex.
+      ENDIF.
+      IF ls_doc-werks IS INITIAL.
+        ls_doc-werks = gc_mask_werks.
+      ENDIF.
+      IF ls_doc-supplier IS INITIAL.
+        ls_doc-supplier = gc_mask_supplier.
+      ENDIF.
+      CONCATENATE gv_object_key(32) "char32
+                  ls_doc-packindex "char3
+                  ls_doc-werks "char4
+                  ls_doc-supplier "10
+                  ls_doc-pds_relevance "Char1 WP19
+                  INTO ls_link-objectkey.
+    ENDIF.
+    ls_link-deletevalue = iv_delete.
+    APPEND ls_link TO lt_link.
+    DATA: lt_dummy1 TYPE bapi_doc_draw2,
+          lt_dummy2 TYPE bapi_doc_drawx2.
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+      EXPORTING
+        input  = iv_document-document_number
+      IMPORTING
+        output = ls_doc-document_number. "#EC CI_USAGE_OK[2438131]
+    CALL FUNCTION 'BAPI_DOCUMENT_CHANGE2'
+      EXPORTING
+        documenttype    = iv_document-document_type
+        documentnumber  = ls_doc-document_number "#EC CI_USAGE_OK[2438131]
+        documentpart    = iv_document-document_part
+        documentversion = iv_document-document_version
+        documentdata    = lt_dummy1
+        documentdatax   = lt_dummy2
+      IMPORTING
+        return          = ev_error
+      TABLES
+        objectlinks     = lt_link.
+
+    IF ev_error-type = 'E'.
+      RETURN.
+    ELSEIF ev_error-type = 'W'.
+      CLEAR ev_error.
+    ENDIF.
+*-->2821 OSM2KOR
+    CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+      EXPORTING
+        wait = 'X'.
+*<-->2821 OSM2KOR
+    gv_changed = 'X'.
+
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+    et_drad = lt_link.
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+  ENDMETHOD.                    "document_change
+
+  METHOD  grid_on_user_command.
+    DATA: lv_schan TYPE z0mp_pack_usage,
+          ls_det   TYPE z0mp_s_det_ui.
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+
+*-->1806 OSM2KOR - Select atleast one line in order to display or delete document
+    IF go_dms_grid IS BOUND AND ( e_ucomm = gc_delete OR e_ucomm = gc_display ).
+      CALL METHOD go_grid->get_selected_rows
+        IMPORTING
+          et_index_rows = DATA(lt_row).
+      IF lt_row IS INITIAL.
+        MESSAGE e101(/scwm/ps_basics).
+      ENDIF.
+    ENDIF.
+*<--1806 OSM2KOR
+
+*-->2140 OSM2KOR
+    IF e_ucomm = gc_new OR e_ucomm = gc_delete OR e_ucomm = gc_create.
+      IF go_dms_grid->z0mp_if_dms_grid~g_packspec IS BOUND.
+        IF go_dms_grid->z0mp_if_dms_grid~g_packspec->gv_save_err = abap_true.
+          EXIT.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+*<--2140 OSM2KOR
+
+*-> PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+    IF go_dms_grid->z0mp_if_dms_grid~g_packspec IS BOUND.
+      READ TABLE go_dms_grid->z0mp_if_dms_grid~g_packspec->gt_det
+       INTO ls_det INDEX 1.
+      IF sy-subrc EQ 0.
+        CLEAR lv_schan.
+        IF ls_det-dettype = z0mp_if_wf_drr_c=>gc_drrtype-ship OR
+           ls_det-dettype = z0mp_if_wf_drr_c=>gc_drrtype-internal. "ZFER
+          lv_schan = ls_det-pack_usage.
+          "BEGIN OF CHANGE BY BVR3KOR USER STORY- 10608 ADD THE STOC CHECK
+        ELSEIF ls_det-dettype = z0mp_if_wf_drr_c=>gc_drrtype-rcpt OR ls_det-dettype = z0mp_if_wf_drr_c=>gc_drrtype-stoc"ADDEDD STOC CHECK.
+        or ls_det-dettype = z0mp_if_wf_drr_c=>gc_drrtype-pale OR ls_det-dettype = z0mp_if_wf_drr_c=>gc_drrtype-doll.""13377
+
+          lv_schan = z0mp_if_wf_drr_c=>gc_sales_channel-oe.
+        ENDIF.
+      ELSE.
+        MESSAGE e076(z0mp_packspec_ui) WITH lv_schan
+          z0mp_if_packspec_constants=>gc_authority_sales_channel.
+        RETURN.
+      ENDIF.
+    ENDIF.
+*<- PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+
+    CASE e_ucomm.
+      WHEN gc_new.
+*->     PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+        IF sy-tcode EQ '/SCWM/PSWORKSTEP'.
+          insert_new_document_link( ).
+        ELSE.
+          IF ( lv_schan IS NOT INITIAL OR go_dms_grid->z0mp_if_dms_grid~g_packspec IS NOT BOUND ).
+            AUTHORITY-CHECK OBJECT 'Z0MP_PSSC'
+              ID 'ACTVT'      FIELD z0mp_if_packspec_constants=>gc_authority_sales_channel
+              ID 'SALES_CHNL' FIELD lv_schan.
+            IF sy-subrc EQ 0.
+              insert_new_document_link( ).
+            ELSE.
+              MESSAGE e042(z0mp_packspec_ui) WITH lv_schan
+                z0mp_if_packspec_constants=>gc_authority_sales_channel.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+*        insert_new_document_link( ).
+*<-     PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+
+      WHEN gc_delete.
+*->     PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+        IF sy-tcode EQ '/SCWM/PSWORKSTEP'.
+          delete_document_link( ).
+        ELSE.
+          IF lv_schan IS NOT INITIAL OR go_dms_grid->z0mp_if_dms_grid~g_packspec IS NOT BOUND.
+            AUTHORITY-CHECK OBJECT 'Z0MP_PSSC'
+              ID 'ACTVT' FIELD z0mp_if_packspec_constants=>gc_authority_sales_channel
+              ID 'SALES_CHNL' FIELD lv_schan.
+            IF sy-subrc EQ 0.
+              delete_document_link( ).
+            ELSE.
+              MESSAGE e042(z0mp_packspec_ui) WITH lv_schan
+                z0mp_if_packspec_constants=>gc_authority_sales_channel.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+*        delete_document_link( ).
+*<-     PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+
+      WHEN gc_display.
+        display_document( ).
+
+      WHEN gc_create.
+*->     PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+        IF sy-tcode EQ '/SCWM/PSWORKSTEP'.
+          create_and_link_document( ).
+        ELSE.
+          IF lv_schan IS NOT INITIAL OR go_dms_grid->z0mp_if_dms_grid~g_packspec IS NOT BOUND.
+            AUTHORITY-CHECK OBJECT 'Z0MP_PSSC'
+              ID 'ACTVT' FIELD z0mp_if_packspec_constants=>gc_authority_sales_channel
+              ID 'SALES_CHNL' FIELD lv_schan.
+            IF sy-subrc EQ 0.
+              create_and_link_document( ).
+            ELSE.
+              MESSAGE e042(z0mp_packspec_ui) WITH lv_schan
+                z0mp_if_packspec_constants=>gc_authority_sales_channel.
+            ENDIF.
+          ENDIF.
+        ENDIF.
+*        create_and_link_document( ).
+*<-     PS_BREQ0504 - AGR7KOR - AA planner only can assign documents to AA DR´s
+
+    ENDCASE.
+
+    grid_on_data_changed_finished( e_modified = 'X' ).
+  ENDMETHOD.                    "grid_on_user_command
+  METHOD create_and_link_document.
+    DATA: lv_file TYPE filep.
+    DATA:lv_file_type(20) TYPE c.
+    DATA: ls_dms_ui TYPE z0mp_s_dms_ps_ui_grid.
+**..... Document data
+    DATA: ls_doc    TYPE bapi_doc_draw2,
+
+**..... Bapi-Returnstruktur
+          ls_return TYPE bapiret2.
+
+**.... Originals that are checked in simultaneously
+    DATA: lt_files TYPE TABLE OF  bapi_doc_files2,
+          ls_files TYPE bapi_doc_files2,
+          lv_exist TYPE xfeld,
+
+**.... Short texts
+          lt_drat  TYPE TABLE OF bapi_doc_drat,
+          ls_drat  TYPE bapi_doc_drat,
+
+**.... Object links
+          lt_drad  TYPE TABLE OF bapi_doc_drad,
+          ls_drad  TYPE bapi_doc_drad.
+    DATA: lt_strs TYPE STANDARD TABLE OF string,
+          ls_str  TYPE string,
+          lv_cnt  TYPE i.
+    DATA: lv_pds_relevance.   "214
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+* Step 0: Packspec(PAC): get packindex, plant and supplier (optional)
+    CLEAR gv_2000_desc.
+
+    IF  gv_dokar = z0mp_if_packspec_constants=>gc_dokar_packspec AND" or gv_dokar = z0mp_if_packspec_constants=>GC_DOKAR_WORKSTEP AND
+      call_popup( ) <> abap_true.
+      RETURN. "user cancelled the popup
+**--> Added for 214 pds relevance pop up for WS transaction
+    ELSEIF  gv_dokar = z0mp_if_packspec_constants=>gc_dokar_workstep AND
+       call_popup( ) <> abap_true.
+      RETURN. "user cancelled the popup
+**<-- Added for 214 pds relevance pop up for WS transaction
+    ENDIF.
+
+**-->3061 for LEOR only 0 can be sleected for PDS relevane
+*---> PackIT-3121 | Commented by URD3KOR |
+*    IF sy-tcode = '/SCWM/PSWORKSTEP' AND pds_ws = 1.
+*      DATA: lv_wstyp(4).
+*      SELECT SINGLE wstyp FROM /scwm/pnpakw INTO lv_wstyp WHERE pnguid EQ go_dms_grid->gv_workstep_key.
+*      IF sy-subrc EQ 0.
+*        lv_wstyp = lv_wstyp.
+*      ENDIF.
+*      IF lv_wstyp EQ 'LEOR'.
+*        MESSAGE e182(z0mp_packspec_ui).
+*      ENDIF.
+*    ENDIF.
+*<--- PackIT-3121 | Commented by URD3KOR |
+**<<--3061 for LEOR only 0 can be sleected for PDS relevane
+
+*   ->WP19 Addition of New fields
+*   Check if already record exists for same combination of PackIndex and Plant
+*    IF  gv_dokar = z0mp_if_packspec_constants=>gc_dokar_packspec.
+*      READ TABLE gt_outtab TRANSPORTING NO FIELDS
+*        WITH KEY packindex = z0mp_s_dms_ps_ui-packindex
+*                 werks     = z0mp_s_dms_ps_ui-werks
+*                 supplier  = z0mp_s_dms_ps_ui-supplier.
+*      IF sy-subrc EQ 0.
+*        MESSAGE ID '26' TYPE 'I' NUMBER '000'
+*               WITH 'Document already exists with same parameters'.
+*        RETURN.
+*      ENDIF.
+*    ENDIF.
+*   <-WP19 Addition of New fields
+
+*UBM6KOR for duplicate document check
+    DATA: ls_doctab LIKE LINE OF  gt_outtab.
+    CLEAR lv_exist.
+    IF z0mp_s_dms_ps_ui-pds_relevance IS NOT INITIAL AND z0mp_s_dms_ps_ui-pds_relevance NE 5.
+
+      IF gt_outtab IS NOT INITIAL.
+        CALL METHOD z0mp_cl_dms_grid=>dir_duplicate_validation
+          EXPORTING
+            it_documents = gt_outtab                 " Packspec Integration DMS
+            iv_packindex = z0mp_s_dms_ps_ui-packindex                " Packaging Index Number
+            iv_werks     = z0mp_s_dms_ps_ui-werks                 " Plant
+            iv_supplier  = z0mp_s_dms_ps_ui-supplier                 " Supplier code
+            iv_pdsrelv   = z0mp_s_dms_ps_ui-pds_relevance                " PDS Relevance
+          IMPORTING
+            ev_exist     = lv_exist.
+
+*      READ TABLE gt_outtab INTO ls_doctab WITH KEY packindex = z0mp_s_dms_ps_ui-packindex
+*                      werks     = z0mp_s_dms_ps_ui-werks
+*                      supplier  = z0mp_s_dms_ps_ui-supplier
+*                      pds_relevance = z0mp_s_dms_ps_ui-pds_relevance.
+*
+*      IF sy-subrc EQ 0 .
+        IF lv_exist EQ abap_true.
+          MESSAGE e087(z0mp_packspec_ui).
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+* Step 1: get the file name from the user
+    CLEAR z0mp_s_dms_ps_ui-description.
+
+    "UBM6KOR Defect#1184 browser should alloww only JPEG&PNG
+    IF z0mp_s_dms_ps_ui-pds_relevance IS INITIAL.
+      lv_file_type = '*.*'.
+    ELSE.
+*      lv_file_type = '*.PNG,*.JPG' .
+      lv_file_type = '*.PNG,*.JPG,*.JPEG'. "2652 OSM2KOR
+    ENDIF.
+    "UBM6KOR Defect#1184
+    CALL FUNCTION 'CV120_DOC_GET_FILE'
+      EXPORTING
+        pf_mask2   = lv_file_type
+      IMPORTING
+        pfx_file   = lv_file "path+file, e.g. c:\path\file.txt
+      EXCEPTIONS
+        wrong_appl = 1
+        error      = 2
+        OTHERS     = 3.
+    IF sy-subrc <> 0 OR lv_file IS INITIAL.
+      RETURN. "user cancelled
+    ENDIF.
+
+
+*Step 2: separate file-name into document name and path
+*2.1 remove the ending (e.g. .txt)
+    SPLIT lv_file AT '.' INTO TABLE lt_strs.
+    READ TABLE lt_strs INTO ls_str INDEX 1.
+    CLEAR lt_strs.
+*2.2 get the last part of the string (after last \)
+    SPLIT ls_str AT '\' INTO TABLE lt_strs.
+    DESCRIBE TABLE lt_strs LINES lv_cnt.
+    IF gs_tdwa-numberassignment = 2.
+      READ TABLE lt_strs INTO ls_doc-documentnumber INDEX lv_cnt.
+    ENDIF.
+
+*Step 3: create&check in the document (see function module documentation)
+    ls_doc-documenttype    = gv_dokar.
+    ls_doc-documentversion = '00'.
+    ls_doc-documentpart    = '000'.
+
+    CLEAR ls_files.
+    IF gs_tdwa-kproflag IS NOT INITIAL.
+*      ls_files-storagecategory = 'Y02L3_001'. "SAP-SYSTEM'."see example in badi-doc
+      ls_files-storagecategory = 'Z_BOSCHDOC'. "SAP-SYSTEM'."see example in badi-doc
+    ELSE.
+      ls_files-storagecategory = 'SAP-SYSTEM'.
+      ls_files-originaltype = '1'. "??? no document check-in without this
+    ENDIF.
+    "see note note 766277
+    "https://archive.sap.com/discussions/thread/3639448
+    ls_files-docfile      = lv_file.
+
+*-> PackIT#4071 - AGR7KOR - Original File name
+*   Get the last part of the string (after last \)
+    SPLIT lv_file AT '\' INTO TABLE DATA(lt_fname).
+    DESCRIBE TABLE lt_fname LINES DATA(lv_count).
+
+    READ TABLE lt_fname INTO ls_doc-docfile1 INDEX lv_count.
+    IF sy-subrc EQ 0 AND z0mp_s_dms_ps_ui-filename IS INITIAL.
+      z0mp_s_dms_ps_ui-filename = ls_doc-docfile1.
+    ENDIF.
+*<- PackIT#4071 - AGR7KOR - Original File name
+
+*-> Defect 1719 - AGR7KOR - Modifying WSapplication
+*    CALL FUNCTION 'TRINT_FILE_GET_EXTENSION'
+*      EXPORTING
+*        filename  = lv_file
+*      IMPORTING
+*        extension = ls_files-wsapplication.
+
+    DATA: lv_extension TYPE char10,
+          lv_frmt      TYPE tdwp-dateifrmt.
+
+    CALL FUNCTION 'TRINT_FILE_GET_EXTENSION'
+      EXPORTING
+        filename  = lv_file
+      IMPORTING
+        extension = lv_extension.
+    CONCATENATE '%' '*' '.' lv_extension '%' INTO lv_frmt.
+*-->2585 OSM2KOR
+*--> 2869 OSM2KOR checking different file types for workstep transaction
+    IF sy-tcode = '/SCWM/PSWORKSTEP'.
+      IF ( lv_extension NE 'JPEG' AND lv_extension NE 'JPG' AND lv_extension NE 'PNG' ) AND
+        pds_ws = 1.
+        MESSAGE e175(z0mp_packspec_ui).
+      ENDIF.
+
+      IF gv_workstep_file_exts IS NOT INITIAL.
+        DATA(lv_ext2) = lv_extension.
+        TRANSLATE lv_ext2 TO UPPER CASE.
+        SPLIT gv_workstep_file_exts AT '|' INTO TABLE DATA(lt_file_extensions).
+        READ TABLE lt_file_extensions TRANSPORTING NO FIELDS WITH KEY table_line = lv_ext2.
+        IF sy-subrc <> 0.
+          MESSAGE e174(z0mp_packspec_ui).
+        ENDIF.
+      ENDIF.
+*<-- 2869 OSM2KOR
+    ELSE.
+      IF gv_allowed_file_exts IS NOT INITIAL.
+        IF lv_extension NE 'BIN'.
+          lv_ext2 = lv_extension.
+          TRANSLATE lv_ext2 TO UPPER CASE.
+          SPLIT gv_allowed_file_exts AT '|' INTO TABLE lt_file_extensions.
+          READ TABLE lt_file_extensions TRANSPORTING NO FIELDS WITH KEY table_line = lv_ext2.
+          IF sy-subrc <> 0.
+            MESSAGE e167(z0mp_packspec_ui).
+          ENDIF.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+*<--2585 OSM2KOR
+*   Fetch Application
+    SELECT dappl
+      FROM tdwp
+      INTO ls_files-wsapplication
+      WHERE dateifrmt LIKE lv_frmt.                "#EC CI_EMPTY_SELECT
+    ENDSELECT.
+    IF sy-subrc NE 0.
+      TRANSLATE lv_extension TO LOWER CASE.
+      CLEAR lv_frmt.
+      CONCATENATE '%' '*' '.' lv_extension '%' INTO DATA(lv_frmt_new). "lv_frmt.  "code profiler
+
+      SELECT dappl
+        FROM tdwp
+        INTO ls_files-wsapplication
+        WHERE dateifrmt LIKE lv_frmt_new. "#EC CI_EMPTY_SELECT   "lv_frmt  "code prfiler
+      ENDSELECT.
+      lv_frmt = lv_frmt_new. "code prfiler
+
+*-->2585 OSM2KOR if file type is not available then it should not allowed
+      IF sy-subrc NE 0.
+        MESSAGE e168(z0mp_packspec_ui).
+      ENDIF.
+*<--2585 OSM2KOR
+    ENDIF.
+*<- Defect 1719 - AGR7KOR - Modifying WSapplication
+
+*** CKS9FE BREQ0501
+    IF z0mp_s_dms_ps_ui-pds_relevance IS NOT INITIAL
+    AND (     ls_files-wsapplication <> 'JPG'
+          AND ls_files-wsapplication <> 'PNG').
+      MESSAGE e044(z0mp_packspec_ui).
+    ENDIF.
+
+    APPEND ls_files TO lt_files.
+*** CKS9FE BREQ0501
+** Short texts
+    CLEAR ls_drat.
+    ls_drat-language    = sy-langu.
+
+    IF z0mp_s_dms_ps_ui-description IS INITIAL.
+      READ TABLE lt_strs INTO ls_drat-description INDEX lv_cnt.
+      ls_doc-description = ls_drat-description.
+      z0mp_s_dms_ps_ui-description = ls_drat-description.
+
+    ELSE.
+      ls_drat-description  = z0mp_s_dms_ps_ui-description.
+    ENDIF.
+
+    APPEND ls_drat TO lt_drat.
+
+** Object link to material master
+    CLEAR ls_drad.
+    ls_drad-objecttype = gv_object_type.
+    ls_drad-objectkey  = gv_object_key.
+    DATA(ls_doc_ui) = z0mp_s_dms_ps_ui.
+
+    IF gv_dokar <> z0mp_if_packspec_constants=>gc_dokar_packspec.
+**--> added for 214
+      ls_doc_ui-packindex = gc_mask_packindex.
+      ls_doc_ui-werks     =  gc_mask_werks.
+      ls_doc_ui-supplier  = gc_mask_supplier.
+      CONCATENATE gv_object_key '________' gc_mask_packindex gc_mask_werks gc_mask_supplier pds_ws INTO ls_drad-objectkey.
+**<-- added for 214
+*      ls_drad-objectkey = gv_object_key.    "commented for 214
+    ELSE.
+
+      IF ls_doc_ui-packindex IS INITIAL.
+        ls_doc_ui-packindex = gc_mask_packindex.
+      ENDIF.
+      IF ls_doc_ui-werks IS INITIAL.
+        ls_doc_ui-werks = gc_mask_werks.
+      ENDIF.
+      IF ls_doc_ui-supplier IS INITIAL.
+        ls_doc_ui-supplier = gc_mask_supplier.
+      ENDIF.
+
+*->   AGR7KOR-Deletion of documents in second version impacts active version
+*     CONCATENATE gv_object_key(20) "char20
+      CONCATENATE gv_object_key(28) "char20
+*<-   AGR7KOR-Deletion of documents in second version impacts active version
+                  ls_doc_ui-packindex "char3
+                  ls_doc_ui-werks "char4
+                  ls_doc_ui-supplier "char10
+                  ls_doc_ui-pds_relevance "Char1
+                  INTO ls_drad-objectkey."char50
+    ENDIF.
+    APPEND ls_drad TO  lt_drad.
+    MOVE-CORRESPONDING z0mp_s_dms_ps_ui TO ls_dms_ui.
+
+************************************   """ Start Changes IPJ8FE - Img Compression - Send Compressed file contents instead of path
+
+    DATA : ls_file         TYPE bapi_doc_files2,
+           lv_filename     TYPE string,
+           lv_path         TYPE string,
+           lt_bintab       TYPE TABLE OF sdokcntbin,
+           lv_xstring      TYPE xstring,
+           lv_length       TYPE i,
+           lo_img_prc      TYPE REF TO cl_fxs_image_processor,
+           lv_size         TYPE decfloat16,
+           lv_unit         TYPE char2,
+           lv_asrat        TYPE decfloat16,
+           lv_nyres        TYPE i,
+           ls_errormessage TYPE bapiret2,
+           lv_mimetype     TYPE string.
+
+    CREATE OBJECT lo_img_prc.
+    READ TABLE  lt_files INTO ls_file INDEX 1.
+    IF sy-subrc EQ 0.
+      lv_path = ls_file-docfile.
+
+      CALL FUNCTION 'SO_SPLIT_FILE_AND_PATH'
+        EXPORTING
+          full_name     = lv_path
+        IMPORTING
+          stripped_name = lv_filename.  "#EC FM_EXC_OK
+*    ENDIF.
+**--->unCommented back by UBM6KOR for PDS doc issue 3448
+**--->Commented by SIM7COB for PDF issue 2904
+      IF ( ls_files-wsapplication EQ 'JPG' OR ls_files-wsapplication EQ 'PNG' OR ls_files-wsapplication EQ 'JPEG')
+        AND ( ls_dms_ui-pds_relevance = 1 OR ls_dms_ui-pds_relevance = 2 OR ls_dms_ui-pds_relevance = 3 OR ls_dms_ui-pds_relevance = 4 OR ls_dms_ui-pds_relevance = 5 ).
+        cl_gui_frontend_services=>gui_upload(
+          EXPORTING
+            filename                = lv_path    " Name of file
+            filetype                = 'BIN'      " File Type (ASCII, Binary)
+          IMPORTING
+            filelength              = lv_length
+          CHANGING
+            data_tab                = lt_bintab  " Transfer table for file contents
+**->Exceptions added to avoid dump when user attaching a document whihc is not in the system
+**-->3513 SIM7COB
+          EXCEPTIONS
+            file_open_error         = 1
+            file_read_error         = 2
+            no_batch                = 3
+            gui_refuse_filetransfer = 4
+            invalid_type            = 5
+            no_authority            = 6
+            unknown_error           = 7
+            bad_data_format         = 8
+            header_not_allowed      = 9
+            separator_not_allowed   = 10
+            header_too_long         = 11
+            unknown_dp_error        = 12
+            access_denied           = 13
+            dp_out_of_memory        = 14
+            disk_full               = 15
+            dp_timeout              = 16
+            not_supported_by_gui    = 17
+            error_no_gui            = 18
+            OTHERS                  = 19
+
+             ).
+
+        IF sy-subrc <> 0.
+          MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                     WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+        ENDIF.
+
+**<--Exceptions added to avoid dump when user attaching a document whihc is not in the system
+**<--3513 SIM7COB
+
+        CALL FUNCTION 'SCMS_BINARY_TO_XSTRING'
+          EXPORTING
+            input_length = lv_length
+          IMPORTING
+            buffer       = lv_xstring
+          TABLES
+            binary_tab   = lt_bintab.  "#EC FM_EXC_OK
+
+        TRY.
+            lo_img_prc->add_image(
+              EXPORTING
+                iv_data                  =  lv_xstring
+                iv_image_name            =  lv_filename   " Name of image for cache
+              RECEIVING
+                rv_handle                =  DATA(lv_handle) ).
+
+            lo_img_prc->get_info(
+              EXPORTING
+                iv_handle                 = lv_handle
+              IMPORTING
+                ev_mimetype               = lv_mimetype
+                ev_xres                   = DATA(lv_xres)
+                ev_yres                   = DATA(lv_yres) ).
+
+            IF lv_mimetype EQ cl_fxs_mime_types=>co_image_png.
+              lo_img_prc->convert(
+                EXPORTING
+                  iv_handle                 = lv_handle
+                  iv_format                 = cl_fxs_mime_types=>co_image_jpeg
+                  iv_otf_adjust             = abap_true ).
+              lv_xstring = lo_img_prc->get_image( iv_handle = lv_handle ).
+            ENDIF.
+
+            lv_size = xstrlen( lv_xstring ) / ( 1024 ).
+            WHILE lv_size GE 50.
+              lv_asrat = lv_xres / lv_yres.
+              IF lv_xres > 800.
+                lv_xres = 800.
+              ELSE.
+                lv_xres = lv_xres - 100.
+              ENDIF.
+              lv_nyres = lv_xres / lv_asrat.
+              lv_yres  = lv_nyres.
+              lo_img_prc->resize(
+                EXPORTING
+                  iv_handle                 = lv_handle
+                  iv_xres                   = lv_xres
+                  iv_yres                   = lv_nyres
+              ).
+              lv_xstring = lo_img_prc->get_image( iv_handle = lv_handle ).
+              lv_size = xstrlen( lv_xstring ) / 1024.
+            ENDWHILE.
+          CATCH cx_root INTO DATA(lo_root).
+            sy-subrc = sy-subrc.
+        ENDTRY.
+        CLEAR : lv_filename,lv_path,lt_bintab,lv_length,lv_size,lv_unit,lv_asrat,lv_nyres,lo_img_prc,lv_mimetype.
+
+      ENDIF.
+**<---Commented by SIM7COB for PDF issue 2904
+**--->unCommented back by UBM6KOR for PDS doc issue 3448
+      CALL FUNCTION 'BAPI_DOCUMENT_CREATE2'
+        EXPORTING
+          documentdata         = ls_doc
+        IMPORTING
+          documenttype         = ls_dms_ui-document_type
+          documentnumber       = ls_dms_ui-document_number "#EC CI_USAGE_OK[2438131]
+          documentpart         = ls_dms_ui-document_part
+          documentversion      = ls_dms_ui-document_version
+          return               = ls_return
+        TABLES
+          documentdescriptions = lt_drat
+          objectlinks          = lt_drad.
+*        documentfiles        = lt_files.
+
+** If the BAPI is unsuccessful.
+      IF ls_return-type CA 'AEX'.
+        CALL FUNCTION 'DEQUEUE_ALL'.
+
+*      APPEND ls_return TO gt_returnmessages.
+        ROLLBACK WORK.
+        EXIT.
+      ELSE.
+        CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+          EXPORTING
+            wait   = 'X'
+          IMPORTING
+            return = ls_return.
+      ENDIF.
+
+
+*    IF NOT lv_xstring IS INITIAL.  "Commented for 2904
+      ls_file-documenttype         = ls_dms_ui-document_type.
+      ls_file-documentnumber       = ls_dms_ui-document_number.
+      ls_file-documentpart         = ls_dms_ui-document_part.
+      ls_file-documentversion      = ls_dms_ui-document_version.
+
+      PERFORM create_doc_lnk USING ls_file lv_xstring  CHANGING  ls_errormessage.  "uncommented for 3448
+*---> Begin of #PackIT-5260 by URD3KOR
+      " Delete Documents from Database if any occurs in above process of Document attachment
+      IF ls_errormessage-type CA 'EA'.
+        PERFORM delete_created_doc USING ls_file.
+        MESSAGE ID ls_errormessage-id TYPE 'I' NUMBER ls_errormessage-number
+                WITH ls_errormessage-message_v1 ls_errormessage-message_v2 ls_errormessage-message_v3 ls_errormessage-message_v4.
+        RETURN.
+      ENDIF.
+*<--- End of #PackIT-5260 by URD3KOR
+
+*    PERFORM create_doc_lnk USING ls_file CHANGING  ls_errormessage.  "2904
+* Append the return messages to the BAPI return.
+*    APPEND ls_errormessage TO gt_returnmessages.
+    ENDIF. "Commented for 2904 "uncommented for 3448
+
+************************************      """ End of Changes IPJ8FE
+
+*step 4: error handling (e.g. DMS-authorization)
+    IF ls_return-type CA 'EA'.
+
+      ROLLBACK WORK.
+      IF ls_return-id IS NOT INITIAL.
+        MESSAGE ID ls_return-id TYPE 'I' NUMBER ls_return-number
+                WITH ls_return-message_v1 ls_return-message_v2 ls_return-message_v3 ls_return-message_v4.
+      ELSE.
+        MESSAGE ID '26' TYPE 'I' NUMBER '000'
+                WITH ls_return-message.
+      ENDIF.
+      RETURN.
+    ELSE.
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+      "Initiate Interface Document Trigger
+      me->interface_doc_trigger(
+        EXPORTING
+          is_draw       = ls_dms_ui
+          it_drad       = lt_drad
+          iv_updateflag = 'I'
+      ).
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+    ENDIF.
+
+*step 5: add line in Grid
+    CALL FUNCTION 'CONVERSION_EXIT_ALPHA_OUTPUT'
+      EXPORTING
+        input  = ls_dms_ui-document_number
+      IMPORTING
+        output = ls_dms_ui-document_number.
+**-->added fpor 214 pds relavnce pop up in WS transaction
+    IF sy-tcode = '/SCWM/PSWORKSTEP'.
+      ls_dms_ui-pds_relevance = pds_ws.
+    ENDIF.
+**<<--added fpor 214 pds relavnce pop up in WS transaction
+    APPEND ls_dms_ui TO gt_outtab.
+    gv_changed = abap_true.
+
+**-->> 2848  Add to change log for document addition and deletion if the PS is active limited change
+    IF ( sy-tcode = 'Z0MP_PACKSPEC' OR sy-tcode = 'Z0MP_PS_MC_SRCH' ) AND gv_object_key+20(8) = '00000001'."PS is active
+*      PERFORM create_change_log USING gv_object_key ls_dms_ui 'U'.
+      CALL METHOD z0mp_cl_packspec_model=>change_log_for_documents
+        EXPORTING
+          im_objectkey = gv_object_key
+          im_dmsui     = ls_dms_ui
+          im_flag      = 'U'
+          im_tcode     = 'X'.
+    ENDIF.
+**<<-- 2848  Add to change log for document addition and deletion if the PS is active limited change
+
+***---> Start of PackIT-3121 by URD3KOR | Add Change Documents in Work step
+***...Workstep Attribute Change Log
+    IF sy-tcode = '/SCWM/PSWORKSTEP'.
+      DATA(lv_action) = 'U'.
+      PERFORM create_ws_change_log_for_doc USING gv_object_key ls_dms_ui lv_action.
+    ENDIF.
+*<--- End of PackIT-3121
+
+  ENDMETHOD.
+  METHOD delete_document_link.
+    DATA: lt_row    TYPE lvc_t_row,
+          ls_row    TYPE lvc_s_row,
+          ls_dms_ui TYPE z0mp_s_dms_ps_ui_grid,
+          ls_error  TYPE bapiret2.
+
+    DATA lt_drad TYPE TABLE OF bapi_doc_drad.
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+    CALL METHOD go_grid->get_selected_rows
+      IMPORTING
+        et_index_rows = lt_row.
+
+    SORT lt_row BY index DESCENDING.
+    LOOP AT lt_row INTO ls_row.
+      CLEAR ls_dms_ui.
+      READ TABLE gt_outtab INTO ls_dms_ui INDEX ls_row-index.
+      CHECK sy-subrc IS INITIAL.
+      "Begin of 7375 SIM7COB
+      IF ls_dms_ui-werks IS NOT INITIAL.
+        "authority check: PR 169
+        AUTHORITY-CHECK OBJECT 'Z0MP_PSPL'
+           ID 'ACTVT' FIELD z0mp_if_packspec_constants=>gc_authority_plant_check
+*--BOC by MUQ1KOR for US-8222 on 15th Nov,2022
+*           ID 'WERKS' FIELD z0mp_s_dms_ps_ui-werks.
+           ID 'WERKS' FIELD ls_dms_ui-werks.
+        IF sy-subrc IS NOT INITIAL.
+*          MESSAGE e018(z0mp_packspec_ui) WITH z0mp_s_dms_ps_ui-werks
+*              z0mp_if_packspec_constants=>gc_authority_plant_check.
+          MESSAGE e018(z0mp_packspec_ui) WITH ls_dms_ui-werks
+                                              z0mp_if_packspec_constants=>gc_authority_plant_check.
+*--EOC by MUQ1KOR for US-8222 on 15th Nov,2022
+        ENDIF.
+      ENDIF.
+      "End of 7375 SIM7COB
+
+      "Begin of Defect 1672 SHJ6COB 01/25/2019
+      IF ls_dms_ui-document_type IS NOT INITIAL AND
+*      CHECK ls_dms_ui-document_type IS NOT INITIAL AND
+      "End of Defect 1672 SHJ6COB 01/25/2019
+            ls_dms_ui-document_number IS NOT INITIAL AND
+            ls_dms_ui-document_version IS NOT INITIAL AND
+            ls_dms_ui-document_part IS NOT INITIAL.
+
+        CLEAR lt_drad.
+        CALL METHOD document_change
+          EXPORTING
+            iv_document = ls_dms_ui
+            iv_delete   = 'X'
+          IMPORTING
+            ev_error    = ls_error
+            et_drad     = lt_drad.
+        IF ls_error-type CA 'E'.
+          MESSAGE ls_error-message TYPE ls_error-type.
+        ELSE.
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+          "Initiate Interface Document Trigger
+          me->interface_doc_trigger(
+            EXPORTING
+              is_draw       = ls_dms_ui
+              it_drad       = lt_drad
+              iv_updateflag = 'D'
+          ).
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+        ENDIF.
+      ENDIF.
+      DELETE gt_outtab INDEX ls_row-index.
+**-->> 2848  Add to change log for document addition and deletion if the PS is active limited change
+      IF ( sy-tcode = 'Z0MP_PACKSPEC' OR sy-tcode = 'Z0MP_PS_MC_SRCH' ) AND gv_object_key+20(8) = '00000001'."PS is active
+*        PERFORM create_change_log USING gv_object_key ls_dms_ui 'D'.
+        CALL METHOD z0mp_cl_packspec_model=>change_log_for_documents
+          EXPORTING
+            im_objectkey = gv_object_key
+            im_dmsui     = ls_dms_ui
+            im_flag      = 'D'
+            im_tcode     = 'X'.
+      ENDIF.
+**<<-- 2848  Add to change log for document addition and deletion if the PS is active limited change
+***---> Start of PackIT-3121 by URD3KOR | Add Change Documents in Work step
+***...Workstep Attribute Change Log
+      IF sy-tcode = '/SCWM/PSWORKSTEP'.
+        DATA(lv_action) = 'D'.
+        PERFORM create_ws_change_log_for_doc USING gv_object_key ls_dms_ui lv_action.
+      ENDIF.
+*<--- End of PackIT-3121
+
+    ENDLOOP.
+
+
+  ENDMETHOD.                    "delete_document_link
+
+  METHOD insert_new_document_link.
+    DATA: ls_dms_ui TYPE z0mp_s_dms_ps_ui_grid,
+          lv_exist  TYPE xfeld.
+    DATA: ls_lvc_s_styl TYPE lvc_s_styl,
+          lt_cell_style TYPE lvc_t_styl.
+    DATA lt_drad TYPE TABLE OF bapi_doc_drad.
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+    gv_2000_desc = abap_true."no input
+
+    IF  gv_dokar = z0mp_if_packspec_constants=>gc_dokar_packspec AND" or gv_dokar = z0mp_if_packspec_constants=>GC_DOKAR_WORKSTEP AND
+      call_popup( ) <> abap_true.
+      RETURN. "user cancelled the popup
+**--> Added for 214 pds relevance pop up for WS transaction
+    ELSEIF  gv_dokar = z0mp_if_packspec_constants=>gc_dokar_workstep AND
+       call_popup( ) <> abap_true.
+      RETURN. "user cancelled the popup
+**<-- Added for 214 pds relevance pop up for WS transaction
+    ENDIF.
+**-->3061 for LEOR only 0 can be sleected for PDS relevane
+*---> PackIT-3121 | Commented by URD3KOR |
+*    IF sy-tcode = '/SCWM/PSWORKSTEP' AND pds_ws = 1.
+*      DATA: lv_wstyp(4).
+*      SELECT SINGLE wstyp FROM /scwm/pnpakw INTO lv_wstyp WHERE pnguid EQ go_dms_grid->gv_workstep_key.
+*      IF sy-subrc EQ 0.
+*        lv_wstyp = lv_wstyp.
+*      ENDIF.
+*      IF lv_wstyp EQ 'LEOR'.
+*        MESSAGE e182(z0mp_packspec_ui).
+*      ENDIF.
+*    ENDIF.
+*<--- PackIT-3121 | Commented by URD3KOR |
+**<<--3061 for LEOR only 0 can be sleected for PDS relevane
+
+* UBM6KOR DUPLICATE DOCUMENT CHECK
+    DATA: ls_doctab LIKE LINE OF  gt_outtab.
+
+    IF z0mp_s_dms_ps_ui-pds_relevance IS NOT INITIAL AND z0mp_s_dms_ps_ui-pds_relevance NE 5.
+      CLEAR lv_exist.
+      IF gt_outtab IS NOT INITIAL.
+        CALL METHOD z0mp_cl_dms_grid=>dir_duplicate_validation
+          EXPORTING
+            it_documents = gt_outtab                 " Packspec Integration DMS
+            iv_packindex = z0mp_s_dms_ps_ui-packindex                " Packaging Index Number
+            iv_werks     = z0mp_s_dms_ps_ui-werks                 " Plant
+            iv_supplier  = z0mp_s_dms_ps_ui-supplier                 " Supplier code
+            iv_pdsrelv   = z0mp_s_dms_ps_ui-pds_relevance                " PDS Relevance
+          IMPORTING
+            ev_exist     = lv_exist.
+        IF lv_exist EQ abap_true.
+          MESSAGE e087(z0mp_packspec_ui).
+        ENDIF.
+      ENDIF.
+*      READ TABLE gt_outtab INTO ls_doctab WITH KEY packindex = z0mp_s_dms_ps_ui-packindex
+*                      werks     = z0mp_s_dms_ps_ui-werks
+*                      supplier  = z0mp_s_dms_ps_ui-supplier
+*                      pds_relevance = z0mp_s_dms_ps_ui-pds_relevance.
+*
+*      IF sy-subrc EQ 0 .
+*        MESSAGE e087(z0mp_packspec_ui).
+*      ENDIF.
+    ENDIF.
+
+*-->2821 OSM2KOR
+    IF get_doc_no( ) <> abap_true.
+      RETURN.
+    ENDIF.
+*<--2821 OSM2KOR
+
+*    CLEAR z0mp_s_dms_ps_ui-description.
+    MOVE-CORRESPONDING z0mp_s_dms_ps_ui TO ls_dms_ui.
+    IF sy-tcode = '/SCWM/PSWORKSTEP'.  "214
+      ls_dms_ui-pds_relevance = pds_ws. "214
+    ENDIF."214
+* append all fields that should be ready for input
+*    ls_lvc_s_styl-style = cl_gui_alv_grid=>mc_style_enabled. "OSM2KOR 2821
+
+    ls_lvc_s_styl-fieldname = 'DOCUMENT_NUMBER'.
+    INSERT ls_lvc_s_styl INTO TABLE lt_cell_style.
+    "ls_lvc_s_styl-fieldname = 'DOCUMENT_VERSION'.
+    "INSERT ls_lvc_s_styl INTO TABLE lt_cell_style.
+    "ls_lvc_s_styl-fieldname = 'DOCUMENT_PART'.
+    "INSERT ls_lvc_s_styl INTO TABLE lt_cell_style.
+
+    ls_dms_ui-document_type = gv_dokar.
+*{Begin of UBM6KOR
+    "for the newly added object,version & part details needs to be paased.
+    ls_dms_ui-document_part = '000'.
+    ls_dms_ui-document_version = '00'.
+*}End of UBM6KOR
+    ls_dms_ui-cell_style = lt_cell_style.
+*-->2821 OSM2KOR
+    ls_dms_ui-werks           = z0mp_s_dms_ps_ui-werks.
+    ls_dms_ui-supplier        = z0mp_s_dms_ps_ui-supplier.
+    ls_dms_ui-packindex       = z0mp_s_dms_ps_ui-packindex.
+    ls_dms_ui-document_number = |{ z0mp_s_dms_ps_ui-document_number ALPHA = OUT }|.
+    ls_dms_ui-description     = z0mp_s_dms_ps_ui-description.
+*-> PackIT#4071 - AGR7KOR - Original File name
+    ls_dms_ui-filename        = z0mp_s_dms_ps_ui-filename.
+*-> PackIT#4071 - AGR7KOR - Original File name
+
+
+**-->>duplicate document check for WS document 214
+    IF sy-tcode = '/SCWM/PSWORKSTEP'.
+      READ TABLE gt_outtab INTO ls_doctab WITH KEY document_number = ls_dms_ui-document_number
+                         document_type     = ls_dms_ui-document_type
+                         document_part  = ls_dms_ui-document_part
+                         document_version = ls_dms_ui-document_version.
+      IF sy-subrc EQ 0 .
+        MESSAGE e087(z0mp_packspec_ui).
+      ENDIF.
+    ENDIF.
+**<<---duplicate document check for WS document  214
+
+    CLEAR lt_drad.
+    CALL METHOD document_change
+      EXPORTING
+        iv_document = ls_dms_ui
+      IMPORTING
+        ev_error    = DATA(ls_error)
+        et_drad     = lt_drad.
+    IF ls_error-type CA 'EW'.
+      IF ls_error-id IS NOT INITIAL.
+        MESSAGE ID ls_error-id
+              TYPE ls_error-type
+            NUMBER ls_error-number
+              WITH ls_error-message_v1
+              ls_error-message_v2
+              ls_error-message_v3
+              ls_error-message_v4.
+      ENDIF.
+    ELSE.
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+      "Initiate Interface Document Trigger
+      me->interface_doc_trigger(
+        EXPORTING
+          is_draw       = ls_dms_ui
+          it_drad       = lt_drad
+          iv_updateflag = 'I'
+      ).
+****#####################################Added by NRA4COB on 24th Jun 2021#####################################****
+    ENDIF.
+
+*<--2821 OSM2KOR
+    APPEND ls_dms_ui TO gt_outtab.
+    CLEAR z0mp_s_dms_ps_ui.
+    gv_changed = abap_true.
+**-->> 2848  Add to change log for document addition and deletion if the PS is active limited change
+    IF ( sy-tcode = 'Z0MP_PACKSPEC' OR sy-tcode = 'Z0MP_PS_MC_SRCH' ) AND gv_object_key+20(8) = '00000001'."PS is active
+*      PERFORM create_change_log USING gv_object_key ls_dms_ui 'U'.
+      CALL METHOD z0mp_cl_packspec_model=>change_log_for_documents
+        EXPORTING
+          im_objectkey = gv_object_key
+          im_dmsui     = ls_dms_ui
+          im_flag      = 'U'
+          im_tcode     = 'X'.
+    ENDIF.
+**<<-- 2848  Add to change log for document addition and deletion if the PS is active limited change
+
+***---> Start of PackIT-3121 by URD3KOR | Add Change Documents in Work step
+***...Workstep Attribute Change Log
+    IF sy-tcode = '/SCWM/PSWORKSTEP'.
+      DATA(lv_action) = 'U'.
+      PERFORM create_ws_change_log_for_doc USING gv_object_key ls_dms_ui lv_action.
+    ENDIF.
+*<--- End of PackIT-3121
+
+  ENDMETHOD.                    "insert_new_element
+  METHOD call_popup.
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+    CLEAR: z0mp_s_dms_ps_ui.
+    GET PARAMETER ID 'DLVWERKS' FIELD z0mp_s_dms_ps_ui-werks. "#EC CI_SUBRC
+    gv_2000_subrc = 1. "1-> stay on popup
+    CALL SELECTION-SCREEN '2000' STARTING AT 10 10.
+
+    IF gv_2000_subrc = 4.
+*   Action was canceled
+      ev_ok = space.
+      RETURN.
+    ENDIF.
+    ev_ok = abap_true.
+  ENDMETHOD.
+  METHOD handle_toolbar.
+    DATA: ls_toolbar TYPE stb_button.
+
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+*-> Def ID: 3106 - AGR7KOR
+*   Check authorizaiton for PS Maintenance
+    DATA lv_ps_maint TYPE xfeld.
+*-->3081 OSM2KOR adding new auth object Z0MP_PSUI for PS editing
+*    AUTHORITY-CHECK OBJECT 'Z0MP_MCH' ID 'ACTVT'  FIELD '02'.
+*    IF sy-subrc EQ 0.
+*      AUTHORITY-CHECK OBJECT 'Z0MP_MCH' ID 'ACTVT'  FIELD '23'.
+*      IF sy-subrc EQ 0.
+*        lv_ps_maint = 'X'.
+*      ELSE.
+*        CLEAR lv_ps_maint.
+*      ENDIF.
+*
+*    ELSE.
+*      lv_ps_maint = 'X'.
+*    ENDIF. "IF sy-subrc EQ 0.
+**<-  Def ID: 3106 - AGR7KOR
+***---> US-5965 by URD3KOR | Don't perform below Auth check for Workstep
+    IF sy-tcode = '/SCWM/PSWORKSTEP'.
+      lv_ps_maint = 'X'.
+    ELSE.
+***<--- US-5965 by URD3KOR
+      AUTHORITY-CHECK OBJECT 'Z0MP_MCH' ID 'ACTVT'  FIELD '23'.
+      IF sy-subrc EQ 0.
+        AUTHORITY-CHECK OBJECT 'Z0MP_MCH' ID 'ACTVT'  FIELD '02'.
+        IF sy-subrc EQ 0.
+          AUTHORITY-CHECK OBJECT 'Z0MP_PSUI' ID 'ACTVT'  FIELD '02'.
+          IF sy-subrc = 0 OR sy-subrc = 4.
+            lv_ps_maint = 'X'.
+          ELSE.
+            CLEAR lv_ps_maint.
+          ENDIF.
+        ELSE.
+          CLEAR lv_ps_maint.
+        ENDIF.
+
+      ELSEIF sy-subrc = 4.
+        AUTHORITY-CHECK OBJECT 'Z0MP_MCH' ID 'ACTVT'  FIELD '02'.
+        IF sy-subrc EQ 0.
+          lv_ps_maint = 'X'.
+        ELSE.
+          CLEAR lv_ps_maint.
+        ENDIF.
+
+      ELSEIF sy-subrc = 12.
+        AUTHORITY-CHECK OBJECT 'Z0MP_PSUI' ID 'ACTVT'  FIELD '02'.
+        IF sy-subrc EQ 0.
+          lv_ps_maint = 'X'.
+        ELSE.
+          CLEAR lv_ps_maint.
+        ENDIF.
+
+      ENDIF.
+    ENDIF.
+*<--3081 OSM2KOR
+
+* add own buttons
+    IF go_grid->is_ready_for_input( ) IS NOT INITIAL
+       AND lv_ps_maint = 'X'.  "Def ID: 3106 - AGR7KOR
+* delete doc link
+      MOVE gc_delete TO ls_toolbar-function.
+*    ls_toolbar-icon = '@3I@'.
+      ls_toolbar-text = TEXT-del."Delete
+      ls_toolbar-quickinfo = TEXT-del.
+      INSERT ls_toolbar INTO e_object->mt_toolbar INDEX 1.
+** append new link
+      MOVE gc_new TO ls_toolbar-function.
+*    ls_toolbar-icon = '@3I@'.
+      ls_toolbar-text = TEXT-ins."Insert
+      ls_toolbar-quickinfo = TEXT-ins.
+*-->2482 OSM2KOE disabling ADD DOCUMENT LINK buttion for phase1
+      "Commenting the change for testing
+*      ls_toolbar-disabled = abap_true.
+*<--2482 OSM2KOR
+      INSERT ls_toolbar INTO e_object->mt_toolbar INDEX 1.
+*-->2482 OSM2KOR
+      CLEAR ls_toolbar-disabled.
+*<--2482 OSM2KOR
+** check in and add document
+      MOVE gc_create TO ls_toolbar-function.
+*    ls_toolbar-icon = '@3I@'.
+      ls_toolbar-text = TEXT-cre."Check in and add
+      ls_toolbar-quickinfo = TEXT-cre.
+      INSERT ls_toolbar INTO e_object->mt_toolbar INDEX 1.
+    ENDIF.
+    ls_toolbar-text = TEXT-dis."Display
+    ls_toolbar-quickinfo = TEXT-dis.
+    MOVE gc_display TO ls_toolbar-function.
+*    ls_toolbar-icon = '@3I@'.
+    INSERT ls_toolbar INTO e_object->mt_toolbar INDEX 1.
+* separator
+    CLEAR ls_toolbar.
+    ls_toolbar-butn_type  = 3.
+    INSERT ls_toolbar INTO e_object->mt_toolbar INDEX 1.
+
+  ENDMETHOD.                    "grid_handle_toolbar
+
+  METHOD get_doc_no.
+    BREAK-POINT ID z0mp_all.
+    BREAK-POINT ID z0mp_ps_dms.
+
+    CLEAR: z0mp_s_dms_ps_ui-document_number, z0mp_s_dms_ps_ui-description.
+    gv_2001_subrc = 1. "1-> stay on popup
+    CALL SELECTION-SCREEN '2001' STARTING AT 10 10.
+
+    IF gv_2001_subrc = 4.
+*   Action was canceled
+      ev_ok = space.
+      RETURN.
+    ENDIF.
+    ev_ok = abap_true.
+  ENDMETHOD.
+
+  METHOD interface_doc_trigger.
+    "Added and Commented by NRA4COB on 5th Jan 2022
+    DATA ls_draw TYPE draw.
+
+    ls_draw-dokar = is_draw-document_type.
+    ls_draw-doknr = is_draw-document_number.
+    ls_draw-dokvr = is_draw-document_version.
+    ls_draw-doktl = is_draw-document_part.
+
+    CALL METHOD z0mp_pi_cl_trigger_solace=>ifpt_document_trigger
+      EXPORTING
+        is_draw       = ls_draw
+        it_drad       = it_drad
+        iv_updateflag = iv_updateflag
+        iv_source     = space.    "L=> Long Run, SPACE=> General
+    IF sy-subrc = 0.
+      DATA(lv_exp) = 'X'.
+    ENDIF.
+
+***    DATA: lv_dokar1       TYPE dokar VALUE 'PAC',
+***          lv_dokar2       TYPE dokar VALUE 'L01',
+***          lv_doknr        TYPE doknr,
+***          lr_root         TYPE REF TO cx_root,
+***          lv_archived_doc,
+***          lv_exc.
+***
+***    DATA ls_return TYPE bapiret2.
+***
+**** Trigger PackIT Document Change Trigger Interface
+***    IF is_draw-document_type = lv_dokar1 OR is_draw-document_type = lv_dokar2.
+***      TRY .
+***          "Get the Document Part which needs to be excluded
+***          SELECT * FROM zpack_constants INTO TABLE @DATA(lt_const) WHERE lconnection = 'GEN_CON'
+***                                                            AND   objtype = 'DIR'
+***                                                            AND   const = 'EXCLUDE_DOC_PART'.
+***          IF sy-subrc <> 0.
+***            lv_exc = 'X'.
+***          ENDIF.
+***
+***          "...Added by NRA4COB on 14th Nov 2021
+***          "Document Part 100=> Archive Document, CHA=> Change Log
+***          CLEAR lv_archived_doc.
+***          IF ( line_exists( lt_const[ value = is_draw-document_part ] ) ).
+***            lv_archived_doc = 'X'.
+***            EXIT.
+***          ENDIF.
+***
+****...Commented by NRA4COB on 14th Nov 2021
+******          CLEAR lv_archived_doc.
+******          IF is_draw-document_part = '100'      "Archive Document
+******              OR is_draw-document_part = 'CHA'. "Change Document
+******            lv_archived_doc = 'X'.
+******            EXIT.
+******          ENDIF.
+***
+***          IF lv_archived_doc IS INITIAL.
+***            ASSIGN it_drad[ 1 ] TO FIELD-SYMBOL(<ls_drad>) .
+***            IF sy-subrc = 0.
+***              CLEAR lv_doknr.
+***              CALL FUNCTION 'CONVERSION_EXIT_ALPHA_INPUT'
+***                EXPORTING
+***                  input  = is_draw-document_number
+***                IMPORTING
+***                  output = lv_doknr.
+***
+***              CALL FUNCTION 'Z0MP_PI_INTERFACE_TRIGGER'
+***                EXPORTING
+***                  iv_dokar      = is_draw-document_type      "Doc type
+***                  iv_doknr      = lv_doknr              "is_draw-document_number    "Doc no
+***                  iv_dokvr      = is_draw-document_version   "Doc Version
+***                  iv_doktl      = is_draw-document_part      "Doc Part
+***                  iv_updateflag = iv_updateflag              "D, I, U
+***                  iv_objky      = <ls_drad>-objectkey.       "WS ID
+***
+***              "Note: Commit is Mandatory
+***              CLEAR ls_return.
+***              CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+***                EXPORTING
+***                  wait   = 'X'
+***                IMPORTING
+***                  return = ls_return.
+***
+***            ENDIF.
+***          ENDIF.
+***
+***        CATCH cx_root INTO lr_root.
+***          lv_exc = 'X'.
+***      ENDTRY.
+***
+***    ENDIF.
+  ENDMETHOD.
+
+ENDCLASS.               "lcl_element_grid

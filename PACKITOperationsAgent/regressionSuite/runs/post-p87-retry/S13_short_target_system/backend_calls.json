@@ -1,0 +1,14 @@
+[
+  {
+    "query": "q1_short_name_resolves",
+    "calls": []
+  },
+  {
+    "query": "q2_no_window_means_default",
+    "calls": []
+  },
+  {
+    "query": "q3_unresolvable_value_never_widens_the_search",
+    "calls": []
+  }
+]

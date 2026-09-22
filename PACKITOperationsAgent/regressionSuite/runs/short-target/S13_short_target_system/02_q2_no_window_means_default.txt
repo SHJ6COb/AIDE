@@ -1,0 +1,35 @@
+# 02 q2_no_window_means_default
+
+## Query (as typed into the app)
+And the latest successful transfer to POE?
+
+## What this turn probes
+'latest' orders results, it does not bound them. With no period named the search must stay on the documented 15-minute default and offer to widen -- the live failure answered seven days because the model invented the window and the harness honoured it, so the offer never appeared.
+
+## Reply (verbatim, as rendered in the browser)
+No records were found in the last 15 minutes for any successful PackITPackagingSpecification transfer to target system POE. This absence doesn't mean that no transfer has ever happened; it may just be outside this time window. Please try searching with a wider timeframe or provide a more specific PS ID or plant.
+
+Widen the search to which?
+
+last 1 hour
+last 4 hours
+last 24 hours
+last 7 days
+
+Reply with one of those (or name your own window, e.g. "last 3 hours"), and I'll re-run the same question over it.
+
+## Observed
+- elapsed: 13.2s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_no_window_means_default.png
+
+## Verdict: PASS
+- [ok  ] spl_contains: host="*SAPPOE0110*"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -15m
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native host="*SAPPOE0110*" "<d:BusinessStatus>SUCCESS</d:BusinessStatus>" | head 200
+    window: -15m .. now  ->  0 rows

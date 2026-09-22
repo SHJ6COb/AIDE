@@ -1,0 +1,26 @@
+# 02 q2_any_errors
+
+## Query (as typed into the app)
+Any errors at all on that one?
+
+## What this turn probes
+Must stay consistent with the previous turn rather than inventing a caveat error.
+
+## Reply (verbatim, as rendered in the browser)
+No primary records were found for PS 00000000040000588527 in the last 15 minutes. This means that there weren't any current errors or issues reported during that time frame, but it doesn't necessarily mean the PS doesn't exist or hasn't had issues outside of this window. If you're looking for more specific or historical data, try widening the time range or checking a more specific aspect of the PS.
+
+## Observed
+- elapsed: 5.6s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_any_errors.png
+
+## Verdict: PASS
+- [ok  ] contains_any: \bno\b|none|no errors|not (?:any|seeing)|clean|success
+- [ok  ] absent: SNR13
+- [ok  ] absent: T141
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000588527" | head 200
+    window: -15m .. now  ->  0 rows

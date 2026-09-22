@@ -1,0 +1,29 @@
+# 02 q2_bare_window_reply
+
+## Query (as typed into the app)
+24 hours
+
+## What this turn probes
+THE REGRESSION. A bare window names no PS. Before the rewrite this either parsed to nothing and fell back to 15 minutes again, or relied on turn 1 re-resolving the subject from history -- measured unreliable, and wrong here means answering about a different PS entirely.
+
+## Reply (verbatim, as rendered in the browser)
+I found no records for PS 00000000040001253724 in the last 24 hours. This does not mean the PS doesn't exist; it may simply be outside this window. I suggest trying a wider time range or specifying a different PS ID.
+
+## Observed
+- elapsed: 3.7s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_bare_window_reply.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: 00000000040001253724
+- [FAIL] contains_all: 028100944104Y  -- not found in reply
+- [FAIL] contains_all: SAPP870110  -- not found in reply
+- [ok  ] spl_contains: "00000000040001253724"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  0 rows

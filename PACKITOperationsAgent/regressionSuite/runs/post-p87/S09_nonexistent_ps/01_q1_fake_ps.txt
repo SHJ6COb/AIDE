@@ -1,0 +1,31 @@
+# 01 q1_fake_ps
+
+## Query (as typed into the app)
+What's going on with PS 00000000099999999999 in the last 7 days?
+
+## What this turn probes
+Zero records must produce a not-found answer, never a plausible-sounding error borrowed from a neighbouring PS.
+
+## Reply (verbatim, as rendered in the browser)
+No records were found for PS 00000000099999999999 in the last 7 days. This does not mean the PS doesn't exist; it may simply be outside this time window. You might consider widening your search or providing a more specific PS ID or relevant details.
+
+## Observed
+- elapsed: 14.1s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_fake_ps.png
+
+## Verdict: PASS
+- [ok  ] contains_any: couldn'?t find|could not find|didn'?t find|no records|no results|nothing found
+- [ok  ] contains_any: 7 days
+- [ok  ] absent: SNR13
+- [ok  ] absent: T141
+- [ok  ] absent: SAPP\w{6}
+- [ok  ] absent: cockpit master data
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -7d
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000099999999999" | head 200
+    window: -7d .. now  ->  0 rows

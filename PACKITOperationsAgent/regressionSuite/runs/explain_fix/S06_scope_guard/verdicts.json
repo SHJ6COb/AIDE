@@ -1,0 +1,101 @@
+[
+  {
+    "scenario": "S06_scope_guard",
+    "query": "q1_off_topic",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "absent",
+        "expression": "00000000040001253724",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SAPP\\w{6}",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SNR13",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "0..0",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S06_scope_guard",
+    "query": "q2_far_too_broad",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_any",
+        "expression": "narrow|specific|PS ID|which plant|need (?:at least|a bit more)|identifying",
+        "passed": false,
+        "detail": "no alternative matched"
+      },
+      {
+        "kind": "absent",
+        "expression": "00000000040001253724",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "00000000040001497551",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "0..0",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S06_scope_guard",
+    "query": "q3_valid_two_field",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "SNR13 | 00000000040001253724",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "spl_contains",
+        "expression": "host=\"*SAPP870110*\"",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

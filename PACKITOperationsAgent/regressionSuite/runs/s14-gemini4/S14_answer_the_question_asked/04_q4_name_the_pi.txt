@@ -1,0 +1,30 @@
+# 04 q4_name_the_pi
+
+## Query (as typed into the app)
+What Packaging Instructions were created?
+
+## What this turn probes
+The live answer said 'Packaging Instruction (PI) F00SC01107' -- that is the SNR13, not a PI. The real numbers are the SNR13 plus a form code plus the supplier without leading zeros. Reporting the shared prefix names the material and drops what identifies the object.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000348796 (Determination Record 00002, Plant 5550) — let me know if you meant a different one:
+
+The following Packaging Instructions were created on target system SAPP870110:
+
+F00SC01107FB131512
+F00SC01107FA131512
+
+## Observed
+- elapsed: 17.8s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/04_q4_name_the_pi.png
+
+## Verdict: PASS
+- [ok  ] contains_all: F00SC01107FB131512
+- [ok  ] absent: PI[: ]+F00SC01107\b
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000348796" | head 200
+    window: -30d .. now  ->  17 rows

@@ -1,0 +1,10 @@
+{
+  "run": "filtered_fix",
+  "started": "2026-08-06T14:15:28.598782",
+  "scenarios": 2,
+  "turns": 6,
+  "passed": 6,
+  "failed": 0,
+  "failures": [],
+  "browser_console": []
+}

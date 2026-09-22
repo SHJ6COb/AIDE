@@ -1,0 +1,76 @@
+[
+  {
+    "scenario": "S09_nonexistent_ps",
+    "query": "q1_fake_ps",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_any",
+        "expression": "couldn'?t find|could not find|didn'?t find|no records|no results|nothing found",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "7 days",
+        "passed": false,
+        "detail": "no alternative matched"
+      },
+      {
+        "kind": "absent",
+        "expression": "SNR13",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "T141",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SAPP\\w{6}",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "cockpit master data",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S09_nonexistent_ps",
+    "query": "q2_are_you_sure",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "absent",
+        "expression": "(?:yes|correct|that'?s right)[^.]{0,40}(?:SNR13|failed at SAPP870110)",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "confirm(?:ed|s) (?:that|the) (?:SNR13|failure)",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "0..2",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,505 @@
+# PackIT (PD7) Interface Error Catalog
+# Transcribed from: "PackIT (PD7) Interface Error- General Hints to resolve-v15-20260804_083926.pdf"
+# Author: Jahed Ali Shaik (BD/TOA-SPL3)
+#
+# Matching rule (see docs/components/catalog/TECHNICAL_SPEC.md): try each row's `pattern`
+# (a case-insensitive regex against the joined, newline-separated error description text)
+# in file order — first match wins. Rows are ordered most-specific-first so a generic
+# pattern doesn't shadow a more specific one that should take priority (e.g. rows with
+# "in plant" come before their plant-independent counterparts).
+#
+# `context`, when present, means the pattern alone is not sufficient — the row only
+# applies when the given SearchParams/TransferRecord fields also match (e.g. row 7 is a
+# special case only for a specific Plant+DeterminationType+CustomerIndex combination).
+# The matcher should treat `context` as an additional required condition, not optional.
+#
+# Rows with `pattern: null` are background/policy notes from the document (not tied to
+# one specific error string) — kept for reference and for the two rows (5, 29) that
+# inform status derivation (see docs/components/transform/TECHNICAL_SPEC.md), not meant
+# to be matched against live error text.
+#
+# `error_category` values: "Target Error", "Source Error", "Technical Error", "HINT",
+# "No action required", "Retrigger required" — see docs/components/catalog/TECHNICAL_SPEC.md
+# for how these map onto the dashboard's 5 Replication Status buckets.
+
+- seq_nr: 15
+  error_category: "Target Error"
+  pattern: "T141 Bom item status Invalid for material"
+  responsible: "Plant"
+  summary: "The affected packaging material has an invalid plant status on the target SAP system."
+  solution: "Change the packaging material's plant status to 40 (valid) on the mentioned SAP system, or use a different packaging material in the PackSpec."
+
+- seq_nr: 45
+  error_category: "Target Error"
+  pattern: "T141 Bom header status Invalid for material"
+  responsible: "Plant"
+  summary: "The affected product has an invalid plant status (50, 11, or not maintained) on the target SAP system."
+  solution: "Change the product's plant status to 40 (valid) on the mentioned SAP system."
+
+- seq_nr: 16
+  error_category: "Target Error"
+  pattern: "Material status 50 '(Invalid|Blocked)' is not selected for BOM item"
+  responsible: "Plant"
+  summary: "Probably the 15-digit PSTE number is invalid."
+  solution: "Check the 15-digit PSTE material master (10-digit product number, index, and 'PS'). Correction of the x-plant or plant specific status must be done by the plant."
+
+- seq_nr: 1
+  error_category: "Target Error"
+  # Loosened 2026-08-04: confirmed live that the real Ret_msgs.Message text is just
+  # "SNR13 Cross Plant Status Invalid" (268 real occurrences in one 3h sample) — the
+  # "FAIL:" prefix and "- Z0MM_XMARA" suffix from the source PDF never actually appear
+  # in production; made optional rather than removed so the fuller documented form still
+  # matches too. See docs/components/catalog/TECHNICAL_SPEC.md.
+  pattern: "(FAIL:\\s*)?SNR1[03]\\s*CROSS PLANT STATUS INVALID(\\s*-\\s*Z0MM_XMARA)?"
+  responsible: "Plant"
+  summary: "The affected 10- or 13-digit number has an invalid X-plant (cross-plant) status on the mentioned SAP system."
+  solution: "Change the X-plant status to 40 (valid) on the mentioned SAP system. If the invalid status is actually correct, delete the Determination Record (and consider deleting the PackSpec if no other DR references it) and inform the PST Team via mServiceHub to cancel the failed transfer."
+
+- seq_nr: 3
+  error_category: "Target Error"
+  # Loosened 2026-08-04: confirmed live that the real Ret_msgs.Message text is just
+  # "SNR13 Plant Status Invalid" (95 real occurrences in one 3h sample) — same scaffolding
+  # mismatch as seq_nr 1/2. See docs/components/catalog/TECHNICAL_SPEC.md.
+  pattern: "(FAIL:\\s*)?SNR1[03]\\s*PLANT STATUS INVALID(\\s*-\\s*Z0MM_XMARC)?"
+  responsible: "Plant"
+  summary: "The affected 10- or 13-digit number has an invalid plant-specific status on the mentioned SAP system."
+  solution: "Change the plant-specific status to 40 (valid) on the related SAP system. If the invalid status is correct, delete the Determination Record (and consider the PackSpec too) and inform the PST Team via mServiceHub."
+
+- seq_nr: 4
+  error_category: "Target Error"
+  pattern: "FAIL:\\s*SNR1[03]\\s*NOT FOUND/?\\s*PLANT STATUS INVALID/?\\s*MARK FOR DELETION\\s*-\\s*Z0MM_XMARC"
+  responsible: "Plant"
+  summary: "The needed plant view for the affected 10-/13-digit number is not created, or a plant-level deletion flag is set."
+  solution: "Create the missing plant view, or remove the deletion flag (also check x-plant and plant status validity). If the deletion flag is correct, delete the Determination Record (and consider the PackSpec)."
+
+- seq_nr: 7
+  error_category: "Retrigger required"
+  pattern: "SNR13 NOT FOUND/?\\s*STATUS EMPTY/?\\s*MARK FOR DELETION\\s*-\\s*Z0MM_XMARA\\s*-\\s*(P81|POE)"
+  context:
+    plant: "8160"
+    determination_type: "ZFER"
+    customer_index: "110"
+    sales_channel: "OE"
+  responsible: "Support Team"
+  summary: "Special case for plant 8150/8160 (EhP) with this exact Sales Channel/Determination Type/Index/Plant combination — a Buffer Monitoring Task, not the generic SNR13-not-found case."
+  solution: "Cancel the stuck entries (Support Team)."
+
+- seq_nr: 2
+  error_category: "Target Error"
+  # Loosened 2026-08-04: confirmed live that the real Ret_msgs.Message text is just
+  # "SNR13 not found/ Mark for deletion" (429 real occurrences in one 3h sample, the
+  # single most common real error seen) — "STATUS EMPTY" and the "- Z0MM_XMARA" suffix
+  # from the source PDF never actually appear; both made optional rather than removed.
+  # See docs/components/catalog/TECHNICAL_SPEC.md.
+  pattern: "SNR1[03]\\s*NOT FOUND/?\\s*(STATUS EMPTY/?\\s*)?MARK FOR DELETION(\\s*-\\s*Z0MM_XMARA)?"
+  responsible: "Plant"
+  summary: "The affected 10- or 13-digit number is either not created at all on the mentioned SAP system, or a client-level deletion flag is set."
+  solution: "Create the missing number, or remove the deletion flag (also check valid x-plant and plant status). If the deletion flag is correct, delete the Determination Record (and consider the PackSpec) and inform the PST Team via mServiceHub."
+
+- seq_nr: 12
+  error_category: "Target Error"
+  pattern: "60\\d+\\s*[Pp]ackaging material (doesn'?t exist in plant|marked for deletion in plant)"
+  responsible: null
+  summary: "The plant view for the affected packaging material is not created on the mentioned SAP system."
+  solution: "Request the plant extension in PackMDM, or (if the deletion flag is correct) use another packaging material in the PackSpec."
+
+- seq_nr: 11
+  error_category: "Target Error"
+  pattern: "^60\\d+\\s*[Pp]ackaging material doesn'?t exist\\s*$"
+  multiline: true
+  responsible: null
+  summary: "The affected packaging material is not available at all on the mentioned SAP system."
+  solution: "Request a plant extension in PackMDM, or use another packaging material in the PackSpec."
+
+- seq_nr: 14
+  error_category: "Target Error"
+  pattern: "(?!60)\\S+\\s*[Pp]ackaging material doesn'?t exist in plant"
+  responsible: null
+  summary: "The plant view for the affected material (not a real packaging-material number, e.g. a HIBE) is not created."
+  solution: "Extend the material to the affected plant, or delete/replace this number with a correct packaging material number."
+
+- seq_nr: 13
+  error_category: "Target Error"
+  pattern: "(?!60)\\S+\\s*[Pp]ackaging material doesn'?t exist\\s*$"
+  multiline: true
+  responsible: null
+  summary: "The affected material number (not a real packaging-material number, e.g. a HIBE) is not created on the mentioned system."
+  solution: "Create the material on the mentioned system, or delete/replace this number with a correct one."
+
+- seq_nr: 17
+  error_category: "Target Error"
+  pattern: "with pack\\. mat type is not allowed as main load carrier in TVTY"
+  responsible: null
+  summary: "Not all materials are allowed as main load carrier (Main Packaging) — material types ZBOD, ZDKL, and ZZWI are not allowed."
+  solution: "Define a different packaging material with a valid Packaging mat. type as main packaging in the PackSpec."
+
+- seq_nr: 18
+  error_category: "Target Error"
+  pattern: "The condition is currently blocked by"
+  responsible: null
+  summary: "A material or BOM was being edited by a user at the same time the interface tried to update it."
+  solution: "No action needed — the transfer is automatically retriggered the next day. If needed sooner, a PST member can retrigger manually via mServiceHub."
+
+- seq_nr: 19
+  error_category: "Target Error"
+  pattern: "Unit of measure \\w+ is not allowed for component"
+  responsible: null
+  summary: "The base unit of measure of the product (or 13-digit number) differs between the target SAP system and PD7."
+  solution: "Check the base units of measure via the Bosch Product Backbone; adjust in the target system, or raise an SMT ticket if PD7 needs the change."
+
+- seq_nr: 20
+  error_category: "Target Error"
+  pattern: "Unit of measure .* not supported for material .* in plant"
+  responsible: null
+  summary: "The base unit of measure of a packaging material differs across SAP systems."
+  solution: "Compare base units of measure in the Bosch Product Backbone and PackMDM; contact 'BBM PST O2C Packaging @ Support Community' for harmonization steps."
+
+- seq_nr: 21
+  error_category: "Target Error"
+  pattern: "End of processing in API:\\s*CSAP_MAT_BOM_MAINTAIN"
+  responsible: null
+  summary: "Update of a Packaging Instruction failed — commonly because a deletion flag was set on the target system."
+  solution: "Check the packaging instruction on the target SAP system; remove the deletion flag (e.g. via TC POP4) if set."
+
+- seq_nr: 22
+  error_category: "Source Error"
+  pattern: "Source Attachment not found at the moment|EXPORT adapter\\(Get_data\\) call failed for object type 01"
+  responsible: null
+  summary: "Saving a document did not work correctly in PackIT — the attached document can't be displayed ('No original is assigned to the document')."
+  solution: "Open the affected PS, check attached documents, delete the bad document, and reassign it if still needed."
+
+- seq_nr: 23
+  error_category: "Target Error"
+  pattern: "item category cannot be changed"
+  responsible: null
+  summary: "Problem updating the 15-digit PSTE BOM."
+  solution: "Use the info button to find the problem number, then check it across all related SAP systems (material type, etc.). Contact 'BBM PST O2C Packaging @ Support Community' if needed."
+
+- seq_nr: 26
+  error_category: "Target Error"
+  pattern: "Palletization Error:.*Unit of measure must be base unit, WM unit, or unit of issue"
+  multiline: true
+  responsible: null
+  summary: "Base unit of measure is not consistent everywhere for the material."
+  solution: "Check the 10-/13-digit number in the target SAP system and PackMDM; contact 'BBM PST O2C Packaging @ Support Community' for harmonization."
+
+- seq_nr: 27
+  error_category: "Target Error"
+  pattern: "Palletization Error:.*The value\\s*is not allowed for the field"
+  multiline: true
+  responsible: null
+  summary: "Usually a 'Warehouse management 1' view problem (Stock removal/placement fields)."
+  solution: "Check the 'Stock removal'/'Stock placement' field entries are included in the relevant selection group; contact the plant's WM responsible if not."
+
+- seq_nr: 28
+  error_category: "Target Error"
+  pattern: "Palletization Error:.*No authorization for material group"
+  multiline: true
+  responsible: null
+  summary: "The 13-digit number uses a material group not included in the technical interface user's authorization."
+  solution: "Either change the material group on the 13-digit number, or (if correct) have the interface user's authorization adjusted — contact 'BBM PST O2C Packaging @ Support Community'."
+
+- seq_nr: 30
+  error_category: "Technical Error"
+  pattern: "Error while saving the Det rule.*Do not enter packing instructions twice"
+  multiline: true
+  responsible: null
+  summary: "The interface tried to add a packaging instruction into a Determination Record slot (e.g. Alternative 1) that's already occupied by a different one."
+  solution: "Check the POF entries and naming convention (see the Determination Record / Packaging Instruction naming table); verify whether a packaging instruction was created manually. Inform the BBM community to retrigger the failed transfer."
+
+- seq_nr: 31
+  error_category: "Technical Error"
+  pattern: "Error while saving the Det rule.*(Formatting error in the field KONDP-PACKNR|Fill out all required entry fields)"
+  multiline: true
+  responsible: null
+  summary: "The interface tried to add an alternative packaging instruction (e.g. ...PA1) to a Determination Record, but no POF entry exists at all for the related 13-digit number yet — often because the Regular packaging's POF/POP transfer never completed, or Regular and Alternative were created at the same time."
+  solution: "Check whether the Regular packaging's PS was fully transferred (POF/POP created) first; retrigger it if not, then retrigger the alternative. Inform the BBM community to retrigger the failed transfer."
+
+- seq_nr: 32
+  error_category: "Technical Error"
+  pattern: "Error occured while creating msg condition\\s*\\.?\\s*Material .* does not exist"
+  multiline: true
+  responsible: null
+  summary: "The interface can't create the HU message condition record because the English-language description is missing for the 13-digit number."
+  solution: "In MM02, under 'Additional Data', add English (EN) language and use '#' for the Material Description, then save — this populates all available languages. Inform the BBM community to retrigger the failed transfer."
+
+- seq_nr: 33
+  error_category: "Technical Error"
+  pattern: "Error while uploading the originals"
+  responsible: null
+  summary: "A document in PackIT can't be viewed, so the interface transfer fails too."
+  solution: "Open the affected PS, find the document that can't be viewed, delete it, and reassign if still needed. Inform the BBM community to retrigger the failed transfer."
+
+- seq_nr: 9
+  error_category: "Target Error"
+  pattern: "No Relevant Import Configuration maintained in target system"
+  responsible: "Support Team"
+  summary: "Import configuration is not maintained in the target system for the relevant connection."
+  solution: "Create a Blogpost in 'BBM PST O2C Packaging @ Support Community'; PST clarifies and raises an SMT ticket if needed. Special case: if this occurs for Determination Type RCPT + Plant 4100 (or RDC for IAM/OES), the transfer must be canceled (Support Team) and the related DR deleted in PackIT (Plant)."
+
+- seq_nr: 34
+  error_category: "Target Error"
+  pattern: "Relevant Import Config not maintained"
+  context:
+    determination_type: "RCPT"
+    plant: "4100"
+  responsible: null
+  summary: "Inbound BOM (RCPT) for the dummy plant 4100 is not supported over the PackIT interface."
+  solution: "The transfer must be canceled (Support Team) and the related Determination Record deleted on PackIT (Plant)."
+
+- seq_nr: 10
+  error_category: "Target Error"
+  pattern: "Relevant Export config not maintained"
+  responsible: "Support Team"
+  summary: "Export configuration is not maintained in the source system (PD7) for the relevant connection."
+  solution: "Create a Blogpost in 'BBM PST O2C Packaging @ Support Community'; PST clarifies and raises an SMT ticket if needed."
+
+- seq_nr: 8
+  error_category: "Target Error"
+  pattern: "RFC Destination configured missing for Logical connection"
+  responsible: "Plant & Support Team"
+  summary: "Crucial technical connection information (RFC destination) is missing for the relevant relation."
+  solution: "User: create a Blogpost in 'BBM PST O2C Packaging @ Support Community'. PST: clarify if the configuration should exist and why it's missing; raise an SMT ticket if required."
+
+- seq_nr: 6
+  error_category: "Retrigger required"
+  pattern: "RFC PORT:\\s*\\S+\\s*DOES NOT EXIST IN TARGET"
+  responsible: "Support Team"
+  summary: "Buffer Monitoring Task issue."
+  solution: "Reprocess by Central Dept. should work; if the error persists, create an IT Helpdesk service ticket."
+
+- seq_nr: 35
+  error_category: "Target Error"
+  pattern: "does not exist or is not activated|You have not fully maintained the descriptions"
+  responsible: null
+  summary: "The related 10-digit number likely isn't created with an English (EN) description in the respective ERP SAP system."
+  solution: "With TC MM02, replace the description next to the material number with '#' and save — this populates all available languages. Note: a retrigger won't work until PD7 receives the update, which can take a few minutes."
+
+- seq_nr: 36
+  error_category: "Target Error"
+  pattern: "Class interface changed at runtime"
+  responsible: "Support Team"
+  summary: "Likely a software-update transport was running while the Shipping Package was being processed."
+  solution: "Support Team must resend the shipping package."
+
+- seq_nr: 37
+  error_category: "Target Error"
+  pattern: "Determination record empty!?"
+  responsible: "Support Team"
+  summary: "The Determination Record was deleted from the PS (confirmable via the archived version in PackIT)."
+  solution: "Support Team cancels the shipping package."
+
+- seq_nr: 38
+  error_category: "Technical Error"
+  pattern: "The condition record entered\\s*already exists"
+  multiline: true
+  responsible: "Support Team"
+  summary: "The interface can't create the message condition record (VV63) because it already exists on the target system."
+  solution: "Support Team cancels the shipping package."
+
+- seq_nr: 39
+  error_category: "Technical Error"
+  pattern: "Threshold hold limit reached.*SP Auto Termination"
+  responsible: "Support Team"
+  summary: "A source-side threshold hold limit was reached, auto-terminating (canceling) the transfer."
+  solution: "Support Team resends the shipping package."
+
+- seq_nr: 40
+  error_category: "Technical Error"
+  pattern: "Message type\\s*.*is unknown"
+  responsible: null
+  summary: "Check whether packaging instructions already exist on the target system but with a deletion flag."
+  solution: "Remove the deletion flag with TC POP4 if set, then resend the failed interface transfer. Note the Determination Record/Packaging Instruction naming convention."
+
+- seq_nr: 42
+  error_category: "Source Error"
+  pattern: "MOQ-C.*does not fit"
+  multiline: true
+  responsible: "Plant User / PP"
+  summary: "Product quantity doesn't match the target's MOQ-C (Tango)."
+  solution: "Match the quantities from the PS and MOQ-C."
+
+- seq_nr: 43
+  error_category: "Source Error"
+  pattern: "XMARM-EAN11 data does not match the target PS"
+  responsible: "Plant User / PP"
+  summary: "Where *XMARM has a non-initial EAN11, the corresponding unit/quantity (total quantity, side card table) should be available on some PS level on the PD7 side."
+  solution: "Align the PS level data with the *XMARM EAN11-related quantity."
+
+- seq_nr: 44
+  error_category: "Target Error"
+  pattern: "Enter storage location for supply area"
+  responsible: null
+  summary: "Missing storage location for supply area."
+  solution: "Resend the Shipping Order — done centrally by the Interface Monitoring Sales Channel responsible."
+
+- seq_nr: 46
+  error_category: "Target Error"
+  pattern: "is not allowed for the field MARA-PRDHA"
+  responsible: null
+  summary: "An invalid Product Hierarchy value is used in the material master."
+  solution: "The number must be corrected via the CTG department — create a ServiceNow ticket for B2P via mServiceHub."
+
+- seq_nr: 47
+  error_category: "Target Error"
+  pattern: "No authorization for Create for condition type"
+  responsible: null
+  summary: "An invalid condition type (e.g. YA02) is wrongly maintained in the plant table — only YA01 and YA05 are valid/controllable for the HU output."
+  solution: "The plant must change the condition type to a valid one (YA01 or YA05)."
+
+- seq_nr: 48
+  error_category: "Source Error"
+  pattern: "PS not Active!|EXPORT adapter\\(Get_data\\) call failed for object type 00"
+  responsible: "Support Team"
+  summary: "The related Determination Record (identifiable by Seq. Nr.) is still not accepted or was deleted."
+  solution: "Support Team cancels the shipping package."
+
+- seq_nr: 49
+  error_category: "Target Error"
+  pattern: "MARC-AWSLS is defined as a required field"
+  responsible: null
+  summary: "On the 15-digit PSTE material master's 'Costing 1' view, the Variance Key (MARC-AWSLS) is wrongly maintained — only 'Y00001' is allowed. Note: not applicable for S/4 — PSTEs have no costing view in P1M."
+  solution: "Maintain 'Y00001' in the Variance Key field."
+
+- seq_nr: 50
+  error_category: "Source Error"
+  pattern: "CX_XSLT_SERIALIZATION_ERROR"
+  responsible: "Support Team"
+  summary: "Uncaught XSLT serialization exception."
+  solution: "Support Team resends the Shipping Package."
+
+- seq_nr: 51
+  error_category: "Target Error"
+  pattern: "is locked by .* user"
+  responsible: null
+  summary: "The transfer is blocked by another user (e.g. HUT5CA)."
+  solution: "Support Team resends the Shipping Package."
+
+- seq_nr: 52
+  error_category: "Target Error"
+  pattern: "not authorized to set deletion indicators for doc\\. type PAC"
+  responsible: null
+  summary: "Authorization issue setting deletion indicators for document type PAC."
+  solution: "To be clarified with BD."
+
+- seq_nr: 53
+  error_category: "Technical Error"
+  pattern: "packing instruction entered does not contain the material"
+  responsible: null
+  summary: "The 13-digit product number entered in a packaging instruction (via POF) may have been changed manually by a user, which isn't allowed."
+  solution: "Check all related packaging instructions (POP for R, A1, A...) for the used 13-digit product number via POF; correct with POP2, then retrigger the failed transfer."
+
+- seq_nr: 54
+  error_category: "Target Error"
+  pattern: "Exactly one item must be designated as loading equipment"
+  responsible: null
+  summary: "Probably two or more packaging materials are defined as main packaging material in the PackSpec."
+  solution: "Change the PackSpec so only one packaging material is the main packaging material; all others should be auxiliary."
+
+- seq_nr: 56
+  error_category: "Target Error"
+  pattern: "Formatting error in the field KOMGP-LIFNR"
+  responsible: null
+  summary: "Likely the POF2 transaction wasn't closed after deleting a 'wrong' POF entry."
+  solution: "Just close the POF2 screen."
+
+- seq_nr: 55
+  error_category: "Target Error"
+  pattern: "\\(U\\)Error PI:.*with Error:\\s*-\\s*2\\s*###"
+  multiline: true
+  responsible: null
+  summary: "Low-confidence match (the source doc itself says 'probably'): likely a packaging instruction with the same number previously got a deletion flag. Check with TCode POP3."
+  solution: "Use TCode POP4 to remove the deletion flag(s). If the packaging instruction has more than one level, remove the flag on every level."
+
+- seq_nr: 57
+  error_category: "Source Error"
+  pattern: "Cockpit master data dependent object still in progress"
+  responsible: null
+  summary: "Cockpit master-data/label updates are triggered alongside the PS but can lag or get stuck in the source with a source error — this is the Dependent Object blocking rule (see docs/components/transform/TECHNICAL_SPEC.md)."
+  solution: "Check entries in TC Z0MP_BUS_ERR_LOG and correct the source error on PD7. If no entries exist for the PS, raise a ticket with mServiceHub (Service+: PACKIT-S4) — support can retrigger via TC Z0MP_SINGLE_TRIGGER."
+
+- seq_nr: 58
+  error_category: "Source Error"
+  pattern: "DIR dependent object still in progress"
+  responsible: null
+  summary: "Document updates are triggered alongside the PS but the document object can get stuck in the source with a source error — the Dependent Object blocking rule (see docs/components/transform/TECHNICAL_SPEC.md)."
+  solution: "Check entries in TC Z0MP_BUS_ERR_LOG and correct the source error; also check the attached documents' size/format on source PD7. If no entries exist for the PS, raise a ticket with mServiceHub (Service+: PACKIT-S4)."
+
+- seq_nr: 59
+  error_category: "Source Error"
+  pattern: "Mandatory parameter Packaging Weight is missing"
+  responsible: null
+  summary: "The Workflow DR status shows SNR13 creation waiting, but the interface transfer is stuck on this weight-related error."
+  solution: "Update the PS weight in the Source system; raise a ticket with BD via mServiceHub (Service+: PACKIT-S4) to change the DR status to Deleted (50), then refloat the workflow after checking weight details on all levels."
+
+- seq_nr: 60
+  error_category: "Target Error"
+  pattern: "No changes made"
+  responsible: null
+  summary: "In the target system, check whether Material status 50 'Invalid' is (incorrectly) not selected for the BOM item, for Material Type PSTE BOM."
+  solution: "Correct the material status setting in the target system as described."
+
+# --- Deliberately low-priority: these patterns are themselves SUCCESS phrases
+# ("...updated successfully", "Succesfuly changed the PI") that can appear as a trailing
+# sub-message even in an otherwise-failed multi-message description (confirmed: example3's
+# real error text ends with two "Succesfuly changed the PI" lines despite being an overall
+# Business Error caused by an earlier formatting problem, matched by row 31 above). Kept
+# last so a real problem pattern earlier in the same text always wins the match first.
+
+- seq_nr: 24
+  error_category: "Target Error"
+  pattern: "MARA / MARM data has been updated in database succes?fully|Succes?fu?ly changed the PI"
+  responsible: null
+  summary: "Probably a packaging instruction with a deletion flag set. Only apply this row if nothing else in the description matched — this pattern is itself a success message that can trail a real error in a concatenated multi-line description."
+  solution: "Use TC POP3 to check the mentioned packaging instruction; if a deletion flag is shown, remove it with TC POP4. Contact 'BBM PST O2C Packaging @ Support Community' if this isn't the right fix."
+
+- seq_nr: 41
+  error_category: "Target Error"
+  pattern: "MARA / MARM data has been updated in database succes?fully"
+  responsible: null
+  summary: "Same underlying cause as row 24 (deletion-flag packaging instruction) — listed separately in the source doc under 'Other Cases'. Same low-priority caveat as row 24."
+  solution: "Same as row 24: check with TC POP3/POP4."
+
+# --- Background/policy notes (not matched against live error text) ---
+
+- seq_nr: 5
+  error_category: "No action required"
+  pattern: "valid from date not reached"
+  responsible: "n.a."
+  summary: "The 'valid from' date on the relevant Determination Record hasn't been reached yet."
+  solution: "No action needed — wait until the 'valid from' date is reached; the buffer-table entry then disappears on its own."
+
+- seq_nr: 25
+  error_category: "HINT"
+  pattern: null
+  responsible: null
+  summary: "Background on palletization data: for the related 13-digit number (SHIP only), PackIT quantities are written into the material master's 'Warehouse management view 2' (MM03) — the shipping-level (HU) total quantity on the first line, and the compressed quantity of all further packaging levels on the second line (no second-line entry for single-level packaging)."
+  solution: null
+
+- seq_nr: 29
+  error_category: "HINT"
+  pattern: null
+  responsible: null
+  summary: "Technical Errors do NOT auto-retrigger, unlike everything else — they must be triggered manually by Support. Informs the Technical-Error branch of status derivation (see docs/components/transform/TECHNICAL_SPEC.md)."
+  solution: null
+
+- seq_nr: "general-hint"
+  error_category: "HINT"
+  pattern: null
+  responsible: null
+  summary: "If an error was corrected, no further action is required — the interface automatically retries the transmission every 10 minutes (except Technical Errors, per row 29)."
+  solution: null
+
+- seq_nr: "general-hint-2"
+  error_category: "HINT"
+  pattern: null
+  responsible: null
+  summary: "If a transfer is no longer needed (e.g. a 13-digit number won't be created/released), delete the related Determination Record in PackIT and inform the PST Team via mServiceHub to cancel the failed transfer. If an unknown/not-understandable error comes up, create a ticket via mServiceHub — this is the source of the agent's strict-grounding fallback behavior."
+  solution: null
+
+- seq_nr: "general-hint-3"
+  error_category: "HINT"
+  pattern: null
+  responsible: null
+  summary: "Proposed email alerts can also be sent to the Plant Key-User or a plant-provided mailbox. The affected Index range starts with: 0*, 3*, 4*, 7*, 8*, 9*, B*, C*, E*, F*, G*, H*, K*, T*, W*, X*, Y*, Z*."
+  solution: null

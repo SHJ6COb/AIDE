@@ -1,0 +1,31 @@
+# 03 q3_right_target
+
+## Query (as typed into the app)
+OK, and did it reach SAPP870110 in the last 24 hours?
+
+## What this turn probes
+The mirror case: the target IS configured and the record IS there. No routing call should be needed at all.
+
+## Reply (verbatim, as rendered in the browser)
+PS 00000000040001253724 reached SAPP870110 in the last 24 hours, but it encountered an error. The status is marked as "ERROR" due to the SNR13, 028100944104Y, being either not found or marked for deletion, with 100 reprocessing attempts at the Target System despite only one source-side trigger.
+
+The error suggests that the affected SNR13 number is either not created on the specified SAP system or a deletion flag is set at the client level. The recommended actions are to either create the missing SNR13 or remove the deletion flag, and if the deletion flag is correct, to delete the Determination Record (and consider the PackSpec) and inform the PST Team via mServiceHub.
+
+## Observed
+- elapsed: 8.7s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_right_target.png
+
+## Verdict: PASS
+- [ok  ] contains_all: SAPP870110
+- [ok  ] contains_all: SNR13
+- [ok  ] spl_contains: host="*SAPP870110*"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+- [ok  ] routing_call: False
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" host="*SAPP870110*" | head 200
+    window: -24h .. now  ->  100 rows

@@ -1,0 +1,40 @@
+[
+  {
+    "query": "q1_real_error",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786084285.377954.3",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001399043\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 1,
+        "emulator_error": null,
+        "at": "2026-08-07T06:31:25.463977+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786084285.377954.3",
+        "failed": false,
+        "at": "2026-08-07T06:31:25.466978+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786084285.377954.3",
+        "offset": 0,
+        "count": 200,
+        "returned": 1,
+        "at": "2026-08-07T06:31:25.473085+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786084285.377954.3",
+        "at": "2026-08-07T06:31:25.475977+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_override",
+    "calls": []
+  }
+]

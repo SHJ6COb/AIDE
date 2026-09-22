@@ -1,0 +1,27 @@
+# 02 q2_any_errors
+
+## Query (as typed into the app)
+Any errors at all on that one?
+
+## What this turn probes
+Must stay consistent with the previous turn rather than inventing a caveat error.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000588527, no records were found in the last 24 hours. This means there were no replication attempts, errors, or status changes during that time. It's important to note that this does not imply the PS doesn't exist or hasn't been triggered; it may simply be outside this specific time window. To get more information, you might try a wider time range or specify another PS ID.
+
+## Observed
+- elapsed: 5.1s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_any_errors.png
+
+## Verdict: PASS
+- [ok  ] contains_any: \bno\b|none|no errors|not (?:any|seeing)|clean|success
+- [ok  ] absent: SNR13
+- [ok  ] absent: T141
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000588527" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  0 rows

@@ -1,0 +1,34 @@
+.env
+.env.backup*
+__pycache__/
+*.egg-info/
+.pytest_cache/
+build/
+packit_agent.db
+node_modules/
+
+# The suite's own conversation store, rewritten by every run. Same kind of
+# artifact as packit_agent.db above -- it was committed in the baseline before
+# anyone looked inside it, and would otherwise show up as a diff after every
+# regression run while carrying nothing anyone reads.
+regressionSuite/.run/*.db
+
+# Vendor Model Farm documentation (5 PDFs) plus `ADK Agent`, a scratch file
+# with a **live** AZURE_OPENAI_API_KEY pasted into it. Reference material, not
+# project source, and the credential must never reach history -- once
+# committed, removing it needs a history rewrite rather than a delete.
+modelFarm/
+
+# Regression-run screenshots. The transcripts (.txt/.json) ARE versioned --
+# they are what gets cited when comparing what an answer said between runs --
+# but the PNGs are ~31 MB today and every run adds more, and they never delta-
+# compress. They stay on disk for inspection, just untracked.
+regressionSuite/runs/**/shots/
+
+# ui/frontend/dist/ is deliberately NOT ignored -- it's the shipped artifact.
+# Per ADR-0003 the app runs as one Python process serving a pre-built bundle,
+# so colleagues need only Python at runtime; ignoring the build output (as
+# this file previously did, via both `dist/` and an explicit entry) would
+# force every one of them to install Node just to start the app. Rebuild with
+# `npm run build` in ui/frontend/ whenever the UI changes, and commit the
+# result alongside the source change.

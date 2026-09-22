@@ -1,0 +1,10 @@
+{
+  "run": "knowledge-split",
+  "started": "2026-08-06T20:17:30.045577",
+  "scenarios": 2,
+  "turns": 7,
+  "passed": 7,
+  "failed": 0,
+  "failures": [],
+  "browser_console": []
+}

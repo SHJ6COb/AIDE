@@ -1,0 +1,10 @@
+{
+  "run": "window_offer2",
+  "started": "2026-08-06T16:27:26.650209",
+  "scenarios": 2,
+  "turns": 5,
+  "passed": 5,
+  "failed": 0,
+  "failures": [],
+  "browser_console": []
+}

@@ -1,0 +1,144 @@
+[
+  {
+    "scenario": "S14_answer_the_question_asked",
+    "query": "q1_which_targets",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "SAPPOE0110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "no linked Document Info Record",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "\\bno DIR\\b",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-30d",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S14_answer_the_question_asked",
+    "query": "q2_the_error_history",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "6099\\.801\\.262",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "5550",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "resolved|then succeeded|succeeded on|no longer|since succeeded|recovered",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "don'?t have (?:direct )?access",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "Z0MP_BUS_ERR_LOG",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "[Ee]xtend (?:the )?material",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "[Ss]uggested [Aa]ction",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S14_answer_the_question_asked",
+    "query": "q3_object_key",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "0000131512",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "00000000040000348796",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "RCPT",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "00002",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S14_answer_the_question_asked",
+    "query": "q4_name_the_pi",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "F00SC01107FB131512",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "PI[: ]+F00SC01107\\b",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

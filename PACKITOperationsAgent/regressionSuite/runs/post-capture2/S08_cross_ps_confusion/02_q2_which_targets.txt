@@ -1,0 +1,30 @@
+# 02 q2_which_targets
+
+## Query (as typed into the app)
+Which target system is each of them on?
+
+## What this turn probes
+The identical description makes cross-attribution easy and invisible. Ground truth: 253724 -> SAPP870110, 399187 -> SAPP990110. A swapped pairing is a wrong result, not a phrasing quibble.
+
+## Reply (verbatim, as rendered in the browser)
+PS 00000000040001253724 is currently on target system SAPP870110, with a Replication Status showing an ERROR. The specific issue is that the associated SNR13 (028100944104Y) is either not found or marked for deletion, leading to 100 reprocessing attempts at the Target System.
+
+For PS 00000000040001399187, I currently do not have its status or target system information. To obtain that, please use a separate query.
+
+## Observed
+- elapsed: 6.6s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_which_targets.png
+
+## Verdict: PASS
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] absent: 00000000040001253724[^.]{0,80}SAPP990110
+- [ok  ] absent: 00000000040001399187[^.]{0,80}SAPP870110
+- [ok  ] search_window: -24h
+- [ok  ] no_unsearched_not_found: 00000000040001399187
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

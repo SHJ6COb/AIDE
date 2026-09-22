@@ -1,0 +1,30 @@
+# 01 q1_compare
+
+## Query (as typed into the app)
+Compare PS 00000000040001253724 and PS 00000000040001399187 over the last 24 hours -- which is worse?
+
+## What this turn probes
+A single-tool-call architecture asked to do a two-subject comparison. Watch for invented data on whichever PS was not searched.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, the replication status is marked as an error with the description "SNR13 not found/ Mark for deletion". The target system, SAPP870110, has reprocessed this PS 100 times but only from a single transfer attempt. This indicates that the message arrived at the target system but could not be processed, likely due to either the SNR13 not being created or having a deletion flag set. The suggested action is to create the missing number or remove the deletion flag, and to inform the PST team if deletion is intended. Please submit another question for that PS.
+
+I can only run one search per question, so nothing beyond that search was checked here -- ask about anything else as a separate question and I can look it up then.
+
+## Observed
+- elapsed: 12.0s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_compare.png
+
+## Verdict: PASS
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: \b(INC\d{5,}|CHG\d{5,}|TICKET-\d+)\b
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

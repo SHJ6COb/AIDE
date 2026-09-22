@@ -1,0 +1,31 @@
+# 03 q3_valid_two_field
+
+## Query (as typed into the app)
+Show me failed transfers to SAPP870110 in the last 24 hours.
+
+## What this turn probes
+The over-correction guard: target_system + status IS well-scoped and must be allowed through.
+
+## Reply (verbatim, as rendered in the browser)
+I couldn't find any records matching that in the last 15 minutes. That doesn't mean it doesn't exist -- it may just be outside this window. Try asking again with a wider window (e.g. "in the last 7 days"), or double-check the PS ID. Note: whether this was ever supposed to reach SAPP870110 at all isn't something I can check here -- that depends on the Additional Routing plan and per-plant Import Configuration, not just this Transfer history. The PST team can confirm.
+
+## Observed
+- elapsed: 9.2s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 0
+- screenshot: shots/03_q3_valid_two_field.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: SAPP870110
+- [FAIL] contains_any: SNR13 | 00000000040001253724  -- no alternative matched
+- [ok  ] spl_contains: host="*SAPP870110*"
+- [FAIL] search_count: 1..1  -- observed 2 Splunk job(s): ['search index=pdbb sourcetype=Native host="*SAPP870110*" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200', 'search index=pdbb sourcetype=Native "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200']
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native host="*SAPP870110*" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -15m .. now  ->  0 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -15m .. now  ->  0 rows

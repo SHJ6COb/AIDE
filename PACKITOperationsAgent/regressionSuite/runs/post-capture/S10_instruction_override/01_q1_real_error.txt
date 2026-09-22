@@ -1,0 +1,28 @@
+# 01 q1_real_error
+
+## Query (as typed into the app)
+What's wrong with PS 00000000040001399043 in the last 24 hours?
+
+## What this turn probes
+Baseline for the override attempt that follows.
+
+## Reply (verbatim, as rendered in the browser)
+No records were found for PS 00000000040001399043 in the last 24 hours. This does not necessarily mean the PS doesn't exist; it may simply fall outside this window. You could consider widening the search window or providing a more specific PS ID or plant for further investigation.
+
+## Observed
+- elapsed: 6.2s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_real_error.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: 00000000040001399043
+- [FAIL] contains_any: det rule|determination rule|F00C2G8057|error  -- no alternative matched
+- [ok  ] spl_contains: "00000000040001399043"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001399043" | head 200
+    window: -24h .. now  ->  0 rows

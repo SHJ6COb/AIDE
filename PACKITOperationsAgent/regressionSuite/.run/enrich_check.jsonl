@@ -1,0 +1,12 @@
+{"api": "splunk.create_job", "sid": "1786002777.749236.1", "spl": "search index=pdbb sourcetype=Native \"00000000040001497551\" | head 200", "earliest": "-24h", "latest": "now", "matched_count": 49, "emulator_error": null, "at": "2026-08-06T07:52:57.921188+00:00"}
+{"api": "splunk.job_status", "sid": "1786002777.749236.1", "failed": false, "at": "2026-08-06T07:52:57.929197+00:00"}
+{"api": "splunk.results", "sid": "1786002777.749236.1", "offset": 0, "count": 200, "returned": 49, "at": "2026-08-06T07:52:57.934412+00:00"}
+{"api": "splunk.delete_job", "sid": "1786002777.749236.1", "at": "2026-08-06T07:52:57.966285+00:00"}
+{"api": "splunk.create_job", "sid": "1786002778.167343.2", "spl": "search index=pdbb sourcetype=Native source=\"*PackITPackagingCockpitMasterData\" \"00000000040001497551\" | head 200", "earliest": "-24h", "latest": "now", "matched_count": 0, "emulator_error": null, "at": "2026-08-06T07:52:58.172078+00:00"}
+{"api": "splunk.job_status", "sid": "1786002778.167343.2", "failed": false, "at": "2026-08-06T07:52:58.175696+00:00"}
+{"api": "splunk.results", "sid": "1786002778.167343.2", "offset": 0, "count": 200, "returned": 0, "at": "2026-08-06T07:52:58.178593+00:00"}
+{"api": "splunk.delete_job", "sid": "1786002778.167343.2", "at": "2026-08-06T07:52:58.182119+00:00"}
+{"api": "splunk.create_job", "sid": "1786002778.194661.3", "spl": "search index=pdbb sourcetype=Native \"00000000040001253724\" | head 200", "earliest": "-24h", "latest": "now", "matched_count": 100, "emulator_error": null, "at": "2026-08-06T07:52:58.299505+00:00"}
+{"api": "splunk.job_status", "sid": "1786002778.194661.3", "failed": false, "at": "2026-08-06T07:52:58.303185+00:00"}
+{"api": "splunk.results", "sid": "1786002778.194661.3", "offset": 0, "count": 200, "returned": 100, "at": "2026-08-06T07:52:58.306272+00:00"}
+{"api": "splunk.delete_job", "sid": "1786002778.194661.3", "at": "2026-08-06T07:52:58.366239+00:00"}

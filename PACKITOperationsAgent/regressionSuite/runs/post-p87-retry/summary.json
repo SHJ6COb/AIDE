@@ -1,0 +1,443 @@
+{
+  "run": "post-p87-retry",
+  "started": "2026-08-07T13:05:22.940147",
+  "scenarios": 6,
+  "turns": 17,
+  "passed": 0,
+  "failed": 17,
+  "failures": [
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q1_status",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "00000000040001253724",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "028100944104Y",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "spl_contains",
+          "expression": "\"00000000040001253724\"",
+          "passed": false,
+          "detail": "actual SPL: ''"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q2_retry_count",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b(100|99)\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q3_ungrounded_plant",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "\\b0110\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "\\bSHIP\\b",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S01_large_retry_chain",
+      "query": "q4_documented_fix",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "deletion flag | mark(ed)? for deletion",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "create | missing",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q1_wrong_target",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP790110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "0110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "aren'?t configured|not configured|never (?:configured|supposed)|routed to",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "spl_contains",
+          "expression": "host=\"*SAPP790110*\"",
+          "passed": false,
+          "detail": "actual SPL: ''"
+        },
+        {
+          "kind": "search_count",
+          "expression": "2..2",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        },
+        {
+          "kind": "routing_call",
+          "expression": "True",
+          "passed": false,
+          "detail": "observed 0 routing call(s)"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q2_where_should_it_go",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    },
+    {
+      "scenario": "S04_routing_gap",
+      "query": "q3_right_target",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "spl_contains",
+          "expression": "host=\"*SAPP870110*\"",
+          "passed": false,
+          "detail": "actual SPL: ''"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S05_time_window_honesty",
+      "query": "q1_no_window",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "15 minutes",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "couldn'?t find|could not find|didn'?t find|no records|no results|nothing found",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S05_time_window_honesty",
+      "query": "q2_widen",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "00000000040001253724",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SNR13",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "spl_contains",
+          "expression": "\"00000000040001253724\"",
+          "passed": false,
+          "detail": "actual SPL: ''"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S11_document_links",
+      "query": "q1_status",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "00000000040000434427",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S11_document_links",
+      "query": "q2_linked_dirs",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "0000000000000000001627019",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "0000000000000000001507973",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S11_document_links",
+      "query": "q3_ps_with_no_links",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "\bno\b|none|not (?:any|linked)|doesn'?t (?:have|declare)|no (?:linked|document)",
+          "passed": false,
+          "detail": "no alternative matched"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S12_window_offer",
+      "query": "q1_no_window_offers_widths",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "15 minutes",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "last 1 hour",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "last 4 hours",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "last 24 hours",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "last 7 days",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S12_window_offer",
+      "query": "q2_bare_window_reply",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "00000000040001253724",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "028100944104Y",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "SAPP870110",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "spl_contains",
+          "expression": "\"00000000040001253724\"",
+          "passed": false,
+          "detail": "actual SPL: ''"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S13_short_target_system",
+      "query": "q1_short_name_resolves",
+      "checks": [
+        {
+          "kind": "spl_contains",
+          "expression": "host=\"*SAPP870110*\"",
+          "passed": false,
+          "detail": "actual SPL: ''"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S13_short_target_system",
+      "query": "q2_no_window_means_default",
+      "checks": [
+        {
+          "kind": "spl_contains",
+          "expression": "host=\"*SAPPOE0110*\"",
+          "passed": false,
+          "detail": "actual SPL: ''"
+        },
+        {
+          "kind": "search_count",
+          "expression": "1..1",
+          "passed": false,
+          "detail": "observed 0 Splunk job(s): []"
+        }
+      ]
+    },
+    {
+      "scenario": "S13_short_target_system",
+      "query": "q3_unresolvable_value_never_widens_the_search",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "plant code|valid plant|couldn'?t interpret|not a (?:real|valid)|provide a",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

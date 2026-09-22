@@ -1,0 +1,32 @@
+# 02 q2_same_error
+
+## Query (as typed into the app)
+Are those two the same error, or different?
+
+## What this turn probes
+The descriptions differ in plant code (0780 vs 078W) and one carries an extra 'Cockpit Data Model Updated' line. Claiming they are identical is a wrong result read straight from data the model has.
+
+## Reply (verbatim, as rendered in the browser)
+The errors encountered for PS 00000000040000434427 in the last 24 hours on the two Target Systems are related but not identical.
+
+For SAPP720110, the error message is "T141 Bom item status Invalid for material 6000.409.798 in plant 0780," indicating an issue with the material's status in that specific plant.
+
+For SAPPOE0110, the error message also states "T141 Bom item status Invalid for material 6000.409.798 in plant 078W," but adds "Cockpit Data Model Updated," which suggests the error might be linked to the Cockpit Data Model update process on this system.
+
+Both errors involve the same underlying issue of the material's plant status being invalid, but they occur in different contexts (specific plants). The recommended solution for both is to change the packaging material's plant status to 40 (valid) or use a different packaging material in the Packspec.
+
+## Observed
+- elapsed: 6.7s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_same_error.png
+
+## Verdict: PASS
+- [ok  ] contains_any: 078W
+- [ok  ] contains_any: 0780
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000434427" | head 200
+    window: -24h .. now  ->  2 rows

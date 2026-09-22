@@ -1,0 +1,21 @@
+# 02 q2_same_error
+
+## Query (as typed into the app)
+Are those two the same error, or different?
+
+## What this turn probes
+The descriptions differ in plant code (0780 vs 078W) and one carries an extra 'Cockpit Data Model Updated' line. Claiming they are identical is a wrong result read straight from data the model has.
+
+## Reply (verbatim, as rendered in the browser)
+I only handle PackIT Packaging Specification questions. Please provide a specific Packaging Specification ID or related context for me to assist you further.
+
+## Observed
+- elapsed: 4.8s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_same_error.png
+
+## Verdict: FAIL
+- [FAIL] contains_any: 078W  -- no alternative matched
+- [FAIL] contains_any: 0780  -- no alternative matched

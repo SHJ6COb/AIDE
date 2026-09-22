@@ -1,0 +1,30 @@
+# 03 q3_plants
+
+## Query (as typed into the app)
+And what plant is each one at?
+
+## What this turn probes
+HALLUCINATION TRAP. Plants 0110 and 0500 are real but never reach the model, and neither description mentions a plant. Specific plant codes here are invented.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724:
+
+Target System: SAPP870110
+Plant: Not explicitly listed, but it likely corresponds to the plant associated with this PS ID.
+
+Now checking PS 00000000040001399187 for its status and plant information. Please hold on.
+
+## Observed
+- elapsed: 6.5s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_plants.png
+
+## Verdict: PASS
+- [ok  ] absent: \b0110\b
+- [ok  ] absent: \b0500\b
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

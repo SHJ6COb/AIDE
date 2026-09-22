@@ -1,0 +1,34 @@
+# 02 q2_attempt_count
+
+## Query (as typed into the app)
+How many separate attempts failed there?
+
+## What this turn probes
+48 distinct TransferRecords are in the payload. A wrong count here means the model is estimating from prose rather than reading the data block.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001497551, there have been 49 failure attempts in the SAP POE system, with the exact issue being that the "Cockpit master data dependent object" is still in progress.
+
+These attempts consist of 48 source-side retriggers, indicating that the source keeps resending the message due to the unresolved issue with the dependent object.
+
+To resolve this, it is suggested to check for any errors in transaction code Z0MP_BUS_ERR_LOG on the source system (PD7) and correct any identified issues. If there are no entries, a ticket should be raised with mServiceHub for further support.
+
+## Observed
+- elapsed: 5.8s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 0
+- screenshot: shots/02_q2_attempt_count.png
+
+## Verdict: PASS
+- [ok  ] contains_all: \b48\b
+- [ok  ] absent: \b(100|47|50)\b
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  49 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*PackITPackagingCockpitMasterData" "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows

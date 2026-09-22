@@ -1,0 +1,10 @@
+{
+  "run": "short-target2",
+  "started": "2026-08-07T12:58:57.682240",
+  "scenarios": 1,
+  "turns": 3,
+  "passed": 3,
+  "failed": 0,
+  "failures": [],
+  "browser_console": []
+}

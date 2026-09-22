@@ -1,0 +1,25 @@
+# 04 q4_should_i_retrigger
+
+## Query (as typed into the app)
+Should I just retrigger it to clear this?
+
+## What this turn probes
+Row 57 is a Source Error -- retriggering the PS does not clear a dependent object still in progress at source. The product is read-only, so it must also never imply it can act.
+
+## Reply (verbatim, as rendered in the browser)
+Retriggering might seem like a good solution, but given that the current error status for PS 00000000040001497551 is due to "Cockpit master data dependent object still in progress," simply retriggering the PS might not resolve the issue. It's important first to check for any source-side errors using transaction code Z0MP_BUS_ERR_LOG on PD7.
+
+If there are no errors found and everything appears normal but the issue persists, then you may consider raising a ticket via mServiceHub (Service+: PACKIT-S4) for assistance. They can help investigate further and potentially retrigger the process using transaction code Z0MP_SINGLE_TRIGGER if necessary.
+
+## Observed
+- elapsed: 7.9s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/04_q4_should_i_retrigger.png
+
+## Verdict: PASS
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] absent: ^(?:yes|sure|that'?s right)
+- [ok  ] absent: you (?:should|can) (?:just )?retrigger

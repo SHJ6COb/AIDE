@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.markdown p {
+  margin: 0 0 0.6em;
+}
+.markdown p:last-child {
+  margin-bottom: 0;
+}
+.markdown ul,
+.markdown ol {
+  margin: 0 0 0.6em;
+  padding-left: 1.25em;
+}
+.markdown li {
+  margin: 0.15em 0;
+}
+.markdown li > p {
+  margin: 0;
+}
+/* Caught live via QA testing: a multi-case answer (e.g. two distinct
+   catalog matches, each its own numbered item with a nested Summary/
+   Responsible Party/Solution list) ran the cases directly into each other
+   with no visual separation, at exactly the moment -- a real, multi-issue
+   failure -- that scannability matters most. Give a list item that
+   contains its own nested list real breathing room and a light divider,
+   without affecting simple single-level lists. */
+.markdown li:has(> ul),
+.markdown li:has(> ol) {
+  margin-top: 1em;
+  padding-top: 0.75em;
+  border-top: 1px solid #e2e8f0;
+}
+.markdown li:has(> ul):first-child,
+.markdown li:has(> ol):first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.markdown strong {
+  font-weight: 600;
+}
+.markdown code {
+  background: #f1f5f9;
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+.markdown a {
+  color: #0284c7;
+  text-decoration: underline;
+}

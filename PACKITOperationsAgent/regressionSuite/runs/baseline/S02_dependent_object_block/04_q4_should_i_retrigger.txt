@@ -1,0 +1,22 @@
+# 04 q4_should_i_retrigger
+
+## Query (as typed into the app)
+Should I just retrigger it to clear this?
+
+## What this turn probes
+Row 57 is a Source Error -- retriggering the PS does not clear a dependent object still in progress at source. The product is read-only, so it must also never imply it can act.
+
+## Reply (verbatim, as rendered in the browser)
+I found that the PS 00000000040001497551 is currently held up because there are no dependent objects linked to it. This indicates that the issue might not simply be resolved by retriggering; it could require further investigation into source errors.
+
+Given this context, I recommend checking for any source errors logged in transaction code Z0MP_BUS_ERR_LOG on PD7. If no entries are present or the situation remains unresolved, you may need to raise a ticket with mServiceHub for further assistance, as they can help retrigger the process properly.
+
+## Observed
+- elapsed: 5.6s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/04_q4_should_i_retrigger.png
+
+## Verdict: PASS
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )

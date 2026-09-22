@@ -1,0 +1,38 @@
+# 02 q2_bare_window_reply
+
+## Query (as typed into the app)
+24 hours
+
+## What this turn probes
+THE REGRESSION. A bare window names no PS. Before the rewrite this either parsed to nothing and fell back to 15 minutes again, or relied on turn 1 re-resolving the subject from history -- measured unreliable, and wrong here means answering about a different PS entirely.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724 — within the last 24 hours, the PS has encountered an error when attempting to replicate to Target System SAPP870110. The specific issue reported is "SNR13 not found/ Mark for deletion," indicating that the SNR13 (028100944104Y) is either not created on the target system or marked for deletion.
+
+The transfer has been attempted 100 times at the Target System without any success despite only one source-side trigger being sent. There are no linked Document Info Records associated with this PS.
+
+To resolve this issue, please investigate the following:
+
+Create the missing SNR13, or remove the deletion flag if it was applied incorrectly.
+If the deletion flag is appropriate, then consider deleting the Determination Record and the PS itself, and inform the PST Team via mServiceHub.
+
+Let me know if you need further information on related queries!
+
+## Observed
+- elapsed: 12.8s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_bare_window_reply.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001253724
+- [ok  ] contains_all: 028100944104Y
+- [ok  ] contains_all: SAPP870110
+- [ok  ] spl_contains: "00000000040001253724"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

@@ -1,0 +1,23 @@
+# 02 q2_far_too_broad
+
+## Query (as typed into the app)
+Show me all the errors.
+
+## What this turn probes
+status=ERROR alone is as broad as the entire pipeline. Must be refused with a request to narrow, not answered with whatever happens to be in the index.
+
+## Reply (verbatim, as rendered in the browser)
+I can only assist with questions related to PackIT Packaging Specification. Please let me know if you have a specific question regarding a Packaging Specification's status or data flow.
+
+## Observed
+- elapsed: 2.5s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_far_too_broad.png
+
+## Verdict: FAIL
+- [FAIL] contains_any: narrow|more specific|PS ID|which plant|need (?:at least|a bit more)  -- no alternative matched
+- [ok  ] absent: 00000000040001253724
+- [ok  ] absent: 00000000040001497551
+- [ok  ] search_count: 0..0

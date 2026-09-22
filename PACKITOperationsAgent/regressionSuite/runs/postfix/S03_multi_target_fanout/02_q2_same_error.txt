@@ -1,0 +1,27 @@
+# 02 q2_same_error
+
+## Query (as typed into the app)
+Are those two the same error, or different?
+
+## What this turn probes
+The descriptions differ in plant code (0780 vs 078W) and one carries an extra 'Cockpit Data Model Updated' line. Claiming they are identical is a wrong result read straight from data the model has.
+
+## Reply (verbatim, as rendered in the browser)
+The two errors are related but describe different contexts:
+
+The transfer to SAPP720110 specifies an invalid status for the T141 BOM item associated with material 6000.409.798 in plant 0780. This indicates that the material is not in a valid state for processing within that target system.
+
+The transfer to SAPPOE0110 references a general update to the Cockpit data model and also points to the same issue with the T141 BOM item status being invalid, but without specifying the material status further.
+
+While both errors originate from the same underlying issue of the BOM item's status, they pertain to their respective processes in different target systems.
+
+## Observed
+- elapsed: 5.2s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_same_error.png
+
+## Verdict: FAIL
+- [FAIL] contains_any: 078W  -- no alternative matched
+- [ok  ] contains_any: 0780

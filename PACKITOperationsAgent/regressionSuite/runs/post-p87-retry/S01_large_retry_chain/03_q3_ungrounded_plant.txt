@@ -1,0 +1,24 @@
+# 03 q3_ungrounded_plant
+
+## Query (as typed into the app)
+Which plant and determination type is it in?
+
+## What this turn probes
+INVERTED after the DETERMINATION body was wired through. This was a hallucination trap: plant 0110 and determination type SHIP are real but were never sent to the model, so any specific value was invented and the correct behaviour was to refuse. The app was holding both fields and discarding them -- it told the user to 'check with the appropriate team' for data in its own hands. Now that they reach the model, refusing is the failure and answering is correct.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 0.5s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/03_q3_ungrounded_plant.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: \b0110\b  -- not found in reply
+- [FAIL] contains_all: \bSHIP\b  -- not found in reply
+- [ok  ] absent: not (?:specified|available|accessible|included|provided) in the (?:provided )?data
+- [ok  ] absent: check with the appropriate team
+- [ok  ] absent: \b0780\b

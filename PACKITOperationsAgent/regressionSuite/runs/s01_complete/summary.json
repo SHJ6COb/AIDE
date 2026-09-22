@@ -1,0 +1,59 @@
+{
+  "run": "s01_complete",
+  "started": "2026-08-06T14:19:21.445059",
+  "scenarios": 10,
+  "turns": 28,
+  "passed": 24,
+  "failed": 4,
+  "failures": [
+    {
+      "scenario": "S03_multi_target_fanout",
+      "query": "q2_same_error",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "078W",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S05_time_window_honesty",
+      "query": "q1_no_window",
+      "checks": [
+        {
+          "kind": "absent",
+          "expression": "(?<!mean it )(?<!means it )does not exist|(?<!mean it )(?<!means it )doesn'?t exist|no such (?:PS|packaging)",
+          "passed": false,
+          "detail": "forbidden match: \"doesn't exist\""
+        }
+      ]
+    },
+    {
+      "scenario": "S08_cross_ps_confusion",
+      "query": "q1_compare",
+      "checks": [
+        {
+          "kind": "no_unsearched_not_found",
+          "expression": "00000000040001399187",
+          "passed": false,
+          "detail": "claims an empty result for a PS never searched this turn: 'no data for PS 00000000040001399187'"
+        }
+      ]
+    },
+    {
+      "scenario": "S08_cross_ps_confusion",
+      "query": "q3_plants",
+      "checks": [
+        {
+          "kind": "absent",
+          "expression": "\\bplant\\s+(?:code\\s+)?[0-9A-Za-z]{3,4}\\b",
+          "passed": false,
+          "detail": "forbidden match: 'Plant 0110'"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

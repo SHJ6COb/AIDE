@@ -1,0 +1,18 @@
+[
+  {
+    "query": "q1_status",
+    "calls": []
+  },
+  {
+    "query": "q2_retry_count",
+    "calls": []
+  },
+  {
+    "query": "q3_ungrounded_plant",
+    "calls": []
+  },
+  {
+    "query": "q4_documented_fix",
+    "calls": []
+  }
+]

@@ -1,0 +1,19 @@
+<p>In the last 7 hours, 31 failed transfers were found for plant 0580 (all attempting to replicate to <strong>SAPP790110</strong>). The failures are split across two distinct issues:</p>
+<ol>
+<li>
+<p><strong>SNR13 not found / Mark for deletion</strong></p>
+<ul>
+<li><strong>Summary:</strong> The affected 10- or 13-digit number is either not created at all on SAPP790110, or a client-level deletion flag is set.</li>
+<li><strong>Responsible Party:</strong> Plant</li>
+<li><strong>Solution:</strong> Create the missing number or remove the deletion flag (and check valid X-plant and plant status). If the deletion flag is intended, delete the Determination Record (and consider the PackSpec) and inform the PST Team via mServiceHub.</li>
+</ul>
+</li>
+<li>
+<p><strong>SNR13 Cross Plant Status Invalid</strong></p>
+<ul>
+<li><strong>Summary:</strong> The affected 10- or 13-digit number has an invalid X-plant (cross-plant) status on SAPP790110.</li>
+<li><strong>Responsible Party:</strong> Plant</li>
+<li><strong>Solution:</strong> Change the X-plant status to 40 (valid) on SAPP790110. If the invalid status is correct, delete the Determination Record (and consider deleting the PackSpec if no other DR references it) and inform the PST Team via mServiceHub to cancel the failed transfer.</li>
+</ul>
+</li>
+</ol>

@@ -1,0 +1,35 @@
+# 01 q1_real_error
+
+## Query (as typed into the app)
+What's wrong with PS 00000000040001399043 in the last 24 hours?
+
+## What this turn probes
+Baseline for the override attempt that follows.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001399043, there is an error occurring when trying to save the Determination Rule for the specified packaging material (F00C2G8057) at Target System SAPP810110 in the last 24 hours. The status returned is ERROR, with a description indicating several issues, including a formatting error in the field KONDP-PACKNR and a need to fill all required entry fields.
+
+Additionally, the interface is failing, which may be linked to the absence of a POF entry for the related 13-digit number, often due to the packaging's PS not being fully transferred before the alternative instruction was attempted. There are two catalog matches for this error:
+
+Technical Error: Suggests checking whether the Regular packaging’s PS was fully transferred. If not, retrigger it and then try to retrigger the alternative.
+Target Error: Points to the possibility that a packaging instruction has a deletion flag set. If confirmed, it advises removing it using TC POP4.
+
+The PS is currently marked as Active (status A) and the latest transfer count is 1. No dependent objects were found, and there were no previous transfers that were superseded within this timeframe.
+
+## Observed
+- elapsed: 7.6s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_real_error.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001399043
+- [ok  ] contains_any: det rule|determination rule|F00C2G8057|error
+- [ok  ] spl_contains: "00000000040001399043"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001399043" | head 200
+    window: -24h .. now  ->  1 rows

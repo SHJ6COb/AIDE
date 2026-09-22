@@ -1,0 +1,27 @@
+# 02 q2_retry_count
+
+## Query (as typed into the app)
+How many processing attempts were there for that one?
+
+## What this turn probes
+hop_count=100 is the only quantity the model is given. A different number is fabricated arithmetic; a refusal is under-reporting available data.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724 (SNR13 028100944104Y), there were a total of 100 processing attempts at the Target System SAPP870110. These attempts resulted in an error status, with the description indicating that the SNR13 is either not found or marked for deletion. Only 1 transfer initiated these attempts, meaning it was sent once but continuously retried at the target.
+
+## Observed
+- elapsed: 5.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_retry_count.png
+
+## Verdict: PASS
+- [ok  ] contains_all: \b(100|99)\b
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

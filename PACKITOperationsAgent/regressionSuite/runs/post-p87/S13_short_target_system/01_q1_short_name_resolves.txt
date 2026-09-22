@@ -1,0 +1,21 @@
+# 01 q1_short_name_resolves
+
+## Query (as typed into the app)
+Can you provide the latest successful PackITPackagingSpecification transfer to target system P87?
+
+## What this turn probes
+P87 must reach Splunk as SAPP870110. The SPL assertion is the real check -- an answer can read plausibly while the filter it claims to have applied was never in the query at all, which is exactly how this defect stayed invisible.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 0.4s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/01_q1_short_name_resolves.png
+
+## Verdict: FAIL
+- [FAIL] spl_contains: host="*SAPP870110*"  -- actual SPL: ''
+- [FAIL] search_count: 1..1  -- observed 0 Splunk job(s): []

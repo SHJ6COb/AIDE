@@ -1,0 +1,24 @@
+# 03 q3_unresolvable_value_never_widens_the_search
+
+## Query (as typed into the app)
+What about transfers at plant not-a-real-plant-code?
+
+## What this turn probes
+A value that cannot become a filter must never be quietly dropped and the search run without it -- that is the failure shared by the IAM/OES enum, LABEL_SALESCHANL, and the omitted time window.
+
+What this turn can actually check is the outcome: no search, and no answer invented in place of one. It does NOT exercise harness's own guard, because the model usually declines this before ever calling the tool (0 Splunk jobs observed) -- forcing a bad value past turn 1 through the real UI isn't reliably reproducible. The guard itself is pinned deterministically by tests/test_harness.py::test_unresolvable_value_asks_instead_of_searching_without_it, which fails the run if get_ps_status is reached at all.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 0.4s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/03_q3_unresolvable_value_never_widens_the_search.png
+
+## Verdict: FAIL
+- [FAIL] contains_any: plant code|valid plant|couldn'?t interpret|not a (?:real|valid)|provide a  -- no alternative matched
+- [ok  ] absent: SAPP\w{2}0110
+- [ok  ] search_count: 0..0

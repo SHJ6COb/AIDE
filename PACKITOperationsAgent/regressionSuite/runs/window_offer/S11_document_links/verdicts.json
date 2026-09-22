@@ -1,0 +1,107 @@
+[
+  {
+    "scenario": "S11_document_links",
+    "query": "q1_status",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "00000000040000434427",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S11_document_links",
+    "query": "q2_linked_dirs",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "0000000000000000001627019",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "contains_all",
+        "expression": "0000000000000000001507973",
+        "passed": false,
+        "detail": "not found in reply"
+      },
+      {
+        "kind": "absent",
+        "expression": "can'?t tell|cannot tell|no way to|not able to determine|don'?t have (?:that )?(?:information|access)",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "(please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S11_document_links",
+    "query": "q3_ps_with_no_links",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_any",
+        "expression": "\bno\b|none|not (?:any|linked)|doesn'?t (?:have|declare)|no (?:linked|document)",
+        "passed": false,
+        "detail": "no alternative matched"
+      },
+      {
+        "kind": "absent",
+        "expression": "0000000000000000001627019",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "0000000000000000001507973",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-24h",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

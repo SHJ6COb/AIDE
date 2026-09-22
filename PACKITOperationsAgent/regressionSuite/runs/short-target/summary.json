@@ -1,0 +1,23 @@
+{
+  "run": "short-target",
+  "started": "2026-08-07T12:57:35.320202",
+  "scenarios": 1,
+  "turns": 3,
+  "passed": 2,
+  "failed": 1,
+  "failures": [
+    {
+      "scenario": "S13_short_target_system",
+      "query": "q3_unresolvable_value_is_named",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "not-a-real-plant-code",
+          "passed": false,
+          "detail": "not found in reply"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

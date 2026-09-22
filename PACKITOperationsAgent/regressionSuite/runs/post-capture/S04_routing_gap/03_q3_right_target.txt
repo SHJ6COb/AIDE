@@ -1,0 +1,33 @@
+# 03 q3_right_target
+
+## Query (as typed into the app)
+OK, and did it reach SAPP870110 in the last 24 hours?
+
+## What this turn probes
+The mirror case: the target IS configured and the record IS there. No routing call should be needed at all.
+
+## Reply (verbatim, as rendered in the browser)
+I couldn't find any records for PS 00000000040001253724 reaching SAPP870110 in the last 24 hours. This doesn't mean it doesn't exist — the PS may simply be outside of this window. You might try asking again with a wider time frame, or check with the PST team to confirm the Expected Target System for this PS.
+
+## Observed
+- elapsed: 6.3s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 0
+- screenshot: shots/03_q3_right_target.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: SAPP870110
+- [FAIL] contains_all: SNR13  -- not found in reply
+- [ok  ] spl_contains: host="*SAPP870110*"
+- [FAIL] search_count: 1..1  -- observed 2 Splunk job(s): ['search index=pdbb sourcetype=Native "00000000040001253724" host="*SAPP870110*" | head 200', 'search index=pdbb sourcetype=Native "00000000040001253724" | head 200']
+- [ok  ] search_window: -24h
+- [ok  ] routing_call: False
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" host="*SAPP870110*" | head 200
+    window: -24h .. now  ->  0 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  0 rows

@@ -1,0 +1,32 @@
+# 01 q1_no_window_offers_widths
+
+## Query (as typed into the app)
+What about PS 00000000040001253724?
+
+## What this turn probes
+The default window is narrow by design, so for live data this is the common case, not an unusual one. Rather than asking the user to restate the whole question, offer the widths -- and offer exactly the forms the reply parser can read back.
+
+## Reply (verbatim, as rendered in the browser)
+PS 00000000040001253724 was not found in the last 15 minutes. This does not mean that the PS does not exist; it may simply be outside this time window. I recommend either widening the search window or providing a more specific PS ID or plant to check further.
+
+## Observed
+- elapsed: 4.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_no_window_offers_widths.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: 15 minutes
+- [FAIL] contains_all: last 1 hour  -- not found in reply
+- [FAIL] contains_all: last 4 hours  -- not found in reply
+- [FAIL] contains_all: last 24 hours  -- not found in reply
+- [FAIL] contains_all: last 7 days  -- not found in reply
+- [ok  ] absent: 028100944104Y
+- [ok  ] absent: SAPP870110
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -15m
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -15m .. now  ->  0 rows

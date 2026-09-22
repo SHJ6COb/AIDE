@@ -1,0 +1,10 @@
+{
+  "run": "post-capture3",
+  "started": "2026-08-07T12:02:17.254946",
+  "scenarios": 3,
+  "turns": 8,
+  "passed": 8,
+  "failed": 0,
+  "failures": [],
+  "browser_console": []
+}

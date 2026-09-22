@@ -1,0 +1,21 @@
+# 03 q3_unresolvable_value_is_named
+
+## Query (as typed into the app)
+What about transfers at plant not-a-real-plant-code?
+
+## What this turn probes
+THE GUARD. A value that cannot become a filter must stop the search and be named back verbatim. Answering anyway would silently widen the question, which is the failure mode shared by the IAM/OES enum, LABEL_SALESCHANL, and the omitted time window.
+
+## Reply (verbatim, as rendered in the browser)
+I can’t check that data without a valid plant code. Please provide a real plant code or a PS ID for a more accurate search about the transfer status.
+
+## Observed
+- elapsed: 8.5s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/03_q3_unresolvable_value_is_named.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: not-a-real-plant-code  -- not found in reply
+- [ok  ] search_count: 0..0

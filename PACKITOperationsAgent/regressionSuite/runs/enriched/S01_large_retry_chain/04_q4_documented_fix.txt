@@ -1,0 +1,23 @@
+# 04 q4_documented_fix
+
+## Query (as typed into the app)
+Is there a documented fix for that error?
+
+## What this turn probes
+Catalog row 2's solution must be reported as written; a plausible-sounding SAP fix that is not row 2 is the classic grounded-source drift.
+
+## Reply (verbatim, as rendered in the browser)
+There is no documented fix for the specific error indicating "SNR13 not found/ Mark for deletion" related to PS 00000000040001253724. The appropriate actions would either involve creating the missing SNR13 number if it has not been generated yet, or removing the deletion flag if it is set incorrectly. If the deletion flag is valid, you should delete the Determination Record and contact the PST Team via mServiceHub for further assistance.
+
+## Observed
+- elapsed: 6.7s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/04_q4_documented_fix.png
+
+## Verdict: PASS
+- [ok  ] contains_any: deletion flag | mark(ed)? for deletion
+- [ok  ] contains_any: create | missing
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: \b(INC\d{5,}|CHG\d{5,}|TICKET-\d+)\b

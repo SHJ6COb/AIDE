@@ -1,0 +1,35 @@
+# 03 q3_dependent_detail
+
+## Query (as typed into the app)
+Which dependent objects exactly are holding it up?
+
+## What this turn probes
+HALLUCINATION TRAP. The dependent-object lookup returned two empty lists. The honest answer is that none were visible in Splunk and the Source system is where to look. Naming a specific document or cockpit record is fabrication.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001497551, there are currently no dependent objects causing the blockage, as both Document Info Records and Cockpit Master Data show a transfer count of 0 and no outcomes. However, the absence of any dependent objects is considered anomalous.
+
+The error message indicates that the Cockpit master data dependent object is still in progress, suggesting that dependent objects related to this PS may have been triggered but could be lagging or encountering a source error.
+
+To address this, it’s recommended to check entries in transaction code Z0MP_BUS_ERR_LOG on PD7 to rectify any underlying source errors. If no entries are found for this PS, you may need to raise a ticket with mServiceHub (Service+: PACKIT-S4) for further assistance and retriggering via Z0MP_SINGLE_TRIGGER.
+
+## Observed
+- elapsed: 7.9s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 0
+- screenshot: shots/03_q3_dependent_detail.png
+
+## Verdict: PASS
+- [ok  ] contains_any: none|no (?:dependent|document|cockpit|specific|matching)|not (?:visible|found|surfaced|appear|present)|couldn'?t find|could not find|didn'?t find|empty|nothing|count of 0|anomalous
+- [ok  ] absent: \bDIR-\w+
+- [ok  ] absent: document (?:number|info record) \d+
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" | head 200
+    window: -24h .. now  ->  49 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*PackITPackagingCockpitMasterData" "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows

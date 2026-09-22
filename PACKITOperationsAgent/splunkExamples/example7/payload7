@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<results preview='0'>
+<meta>
+<fieldOrder>
+<field>_bkt</field>
+<field>_cd</field>
+<field>_indextime</field>
+<field>_raw</field>
+<field>_serial</field>
+<field>_si</field>
+<field>_sourcetype</field>
+<field>_subsecond</field>
+<field>_time</field>
+<field>host</field>
+<field>index</field>
+<field>linecount</field>
+<field>source</field>
+<field>sourcetype</field>
+<field>splunk_server</field>
+</fieldOrder>
+</meta>
+	<result offset='0'>
+		<field k='_bkt'>
+			<value><text>pdbb~11605~87F78375-09C0-4ED5-A073-287FE171A651</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>11605:58583541</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1786081522</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>{&quot;COLLECTIVEMESSAGE&quot;: {&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C465C2D8554056&quot;,&quot;TIMESTAMP&quot;:&quot;20260807054521&quot;},&quot;SINGLEMESSAGES&quot;:[{&quot;SINGLEMESSAGEHEADER&quot;:{&quot;SOURCESYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;OBJECTKEY&quot;:{&quot;SYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000010000617691&quot;,&quot;DOCUMENTPART&quot;:&quot;000&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C465C2D8554056&quot;,&quot;MESSAGETYPE&quot;:&quot;DocumentInfoRecord&quot;,&quot;TOPICSTRING&quot;:&quot;Native/DocumentInfoRecord/SAPPD70110&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;CREATIONTIMESTAMP&quot;:&quot;20260807054521&quot;,&quot;LOGICALCONNECTION&quot;:&quot;PACKIT&quot;},&quot;TOPICSTRING&quot;:&quot;<sg h='1'>DocumentInfoRecord/V1/REGULAR/SAPPD70110/L01/_/_/_</sg>&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;SINGLEMESSAGEBODY&quot;:{&quot;DOCUMENTINFORECORDROOT&quot;:{&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000010000617691&quot;,&quot;DOCUMENTPART&quot;:&quot;000&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MAINDATA&quot;:{&quot;CADINDICATOR&quot;:&quot;&quot;,&quot;DATARECORDDEPARTMENTRESP&quot;:&quot;DAD2BG&quot;,&quot;DELETIONINDICATOR&quot;:&quot;&quot;,&quot;ECNUMBER&quot;:&quot;&quot;,&quot;SOURCEAPPLICATION&quot;:&quot;&quot;,&quot;STATUS&quot;:&quot;AA&quot;,&quot;VALIDFROMDATE&quot;:&quot;2025-04-04&quot;,&quot;LABORATORY&quot;:&quot;&quot;,&quot;ORGOFFICEID&quot;:&quot;&quot;,&quot;DATARECORDRESP&quot;:&quot;&quot;,&quot;PARENTDOCUMENTNUMBER&quot;:&quot;&quot;,&quot;PARENTDOCUMENTPART&quot;:&quot;&quot;,&quot;PARENTDOCUMENTTYPE&quot;:&quot;&quot;,&quot;PARENTDOCUMENTVERSION&quot;:&quot;&quot;},&quot;OBJECTLINKSDOCUMENT&quot;:[],&quot;OBJECTLINKSPACKITPACKSPEC&quot;:[],&quot;OBJECTLINKSWORKSTEP&quot;:[{&quot;WORKSTEP_ID&quot;:&quot;00000000001000000425&quot;,&quot;PACKAGINGDATASHEETRELEVANCE&quot;:&quot;0&quot;}],&quot;CHARACTERISTICVALUES&quot;:[],&quot;CLASSALLOCATIONS&quot;:[],&quot;DOCUMENTDESCRIPTIONS&quot;:[{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;E&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;D&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;H&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;P&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;C&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;F&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;T&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;S&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;J&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;1&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;L&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;I&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;3&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;DESCRIPTION&quot;:&quot;B04Y_V07_en_signed&quot;,&quot;LANGUAGE_ISO&quot;:&quot;4&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;}],&quot;DOCUMENTFILES&quot;:[{&quot;CONTENTTRANSFERTYPE&quot;:&quot;D&quot;,&quot;FILEINDEX&quot;:&quot;0EBD9DC62D041FE0A99F1FE69CE958D3&quot;,&quot;FILENAME&quot;:&quot;B04Y_V07_en_signed.pdf&quot;,&quot;ORIGINALFILEPATH&quot;:&quot;&quot;,&quot;UPDATETIMESTAMP&quot;:20251009101619,&quot;WORKSTATIONAPPLICATION&quot;:&quot;PDF&quot;}],&quot;OBJECTLINKSMATERIAL&quot;:[],&quot;OBJECTLINKSCHANGEMASTER&quot;:[]}}]}</v></field>
+		<field k='_serial'>
+			<value><text>0</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+			<value><text>pdbb</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>Native</text></value>
+		</field>
+		<field k='_subsecond'>
+			<value><text>.32</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2026-08-07T07:45:22.320+02:00</text></value>
+		</field>
+		<field k='host'>
+			<value><text>SOLACE</text></value>
+		</field>
+		<field k='index'>
+			<value h='1'><text>pdbb</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value h='1'><text>DocumentInfoRecord</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>Native</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+		</field>
+	</result>
+	<result offset='1'>
+		<field k='_bkt'>
+			<value><text>pdbb~11605~87F78375-09C0-4ED5-A073-287FE171A651</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>11605:58567785</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1786081521</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>{&quot;COLLECTIVEMESSAGE&quot;: {&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C465B43CC0C057&quot;,&quot;TIMESTAMP&quot;:&quot;20260807054521&quot;},&quot;SINGLEMESSAGES&quot;:[{&quot;SINGLEMESSAGEHEADER&quot;:{&quot;SOURCESYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;OBJECTKEY&quot;:{&quot;SYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000000000000678&quot;,&quot;DOCUMENTPART&quot;:&quot;LEO&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C465B43CC0C057&quot;,&quot;MESSAGETYPE&quot;:&quot;DocumentInfoRecord&quot;,&quot;TOPICSTRING&quot;:&quot;Native/DocumentInfoRecord/SAPPD70110&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;CREATIONTIMESTAMP&quot;:&quot;20260807054521&quot;,&quot;LOGICALCONNECTION&quot;:&quot;PACKIT&quot;},&quot;TOPICSTRING&quot;:&quot;<sg h='1'>DocumentInfoRecord/V1/REGULAR/SAPPD70110/L01/_/_/_</sg>&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;SINGLEMESSAGEBODY&quot;:{&quot;DOCUMENTINFORECORDROOT&quot;:{&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000000000000678&quot;,&quot;DOCUMENTPART&quot;:&quot;LEO&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MAINDATA&quot;:{&quot;CADINDICATOR&quot;:&quot;&quot;,&quot;DATARECORDDEPARTMENTRESP&quot;:&quot;MCKNIGK&quot;,&quot;DELETIONINDICATOR&quot;:&quot;&quot;,&quot;ECNUMBER&quot;:&quot;&quot;,&quot;SOURCEAPPLICATION&quot;:&quot;PDF&quot;,&quot;STATUS&quot;:&quot;AA&quot;,&quot;VALIDFROMDATE&quot;:&quot;2023-05-04&quot;,&quot;LABORATORY&quot;:&quot;&quot;,&quot;ORGOFFICEID&quot;:&quot;&quot;,&quot;DATARECORDRESP&quot;:&quot;&quot;,&quot;PARENTDOCUMENTNUMBER&quot;:&quot;&quot;,&quot;PARENTDOCUMENTPART&quot;:&quot;&quot;,&quot;PARENTDOCUMENTTYPE&quot;:&quot;&quot;,&quot;PARENTDOCUMENTVERSION&quot;:&quot;&quot;},&quot;OBJECTLINKSDOCUMENT&quot;:[],&quot;OBJECTLINKSPACKITPACKSPEC&quot;:[],&quot;OBJECTLINKSWORKSTEP&quot;:[{&quot;WORKSTEP_ID&quot;:&quot;00000000001000000649&quot;,&quot;PACKAGINGDATASHEETRELEVANCE&quot;:&quot;&quot;}],&quot;CHARACTERISTICVALUES&quot;:[],&quot;CLASSALLOCATIONS&quot;:[],&quot;DOCUMENTDESCRIPTIONS&quot;:[{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;E&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;D&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;H&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;P&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;C&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;F&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;S&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;T&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;J&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;1&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;L&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;I&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;3&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;DESCRIPTION&quot;:&quot;KSD_Fiat_EN&quot;,&quot;LANGUAGE_ISO&quot;:&quot;4&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;}],&quot;DOCUMENTFILES&quot;:[{&quot;CONTENTTRANSFERTYPE&quot;:&quot;D&quot;,&quot;FILEINDEX&quot;:&quot;0EBD9DC62D041FE0A99F25A487CB1BBC&quot;,&quot;FILENAME&quot;:&quot;/PT3/PT3/PACKIT/230504/1/LO/TEO/Document&quot;,&quot;ORIGINALFILEPATH&quot;:&quot;&quot;,&quot;UPDATETIMESTAMP&quot;:20251009101736,&quot;WORKSTATIONAPPLICATION&quot;:&quot;PDF&quot;}],&quot;OBJECTLINKSMATERIAL&quot;:[],&quot;OBJECTLINKSCHANGEMASTER&quot;:[]}}]}</v></field>
+		<field k='_serial'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+			<value><text>pdbb</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>Native</text></value>
+		</field>
+		<field k='_subsecond'>
+			<value><text>.266</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2026-08-07T07:45:21.266+02:00</text></value>
+		</field>
+		<field k='host'>
+			<value><text>SOLACE</text></value>
+		</field>
+		<field k='index'>
+			<value h='1'><text>pdbb</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value h='1'><text>DocumentInfoRecord</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>Native</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+		</field>
+	</result>
+	<result offset='2'>
+		<field k='_bkt'>
+			<value><text>pdbb~11605~87F78375-09C0-4ED5-A073-287FE171A651</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>11605:58554503</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1786081520</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>{&quot;COLLECTIVEMESSAGE&quot;: {&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C465A7987E4132&quot;,&quot;TIMESTAMP&quot;:&quot;20260807054520&quot;},&quot;SINGLEMESSAGES&quot;:[{&quot;SINGLEMESSAGEHEADER&quot;:{&quot;SOURCESYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;OBJECTKEY&quot;:{&quot;SYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000000000000677&quot;,&quot;DOCUMENTPART&quot;:&quot;LEO&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C465A7987E4132&quot;,&quot;MESSAGETYPE&quot;:&quot;DocumentInfoRecord&quot;,&quot;TOPICSTRING&quot;:&quot;Native/DocumentInfoRecord/SAPPD70110&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;CREATIONTIMESTAMP&quot;:&quot;20260807054520&quot;,&quot;LOGICALCONNECTION&quot;:&quot;PACKIT&quot;},&quot;TOPICSTRING&quot;:&quot;<sg h='1'>DocumentInfoRecord/V1/REGULAR/SAPPD70110/L01/_/_/_</sg>&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;SINGLEMESSAGEBODY&quot;:{&quot;DOCUMENTINFORECORDROOT&quot;:{&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000000000000677&quot;,&quot;DOCUMENTPART&quot;:&quot;LEO&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MAINDATA&quot;:{&quot;CADINDICATOR&quot;:&quot;&quot;,&quot;DATARECORDDEPARTMENTRESP&quot;:&quot;MCKNIGK&quot;,&quot;DELETIONINDICATOR&quot;:&quot;&quot;,&quot;ECNUMBER&quot;:&quot;&quot;,&quot;SOURCEAPPLICATION&quot;:&quot;PDF&quot;,&quot;STATUS&quot;:&quot;AA&quot;,&quot;VALIDFROMDATE&quot;:&quot;2023-05-04&quot;,&quot;LABORATORY&quot;:&quot;&quot;,&quot;ORGOFFICEID&quot;:&quot;&quot;,&quot;DATARECORDRESP&quot;:&quot;&quot;,&quot;PARENTDOCUMENTNUMBER&quot;:&quot;&quot;,&quot;PARENTDOCUMENTPART&quot;:&quot;&quot;,&quot;PARENTDOCUMENTTYPE&quot;:&quot;&quot;,&quot;PARENTDOCUMENTVERSION&quot;:&quot;&quot;},&quot;OBJECTLINKSDOCUMENT&quot;:[],&quot;OBJECTLINKSPACKITPACKSPEC&quot;:[],&quot;OBJECTLINKSWORKSTEP&quot;:[{&quot;WORKSTEP_ID&quot;:&quot;00000000001000000649&quot;,&quot;PACKAGINGDATASHEETRELEVANCE&quot;:&quot;&quot;}],&quot;CHARACTERISTICVALUES&quot;:[],&quot;CLASSALLOCATIONS&quot;:[],&quot;DOCUMENTDESCRIPTIONS&quot;:[{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;E&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;D&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;H&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;P&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;C&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;F&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;S&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;T&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;J&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;1&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;L&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;I&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;3&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;DESCRIPTION&quot;:&quot;KSD 03 FIA de&quot;,&quot;LANGUAGE_ISO&quot;:&quot;4&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;}],&quot;DOCUMENTFILES&quot;:[{&quot;CONTENTTRANSFERTYPE&quot;:&quot;D&quot;,&quot;FILEINDEX&quot;:&quot;0EBD9DC62D041FE0A99F25367A36DBBC&quot;,&quot;FILENAME&quot;:&quot;/PT3/PT3/PACKIT/230504/1/LO/TEO/Document&quot;,&quot;ORIGINALFILEPATH&quot;:&quot;&quot;,&quot;UPDATETIMESTAMP&quot;:20251009101730,&quot;WORKSTATIONAPPLICATION&quot;:&quot;PDF&quot;}],&quot;OBJECTLINKSMATERIAL&quot;:[],&quot;OBJECTLINKSCHANGEMASTER&quot;:[]}}]}</v></field>
+		<field k='_serial'>
+			<value><text>2</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+			<value><text>pdbb</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>Native</text></value>
+		</field>
+		<field k='_subsecond'>
+			<value><text>.603</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2026-08-07T07:45:20.603+02:00</text></value>
+		</field>
+		<field k='host'>
+			<value><text>SOLACE</text></value>
+		</field>
+		<field k='index'>
+			<value h='1'><text>pdbb</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value h='1'><text>DocumentInfoRecord</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>Native</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+		</field>
+	</result>
+	<result offset='3'>
+		<field k='_bkt'>
+			<value><text>pdbb~11605~87F78375-09C0-4ED5-A073-287FE171A651</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>11605:58541756</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1786081520</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>{&quot;COLLECTIVEMESSAGE&quot;: {&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FD1A4C4659BFD219FA0&quot;,&quot;TIMESTAMP&quot;:&quot;20260807054519&quot;},&quot;SINGLEMESSAGES&quot;:[{&quot;SINGLEMESSAGEHEADER&quot;:{&quot;SOURCESYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;OBJECTKEY&quot;:{&quot;SYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000000000000279&quot;,&quot;DOCUMENTPART&quot;:&quot;LEM&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FD1A4C4659BFD219FA0&quot;,&quot;MESSAGETYPE&quot;:&quot;DocumentInfoRecord&quot;,&quot;TOPICSTRING&quot;:&quot;Native/DocumentInfoRecord/SAPPD70110&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;CREATIONTIMESTAMP&quot;:&quot;20260807054519&quot;,&quot;LOGICALCONNECTION&quot;:&quot;PACKIT&quot;},&quot;TOPICSTRING&quot;:&quot;<sg h='1'>DocumentInfoRecord/V1/REGULAR/SAPPD70110/L01/_/_/_</sg>&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;SINGLEMESSAGEBODY&quot;:{&quot;DOCUMENTINFORECORDROOT&quot;:{&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000000000000279&quot;,&quot;DOCUMENTPART&quot;:&quot;LEM&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MAINDATA&quot;:{&quot;CADINDICATOR&quot;:&quot;&quot;,&quot;DATARECORDDEPARTMENTRESP&quot;:&quot;MCKNIGK&quot;,&quot;DELETIONINDICATOR&quot;:&quot;&quot;,&quot;ECNUMBER&quot;:&quot;&quot;,&quot;SOURCEAPPLICATION&quot;:&quot;PDF&quot;,&quot;STATUS&quot;:&quot;AA&quot;,&quot;VALIDFROMDATE&quot;:&quot;2023-05-04&quot;,&quot;LABORATORY&quot;:&quot;&quot;,&quot;ORGOFFICEID&quot;:&quot;&quot;,&quot;DATARECORDRESP&quot;:&quot;&quot;,&quot;PARENTDOCUMENTNUMBER&quot;:&quot;&quot;,&quot;PARENTDOCUMENTPART&quot;:&quot;&quot;,&quot;PARENTDOCUMENTTYPE&quot;:&quot;&quot;,&quot;PARENTDOCUMENTVERSION&quot;:&quot;&quot;},&quot;OBJECTLINKSDOCUMENT&quot;:[],&quot;OBJECTLINKSPACKITPACKSPEC&quot;:[],&quot;OBJECTLINKSWORKSTEP&quot;:[{&quot;WORKSTEP_ID&quot;:&quot;00000000001000000649&quot;,&quot;PACKAGINGDATASHEETRELEVANCE&quot;:&quot;&quot;}],&quot;CHARACTERISTICVALUES&quot;:[],&quot;CLASSALLOCATIONS&quot;:[],&quot;DOCUMENTDESCRIPTIONS&quot;:[{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;E&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;D&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;H&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;P&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;C&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;F&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;T&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;J&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;S&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;1&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;L&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;I&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;3&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;DESCRIPTION&quot;:&quot;LO_MD_K04Y.pdf&quot;,&quot;LANGUAGE_ISO&quot;:&quot;4&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;}],&quot;DOCUMENTFILES&quot;:[{&quot;CONTENTTRANSFERTYPE&quot;:&quot;D&quot;,&quot;FILEINDEX&quot;:&quot;0EBD9DC62D041FE0A99F24C77E01D9B9&quot;,&quot;FILENAME&quot;:&quot;/PT3/PT3/PACKIT/230504/1/LO/MD/Documents&quot;,&quot;ORIGINALFILEPATH&quot;:&quot;&quot;,&quot;UPDATETIMESTAMP&quot;:20251009101724,&quot;WORKSTATIONAPPLICATION&quot;:&quot;PDF&quot;}],&quot;OBJECTLINKSMATERIAL&quot;:[],&quot;OBJECTLINKSCHANGEMASTER&quot;:[]}}]}</v></field>
+		<field k='_serial'>
+			<value><text>3</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+			<value><text>pdbb</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>Native</text></value>
+		</field>
+		<field k='_subsecond'>
+			<value><text>.4</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2026-08-07T07:45:20.400+02:00</text></value>
+		</field>
+		<field k='host'>
+			<value><text>SOLACE</text></value>
+		</field>
+		<field k='index'>
+			<value h='1'><text>pdbb</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value h='1'><text>DocumentInfoRecord</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>Native</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+		</field>
+	</result>
+	<result offset='4'>
+		<field k='_bkt'>
+			<value><text>pdbb~11605~87F78375-09C0-4ED5-A073-287FE171A651</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>11605:46200922</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1786081321</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>{&quot;COLLECTIVEMESSAGE&quot;: {&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C456DA8F260171&quot;,&quot;TIMESTAMP&quot;:&quot;20260807054201&quot;},&quot;SINGLEMESSAGES&quot;:[{&quot;SINGLEMESSAGEHEADER&quot;:{&quot;SOURCESYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;OBJECTKEY&quot;:{&quot;SYSTEMID&quot;:&quot;SAPPD70110&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000010000481455&quot;,&quot;DOCUMENTPART&quot;:&quot;000&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MESSAGEID&quot;:&quot;0EBD9DC62D031FE1A4C456DA8F260171&quot;,&quot;MESSAGETYPE&quot;:&quot;DocumentInfoRecord&quot;,&quot;TOPICSTRING&quot;:&quot;Native/DocumentInfoRecord/SAPPD70110&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;CREATIONTIMESTAMP&quot;:&quot;20260807054201&quot;,&quot;LOGICALCONNECTION&quot;:&quot;PACKIT&quot;},&quot;TOPICSTRING&quot;:&quot;<sg h='1'>DocumentInfoRecord/V1/REGULAR/SAPPD70110/L01/_/_/_</sg>&quot;,&quot;SELECTORS&quot;:&quot;  &quot;,&quot;SINGLEMESSAGEBODY&quot;:{&quot;DOCUMENTINFORECORDROOT&quot;:{&quot;DOCUMENTNUMBER&quot;:&quot;0000000000000010000481455&quot;,&quot;DOCUMENTPART&quot;:&quot;000&quot;,&quot;DOCUMENTTYPE&quot;:&quot;L01&quot;,&quot;DOCUMENTVERSION&quot;:&quot;00&quot;},&quot;MAINDATA&quot;:{&quot;CADINDICATOR&quot;:&quot;&quot;,&quot;DATARECORDDEPARTMENTRESP&quot;:&quot;PKD1BAN&quot;,&quot;DELETIONINDICATOR&quot;:&quot;&quot;,&quot;ECNUMBER&quot;:&quot;&quot;,&quot;SOURCEAPPLICATION&quot;:&quot;&quot;,&quot;STATUS&quot;:&quot;AA&quot;,&quot;VALIDFROMDATE&quot;:&quot;2024-07-16&quot;,&quot;LABORATORY&quot;:&quot;&quot;,&quot;ORGOFFICEID&quot;:&quot;&quot;,&quot;DATARECORDRESP&quot;:&quot;&quot;,&quot;PARENTDOCUMENTNUMBER&quot;:&quot;&quot;,&quot;PARENTDOCUMENTPART&quot;:&quot;&quot;,&quot;PARENTDOCUMENTTYPE&quot;:&quot;&quot;,&quot;PARENTDOCUMENTVERSION&quot;:&quot;&quot;},&quot;OBJECTLINKSDOCUMENT&quot;:[],&quot;OBJECTLINKSPACKITPACKSPEC&quot;:[],&quot;OBJECTLINKSWORKSTEP&quot;:[{&quot;WORKSTEP_ID&quot;:&quot;00000000001000000626&quot;,&quot;PACKAGINGDATASHEETRELEVANCE&quot;:&quot;0&quot;}],&quot;CHARACTERISTICVALUES&quot;:[],&quot;CLASSALLOCATIONS&quot;:[],&quot;DOCUMENTDESCRIPTIONS&quot;:[{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;E&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;D&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;H&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;P&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;C&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;F&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;S&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;T&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;J&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;1&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;L&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;I&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;3&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;},{&quot;ADDITIONALDESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;DESCRIPTION&quot;:&quot;BM01_IN lettering Order_July 2024&quot;,&quot;LANGUAGE_ISO&quot;:&quot;4&quot;,&quot;TEXTINDICATOR&quot;:&quot;&quot;}],&quot;DOCUMENTFILES&quot;:[{&quot;CONTENTTRANSFERTYPE&quot;:&quot;D&quot;,&quot;FILEINDEX&quot;:&quot;0EBD9DC62D041FE0A99F346446931D7C&quot;,&quot;FILENAME&quot;:&quot;BM01_IN lettering Order_July 2024.pdf&quot;,&quot;ORIGINALFILEPATH&quot;:&quot;&quot;,&quot;UPDATETIMESTAMP&quot;:20251009102056,&quot;WORKSTATIONAPPLICATION&quot;:&quot;PDF&quot;}],&quot;OBJECTLINKSMATERIAL&quot;:[],&quot;OBJECTLINKSCHANGEMASTER&quot;:[]}}]}</v></field>
+		<field k='_serial'>
+			<value><text>4</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+			<value><text>pdbb</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>Native</text></value>
+		</field>
+		<field k='_subsecond'>
+			<value><text>.961</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2026-08-07T07:42:01.961+02:00</text></value>
+		</field>
+		<field k='host'>
+			<value><text>SOLACE</text></value>
+		</field>
+		<field k='index'>
+			<value h='1'><text>pdbb</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value h='1'><text>DocumentInfoRecord</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>Native</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>rb-itoa-splunk-i2-pdbb</text></value>
+		</field>
+	</result>
+</results>

@@ -1,0 +1,32 @@
+# 01 q1_status
+
+## Query (as typed into the app)
+What's happening with PS 00000000040000434427 in the last 24 hours?
+
+## What this turn probes
+Establishes the conversation subject so the DIR question below is a real follow-up.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000434427 — in the last 24 hours, there have been errors reported in both the SAPP720110 and SAPPOE0110 target systems. The status descriptions indicate that there is an issue with the T141 BOM item for material 6000.409.798 in plant 0780 for SAPP720110 and in plant 078W for SAPPOE0110.
+
+Both targets experienced one processing attempt, and each transfer encountered the same problem. Overall, there have been two transfer attempts logged for this PS.
+
+The error catalog suggests that the root of the issue is due to the packaging material having an invalid plant status on the targets. To resolve this, you'll need to either change the status of the packaging material to 40 (valid) on the respective SAP system or choose a different packaging material in the Packaging Specification.
+
+Additionally, PS 00000000040000434427 declares links to two Document Info Records, which are PAC-0000000000000000001627019-FRE-00 and PAC-0000000000000000001507973-ARC-00.
+
+## Observed
+- elapsed: 15.1s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_status.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040000434427
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000434427" | head 200
+    window: -24h .. now  ->  2 rows

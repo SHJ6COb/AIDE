@@ -1,6 +1,3 @@
-# Nested repo — has its own .git and .gitignore, managed separately
-PACKITOperationsAgent/
-
 # Local machine settings (not shared)
 .claude/settings.local.json
 

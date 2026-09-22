@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This is to override browser formatting; see server.conf[httpServer] to disable. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
+<?xml-stylesheet type="text/xml" href="/static/atom.xsl"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:s="http://dev.splunk.com/ns/rest" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
+    <title>| search index=pdbb PackITPackagingCockpitMasterData 00000000040000588527| </title>
+    <id>https://rb-itoa-splunk-pdbb.de.bosch.com:8089/services/search/jobs/1785822010.106863</id>
+    <updated>2026-08-04T07:40:21.363+02:00</updated>
+    <link href="/services/search/jobs/1785822010.106863" rel="alternate"/>
+    <published>2026-08-04T07:40:10.000+02:00</published>
+    <link href="/services/search/jobs/1785822010.106863/search.log" rel="search.log"/>
+    <link href="/services/search/jobs/1785822010.106863/search_telemetry.json" rel="search_telemetry.json"/>
+    <link href="/services/search/jobs/1785822010.106863/events" rel="events"/>
+    <link href="/services/search/jobs/1785822010.106863/results" rel="results"/>
+    <link href="/services/search/jobs/1785822010.106863/results_preview" rel="results_preview"/>
+    <link href="/services/search/jobs/1785822010.106863/timeline" rel="timeline"/>
+    <link href="/services/search/jobs/1785822010.106863/summary" rel="summary"/>
+    <link href="/services/search/jobs/1785822010.106863/control" rel="control"/>
+    <author>
+        <name>pdbb_normal_user</name>
+    </author>
+    <content type="text/xml">
+        <s:dict>
+            <s:key name="bundleVersion">106185276513343506</s:key>
+            <s:key name="canSummarize">0</s:key>
+            <s:key name="cursorTime">1970-01-01T01:00:00.000+01:00</s:key>
+            <s:key name="defaultSaveTTL">604800</s:key>
+            <s:key name="defaultTTL">600</s:key>
+            <s:key name="delegate"></s:key>
+            <s:key name="diskUsage">114688</s:key>
+            <s:key name="dispatchState">DONE</s:key>
+            <s:key name="doneProgress">1.00000</s:key>
+            <s:key name="dropCount">0</s:key>
+            <s:key name="earliestTime">2026-08-03T07:40:10.000+02:00</s:key>
+            <s:key name="eventAvailableCount">3</s:key>
+            <s:key name="eventCount">3</s:key>
+            <s:key name="eventFieldCount">6</s:key>
+            <s:key name="eventIsStreaming">1</s:key>
+            <s:key name="eventIsTruncated">0</s:key>
+            <s:key name="eventSearch">search (00000000040000588527 index=pdbb PackITPackagingCockpitMasterData)</s:key>
+            <s:key name="eventSorting">desc</s:key>
+            <s:key name="indexEarliestTime">1785739542</s:key>
+            <s:key name="indexLatestTime">1785739563</s:key>
+            <s:key name="isBatchModeSearch">0</s:key>
+            <s:key name="isDone">1</s:key>
+            <s:key name="isEventsPreviewEnabled">0</s:key>
+            <s:key name="isFailed">0</s:key>
+            <s:key name="isFinalized">0</s:key>
+            <s:key name="isPaused">0</s:key>
+            <s:key name="isPreviewEnabled">0</s:key>
+            <s:key name="isRealTimeSearch">0</s:key>
+            <s:key name="isRemoteTimeline">0</s:key>
+            <s:key name="isSaved">0</s:key>
+            <s:key name="isSavedSearch">0</s:key>
+            <s:key name="isTimeCursored">1</s:key>
+            <s:key name="isZombie">0</s:key>
+            <s:key name="is_prjob">0</s:key>
+            <s:key name="keywords">00000000040000588527 index::pdbb packitpackagingcockpitmasterdata</s:key>
+            <s:key name="label"></s:key>
+            <s:key name="latestTime">2026-08-04T07:40:10.000+02:00</s:key>
+            <s:key name="normalizedSearch">litsearch (index=pdbb PackITPackagingCockpitMasterData 00000000040000588527) | fields keepcolorder=t "_bkt" "_cd" "_si" "host" "index" "linecount" "source" "sourcetype" "splunk_server"</s:key>
+            <s:key name="numPreviews">0</s:key>
+            <s:key name="optimizedSearch">| search (00000000040000588527 index=pdbb PackITPackagingCockpitMasterData)</s:key>
+            <s:key name="phase0">litsearch (00000000040000588527 index=pdbb PackITPackagingCockpitMasterData) | fields  keepcolorder=t "_bkt" "_cd" "_si" "host" "index" "linecount" "source" "sourcetype" "splunk_server"</s:key>
+            <s:key name="phase1">simpleresultcombiner  max=0 | timeliner  remote=0 partial_commits=1 max_events_per_bucket=50000 fieldstats_update_maxperiod=60 bucket=0 | noop </s:key>
+            <s:key name="pid">3159097</s:key>
+            <s:key name="priority">5</s:key>
+            <s:key name="provenance"></s:key>
+            <s:key name="remoteSearch">litsearch (00000000040000588527 index=pdbb PackITPackagingCockpitMasterData) | fields  keepcolorder=t "_bkt" "_cd" "_si" "host" "index" "linecount" "source" "sourcetype" "splunk_server"</s:key>
+            <s:key name="reportSearch"></s:key>
+            <s:key name="resultCount">3</s:key>
+            <s:key name="resultIsStreaming">1</s:key>
+            <s:key name="resultPreviewCount">3</s:key>
+            <s:key name="runDuration">0.117</s:key>
+            <s:key name="sampleRatio">1</s:key>
+            <s:key name="sampleSeed">0</s:key>
+            <s:key name="scanCount">3</s:key>
+            <s:key name="search">| search index=pdbb PackITPackagingCockpitMasterData 00000000040000588527| </s:key>
+            <s:key name="searchCanBeEventType">1</s:key>
+            <s:key name="searchEarliestTime">1785735610.000000000</s:key>
+            <s:key name="searchLatestTime">1785822010.000000000</s:key>
+            <s:key name="searchTotalBucketsCount">28</s:key>
+            <s:key name="searchTotalEliminatedBucketsCount">19</s:key>
+            <s:key name="sid">1785822010.106863</s:key>
+            <s:key name="statusBuckets">0</s:key>
+            <s:key name="ttl">600</s:key>
+            <s:key name="performance">
+                <s:dict>
+                    <s:key name="command.fields">
+                        <s:dict>
+                            <s:key name="invocations">9</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.noop">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search">
+                        <s:dict>
+                            <s:key name="duration_secs">0.01</s:key>
+                            <s:key name="invocations">9</s:key>
+                            <s:key name="input_count">0</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.calcfields">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.expand_search">
+                        <s:dict>
+                            <s:key name="duration_secs">0.004</s:key>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.expand_search.calcfield">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.expand_search.fieldaliaser">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.expand_search.indexed_fields">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.expand_search.kv">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.expand_search.lookup">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.expand_search.sourcetype">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.fieldalias">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.index">
+                        <s:dict>
+                            <s:key name="duration_secs">0.005</s:key>
+                            <s:key name="invocations">9</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.index.usec_1_8">
+                        <s:dict>
+                            <s:key name="invocations">1188</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.index.usec_8_64">
+                        <s:dict>
+                            <s:key name="invocations">2</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.kv">
+                        <s:dict>
+                            <s:key name="duration_secs">0.002</s:key>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.lookups">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.parse_directives">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.rawdata">
+                        <s:dict>
+                            <s:key name="duration_secs">0.002</s:key>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.summary">
+                        <s:dict>
+                            <s:key name="invocations">9</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.tags">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.track_sourcetypes">
+                        <s:dict>
+                            <s:key name="invocations">9</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.search.typer">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.simpleresultcombiner">
+                        <s:dict>
+                            <s:key name="invocations">11</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="command.timeliner">
+                        <s:dict>
+                            <s:key name="duration_secs">0.001</s:key>
+                            <s:key name="invocations">11</s:key>
+                            <s:key name="input_count">3</s:key>
+                            <s:key name="output_count">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.evaluate.search">
+                        <s:dict>
+                            <s:key name="duration_secs">0.013</s:key>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.fetch.rcp.phase_0">
+                        <s:dict>
+                            <s:key name="duration_secs">0.058</s:key>
+                            <s:key name="invocations">11</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.finalWriteToDisk">
+                        <s:dict>
+                            <s:key name="duration_secs">0.001</s:key>
+                            <s:key name="invocations">2</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.localSearch">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.parserThread">
+                        <s:dict>
+                            <s:key name="invocations">9</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.stream.local">
+                        <s:dict>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.stream.remote">
+                        <s:dict>
+                            <s:key name="duration_secs">0.01</s:key>
+                            <s:key name="invocations">8</s:key>
+                            <s:key name="input_count">0</s:key>
+                            <s:key name="output_count">169189</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.stream.remote.rb-itoa-splunk-i2-pdbb">
+                        <s:dict>
+                            <s:key name="duration_secs">0.01</s:key>
+                            <s:key name="invocations">8</s:key>
+                            <s:key name="input_count">0</s:key>
+                            <s:key name="output_count">169189</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.timeline">
+                        <s:dict>
+                            <s:key name="invocations">11</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="dispatch.writeStatus">
+                        <s:dict>
+                            <s:key name="duration_secs">0.001</s:key>
+                            <s:key name="invocations">3</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="search.optimize">
+                        <s:dict>
+                            <s:key name="duration_secs">0.007</s:key>
+                            <s:key name="invocations">1</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="startup.configuration">
+                        <s:dict>
+                            <s:key name="duration_secs">0.029</s:key>
+                            <s:key name="invocations">2</s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="startup.handoff">
+                        <s:dict>
+                            <s:key name="duration_secs">0.02</s:key>
+                            <s:key name="invocations">2</s:key>
+                        </s:dict>
+                    </s:key>
+                </s:dict>
+            </s:key>
+            <s:key name="messages">
+                <s:dict/>
+            </s:key>
+            <s:key name="request">
+                <s:dict>
+                    <s:key name="earliest_time">-24h</s:key>
+                    <s:key name="latest_time">now</s:key>
+                    <s:key name="search">| search index=pdbb PackITPackagingCockpitMasterData 00000000040000588527| </s:key>
+                </s:dict>
+            </s:key>
+            <s:key name="runtime">
+                <s:dict>
+                    <s:key name="auto_cancel">0</s:key>
+                    <s:key name="auto_pause">0</s:key>
+                </s:dict>
+            </s:key>
+            <s:key name="eai:acl">
+                <s:dict>
+                    <s:key name="perms">
+                        <s:dict>
+                            <s:key name="read">
+                                <s:list>
+                                    <s:item>pdbb_normal_user</s:item>
+                                </s:list>
+                            </s:key>
+                            <s:key name="write">
+                                <s:list>
+                                    <s:item>pdbb_normal_user</s:item>
+                                </s:list>
+                            </s:key>
+                        </s:dict>
+                    </s:key>
+                    <s:key name="owner">pdbb_normal_user</s:key>
+                    <s:key name="modifiable">1</s:key>
+                    <s:key name="sharing">global</s:key>
+                    <s:key name="app">search</s:key>
+                    <s:key name="can_write">1</s:key>
+                    <s:key name="ttl">600</s:key>
+                </s:dict>
+            </s:key>
+            <s:key name="searchProviders">
+                <s:list>
+                    <s:item>rb-itoa-splunk-i2-pdbb</s:item>
+                    <s:item>rb-itoa-splunk-pdbb</s:item>
+                </s:list>
+            </s:key>
+            <s:key name="remoteSearchLogs">
+                <s:list>
+                    <s:item>rb-itoa-splunk-i2-pdbb</s:item>
+                </s:list>
+            </s:key>
+        </s:dict>
+    </content>
+</entry>

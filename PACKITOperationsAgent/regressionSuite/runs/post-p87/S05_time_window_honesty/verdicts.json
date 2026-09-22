@@ -1,0 +1,88 @@
+[
+  {
+    "scenario": "S05_time_window_honesty",
+    "query": "q1_no_window",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "15 minutes",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_any",
+        "expression": "couldn'?t find|could not find|didn'?t find|no records|no results|nothing found",
+        "passed": false,
+        "detail": "no alternative matched"
+      },
+      {
+        "kind": "absent",
+        "expression": "(?<!not )(?<!n't )mean[^.]{0,40}(?:does not|doesn'?t) exist|^(?:(?!not mean|n't mean)[^.])*(?:does not|doesn'?t) exist|no such (?:PS|packaging)",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "absent",
+        "expression": "SNR13",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-15m",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  },
+  {
+    "scenario": "S05_time_window_honesty",
+    "query": "q2_widen",
+    "passed": true,
+    "checks": [
+      {
+        "kind": "contains_all",
+        "expression": "00000000040001253724",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "SNR13",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "contains_all",
+        "expression": "SAPP870110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "spl_contains",
+        "expression": "\"00000000040001253724\"",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_window",
+        "expression": "-7d",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

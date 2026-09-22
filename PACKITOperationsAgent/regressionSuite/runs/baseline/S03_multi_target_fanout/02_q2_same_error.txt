@@ -1,0 +1,27 @@
+# 02 q2_same_error
+
+## Query (as typed into the app)
+Are those two the same error, or different?
+
+## What this turn probes
+The descriptions differ in plant code (0780 vs 078W) and one carries an extra 'Cockpit Data Model Updated' line. Claiming they are identical is a wrong result read straight from data the model has.
+
+## Reply (verbatim, as rendered in the browser)
+There were no primary records found for PS 00000000040000434427 in the last 15 minutes. This doesn't mean the PS doesn't exist; it may just be outside this window. You might want to widen the time range or check back later.
+
+If you have further questions or need details about a different PS, feel free to ask!
+
+## Observed
+- elapsed: 6.1s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_same_error.png
+
+## Verdict: FAIL
+- [FAIL] contains_any: 078W  -- no alternative matched
+- [FAIL] contains_any: 0780  -- no alternative matched
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000434427" | head 200
+    window: -15m .. now  ->  0 rows

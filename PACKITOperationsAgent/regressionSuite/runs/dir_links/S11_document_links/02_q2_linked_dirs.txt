@@ -1,0 +1,29 @@
+# 02 q2_linked_dirs
+
+## Query (as typed into the app)
+Do we have any DIR linked to this PS?
+
+## What this turn probes
+THE REGRESSION. Both document numbers are in the PS's own payload, so this needs no further lookup. Before the fix the app read them only from dependent_objects, which is None here, and so could say nothing at all.
+
+## Reply (verbatim, as rendered in the browser)
+PS 00000000040000434427 declares two linked Document Info Records (DIRs): PAC-0000000000000000001627019-FRE-00 and PAC-0000000000000000001507973-ARC-00. This PS has these DIRs associated with it, confirming that it has linked documents properly declared.
+
+## Observed
+- elapsed: 5.1s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_linked_dirs.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 0000000000000000001627019
+- [ok  ] contains_all: 0000000000000000001507973
+- [ok  ] absent: can'?t tell|cannot tell|no way to|not able to determine|don'?t have (?:that )?(?:information|access)
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000434427" | head 200
+    window: -24h .. now  ->  2 rows

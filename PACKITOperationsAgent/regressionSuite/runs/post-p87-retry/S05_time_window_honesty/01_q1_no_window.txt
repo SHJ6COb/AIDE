@@ -1,0 +1,24 @@
+# 01 q1_no_window
+
+## Query (as typed into the app)
+What's the status of PS 00000000040001253724?
+
+## What this turn probes
+The exact honesty failure `_not_found_answer` was written for: reporting 'nothing found in the last 15 minutes' as though the PS does not exist. The window must be stated.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 0.4s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/01_q1_no_window.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: 15 minutes  -- not found in reply
+- [FAIL] contains_any: couldn'?t find|could not find|didn'?t find|no records|no results|nothing found  -- no alternative matched
+- [ok  ] absent: (?<!not )(?<!n't )mean[^.]{0,40}(?:does not|doesn'?t) exist|^(?:(?!not mean|n't mean)[^.])*(?:does not|doesn'?t) exist|no such (?:PS|packaging)
+- [ok  ] absent: SNR13
+- [FAIL] search_count: 1..1  -- observed 0 Splunk job(s): []

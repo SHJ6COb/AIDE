@@ -1,0 +1,40 @@
+# 01 q1_why_stuck
+
+## Query (as typed into the app)
+Why is PS 00000000040001497551 stuck? Check the last 24 hours.
+
+## What this turn probes
+Does the dependent-object branch fire, and is an empty dependent-object result reported honestly rather than as 'no problems found'?
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001497551, the current issue stems from the Target System, SAPPOE0110. It has encountered an error: "Cockpit master data dependent object still in progress."
+
+There have been 48 transfers initiated from the Source System, and while the PS itself is active, it is currently blocked due to dependent objects—specifically, the Cockpit master data which didn't process alongside the PS. This situation often indicates that there may be a source error affecting the Cockpit master data updates.
+
+To address this, you should check the entries in transaction code Z0MP_BUS_ERR_LOG on PD7 for any errors related to this PS. If no entries are found, a ticket should be raised with mServiceHub (Service+: PACKIT-S4) to get support for retriggering via TC Z0MP_SINGLE_TRIGGER.
+
+## Observed
+- elapsed: 13.5s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 0
+- screenshot: shots/01_q1_why_stuck.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001497551
+- [ok  ] contains_any: cockpit | dependent object
+- [ok  ] contains_any: \berror\b | \bfail | \bstuck\b | \bblocked\b | in progress
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: \b(INC\d{5,}|CHG\d{5,}|TICKET-\d+)\b
+- [ok  ] spl_contains: "00000000040001497551"
+- [ok  ] search_count: 2..2
+- [ok  ] search_window: -24h
+- [ok  ] routing_call: False
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  49 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*PackITPackagingCockpitMasterData" "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows

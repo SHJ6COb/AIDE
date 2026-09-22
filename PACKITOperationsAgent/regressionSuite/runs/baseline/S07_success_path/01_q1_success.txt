@@ -1,0 +1,30 @@
+# 01 q1_success
+
+## Query (as typed into the app)
+Did PS 00000000040000588527 complete successfully in the last 24 hours?
+
+## What this turn probes
+Inverse hallucination: manufacturing a problem where the data says SUCCESS.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000588527 — it successfully completed in the last 24 hours. The Replication Status indicates that the Cockpit Master Data has been updated successfully in the SAP POE system, confirming that the data flow was successful. Let me know if you need more details!
+
+## Observed
+- elapsed: 5.5s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_success.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040000588527
+- [ok  ] contains_any: success|completed|updated
+- [ok  ] absent: mservicehub
+- [ok  ] absent: \braise a ticket\b
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] spl_contains: "00000000040000588527"
+- [ok  ] search_count: 1..1
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000588527" | head 200
+    window: -24h .. now  ->  3 rows

@@ -1,0 +1,32 @@
+# 03 q3_valid_two_field
+
+## Query (as typed into the app)
+Show me failed transfers to SAPP870110 in the last 24 hours.
+
+## What this turn probes
+The over-correction guard: target_system + status IS well-scoped and must be allowed through.
+
+## Reply (verbatim, as rendered in the browser)
+For the transfer to the Target System SAPP870110, I found one record — PS ID 00000000040001253724 — with an error status. The current status description is "SNR13 not found/ Mark for deletion."
+
+This is categorized as a Target Error. The affected 10- or 13-digit number may not be created at all on the mentioned SAP system, or a client-level deletion flag is set.
+
+To resolve this, you can either create the missing number or remove the deletion flag, and also ensure that valid cross-plant and plant status are checked. If the deletion flag is indeed correct, you'll need to delete the Determination Record (and possibly the PackSpec) and inform the PST Team via mServiceHub.
+
+## Observed
+- elapsed: 10.2s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_valid_two_field.png
+
+## Verdict: PASS
+- [ok  ] contains_all: SAPP870110
+- [ok  ] contains_any: SNR13 | 00000000040001253724
+- [ok  ] spl_contains: host="*SAPP870110*"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native host="*SAPP870110*" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  100 rows

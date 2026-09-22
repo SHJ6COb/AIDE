@@ -1,0 +1,74 @@
+[
+  {
+    "query": "q1_short_name_resolves",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087629.028466.1",
+        "spl": "search index=pdbb sourcetype=Native host=\"*SAPP870110*\" \"<d:BusinessStatus>SUCCESS</d:BusinessStatus>\" | head 200",
+        "earliest": "-15m",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T07:27:09.028466+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087629.028466.1",
+        "failed": false,
+        "at": "2026-08-07T07:27:09.039712+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087629.028466.1",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T07:27:09.046970+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087629.028466.1",
+        "at": "2026-08-07T07:27:09.050106+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_no_window_means_default",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786087639.582334.2",
+        "spl": "search index=pdbb sourcetype=Native host=\"*SAPPOE0110*\" \"<d:BusinessStatus>SUCCESS</d:BusinessStatus>\" | head 200",
+        "earliest": "-15m",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T07:27:19.582334+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786087639.582334.2",
+        "failed": false,
+        "at": "2026-08-07T07:27:19.586340+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786087639.582334.2",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T07:27:19.589591+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786087639.582334.2",
+        "at": "2026-08-07T07:27:19.592587+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q3_unresolvable_value_is_named",
+    "calls": []
+  }
+]

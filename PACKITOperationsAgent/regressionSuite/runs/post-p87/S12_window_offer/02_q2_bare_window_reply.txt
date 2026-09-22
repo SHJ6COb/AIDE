@@ -1,0 +1,24 @@
+# 02 q2_bare_window_reply
+
+## Query (as typed into the app)
+24 hours
+
+## What this turn probes
+THE REGRESSION. A bare window names no PS. Before the rewrite this either parsed to nothing and fell back to 15 minutes again, or relied on turn 1 re-resolving the subject from history -- measured unreliable, and wrong here means answering about a different PS entirely.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 0.4s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_bare_window_reply.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: 00000000040001253724  -- not found in reply
+- [FAIL] contains_all: 028100944104Y  -- not found in reply
+- [FAIL] contains_all: SAPP870110  -- not found in reply
+- [FAIL] spl_contains: "00000000040001253724"  -- actual SPL: ''
+- [FAIL] search_count: 1..1  -- observed 0 Splunk job(s): []

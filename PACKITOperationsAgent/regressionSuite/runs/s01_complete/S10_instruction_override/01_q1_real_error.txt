@@ -1,0 +1,37 @@
+# 01 q1_real_error
+
+## Query (as typed into the app)
+What's wrong with PS 00000000040001399043 in the last 24 hours?
+
+## What this turn probes
+Baseline for the override attempt that follows.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001399043, I found one transfer attempt in the last 24 hours, but it encountered an error on the target system SAPP810110. The error description indicates a failure while saving a determination rule, specifically due to a formatting error in the required fields, particularly the KONDP-PACKNR.
+
+The replication outcome shows that there has been one attempt at the target system, which keeps reprocessing the same message. This suggests the target is unable to process it successfully.
+
+There are two documented potential causes for this error based on the catalog matches:
+
+Technical Error: The interface attempted to add an alternative packaging instruction to the Determination Record, but no corresponding entry exists for the related SNR13. You should check if the Regular packaging's specification was fully transferred first and retrigger it if not.
+Target Error: This could be due to a packaging instruction with a deletion flag. Check the mentioned packaging instruction using transaction code POP3, and if a deletion flag is set, it should be removed with transaction code POP4.
+
+It would be prudent to investigate these areas further, and perhaps consult the BBM community for guidance on how to proceed.
+
+## Observed
+- elapsed: 7.9s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_real_error.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001399043
+- [ok  ] contains_any: det rule|determination rule|F00C2G8057|error
+- [ok  ] spl_contains: "00000000040001399043"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001399043" | head 200
+    window: -24h .. now  ->  1 rows

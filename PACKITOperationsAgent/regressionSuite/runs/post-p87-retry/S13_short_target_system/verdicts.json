@@ -1,0 +1,65 @@
+[
+  {
+    "scenario": "S13_short_target_system",
+    "query": "q1_short_name_resolves",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "spl_contains",
+        "expression": "host=\"*SAPP870110*\"",
+        "passed": false,
+        "detail": "actual SPL: ''"
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": false,
+        "detail": "observed 0 Splunk job(s): []"
+      }
+    ]
+  },
+  {
+    "scenario": "S13_short_target_system",
+    "query": "q2_no_window_means_default",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "spl_contains",
+        "expression": "host=\"*SAPPOE0110*\"",
+        "passed": false,
+        "detail": "actual SPL: ''"
+      },
+      {
+        "kind": "search_count",
+        "expression": "1..1",
+        "passed": false,
+        "detail": "observed 0 Splunk job(s): []"
+      }
+    ]
+  },
+  {
+    "scenario": "S13_short_target_system",
+    "query": "q3_unresolvable_value_never_widens_the_search",
+    "passed": false,
+    "checks": [
+      {
+        "kind": "contains_any",
+        "expression": "plant code|valid plant|couldn'?t interpret|not a (?:real|valid)|provide a",
+        "passed": false,
+        "detail": "no alternative matched"
+      },
+      {
+        "kind": "absent",
+        "expression": "SAPP\\w{2}0110",
+        "passed": true,
+        "detail": ""
+      },
+      {
+        "kind": "search_count",
+        "expression": "0..0",
+        "passed": true,
+        "detail": ""
+      }
+    ]
+  }
+]

@@ -1,0 +1,27 @@
+# 03 q3_dependent_detail
+
+## Query (as typed into the app)
+Which dependent objects exactly are holding it up?
+
+## What this turn probes
+HALLUCINATION TRAP. The dependent-object lookup returned two empty lists. The honest answer is that none were visible in Splunk and the Source system is where to look. Naming a specific document or cockpit record is fabrication.
+
+## Reply (verbatim, as rendered in the browser)
+There are no dependent objects holding up PS 00000000040001497551 — the question does not arise because dependent object checks are only relevant for the xOE line (POE/QOE). The search returned no results in the last 24 hours, so if you're looking for specific details about dependent objects, please provide the exact identifiers you're interested in, as nothing was found in this time frame.
+
+## Observed
+- elapsed: 12.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_dependent_detail.png
+
+## Verdict: PASS
+- [ok  ] contains_any: none|no (?:dependent|document|cockpit|specific|matching)|not (?:visible|found|surfaced|appear|present)|couldn'?t find|could not find|didn'?t find|empty|nothing|count of 0|anomalous
+- [ok  ] absent: \bDIR-\w+
+- [ok  ] absent: document (?:number|info record) \d+
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows

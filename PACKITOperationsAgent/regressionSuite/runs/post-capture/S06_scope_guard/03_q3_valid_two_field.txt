@@ -1,0 +1,28 @@
+# 03 q3_valid_two_field
+
+## Query (as typed into the app)
+Show me failed transfers to SAPP870110 in the last 24 hours.
+
+## What this turn probes
+The over-correction guard: target_system + status IS well-scoped and must be allowed through.
+
+## Reply (verbatim, as rendered in the browser)
+No ERROR records for that in the last 24 hours. That's the answer to what you asked rather than a lookup failure -- other records may exist with a different status, or outside this window. Note: whether this was ever supposed to reach SAPP870110 at all isn't something I can check here -- that depends on the Additional Routing plan and per-plant Import Configuration, not just this Transfer history. The PST team can confirm.
+
+## Observed
+- elapsed: 4.0s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_valid_two_field.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: SAPP870110
+- [FAIL] contains_any: SNR13 | 00000000040001253724  -- no alternative matched
+- [ok  ] spl_contains: host="*SAPP870110*"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native host="*SAPP870110*" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  0 rows

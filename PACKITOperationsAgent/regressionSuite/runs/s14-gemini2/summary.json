@@ -1,0 +1,35 @@
+{
+  "run": "s14-gemini2",
+  "started": "2026-08-07T14:50:34.110799",
+  "scenarios": 1,
+  "turns": 4,
+  "passed": 3,
+  "failed": 1,
+  "failures": [
+    {
+      "scenario": "S14_answer_the_question_asked",
+      "query": "q2_the_error_history",
+      "checks": [
+        {
+          "kind": "contains_all",
+          "expression": "6099\\.801\\.262",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_all",
+          "expression": "5550",
+          "passed": false,
+          "detail": "not found in reply"
+        },
+        {
+          "kind": "contains_any",
+          "expression": "resolved|then succeeded|succeeded on|no longer|since succeeded|recovered",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

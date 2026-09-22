@@ -1,0 +1,22 @@
+# 02 q2_retry_count
+
+## Query (as typed into the app)
+How many processing attempts were there for that one?
+
+## What this turn probes
+hop_count=100 is the only quantity the model is given. A different number is fabricated arithmetic; a refusal is under-reporting available data.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 1.0s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_retry_count.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: \b(100|99)\b  -- not found in reply
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [FAIL] search_count: 1..1  -- observed 0 Splunk job(s): []

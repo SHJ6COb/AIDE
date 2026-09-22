@@ -1,0 +1,35 @@
+{
+  "run": "enriched",
+  "started": "2026-08-06T13:49:59.401823",
+  "scenarios": 3,
+  "turns": 11,
+  "passed": 9,
+  "failed": 2,
+  "failures": [
+    {
+      "scenario": "S02_dependent_object_block",
+      "query": "q1_why_stuck",
+      "checks": [
+        {
+          "kind": "search_count",
+          "expression": "3..3",
+          "passed": false,
+          "detail": "observed 2 Splunk job(s): ['search index=pdbb sourcetype=Native \"00000000040001497551\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200', 'search index=pdbb sourcetype=Native source=\"*PackITPackagingCockpitMasterData\" \"00000000040001497551\" | head 200']"
+        }
+      ]
+    },
+    {
+      "scenario": "S02_dependent_object_block",
+      "query": "q2_attempt_count",
+      "checks": [
+        {
+          "kind": "absent",
+          "expression": "\\b(100|47|49|50)\\b",
+          "passed": false,
+          "detail": "forbidden match: '49'"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

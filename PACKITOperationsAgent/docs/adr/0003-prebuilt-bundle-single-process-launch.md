@@ -1,0 +1,5 @@
+# Pre-built frontend bundle served by one Python process, not two dev servers
+
+The UI is React + Vite + Tailwind, but colleagues run the MVP via one CLI command (`packit-agent`) that starts a single FastAPI process, which mounts a **pre-built** static bundle (`ui/frontend/dist/`, built once via `npm run build` whenever the UI changes) alongside its own API/SSE routes, and opens the default browser to `localhost`. Colleagues need only Python installed at runtime — Node/npm is a build-time dependency for whoever ships UI changes, not a runtime one for everyone running the app.
+
+We considered running the Vite dev server and the Python backend as two separate processes (the standard way to actively develop a React app, with the dev server proxying API calls to the backend). Rejected for day-to-day MVP use: it would mean every colleague needs Node.js installed, two things running instead of one, and a proxy configuration step — none of which matches "share the folder, launch the CLI, the app opens" as one command. `ui/frontend/` still uses the normal Vite dev server for active frontend development; only the shipped/distributed path is the single pre-built process.

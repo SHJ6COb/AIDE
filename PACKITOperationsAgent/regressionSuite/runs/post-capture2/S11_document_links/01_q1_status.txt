@@ -1,0 +1,33 @@
+# 01 q1_status
+
+## Query (as typed into the app)
+What's happening with PS 00000000040000434427 in the last 24 hours?
+
+## What this turn probes
+Establishes the conversation subject so the DIR question below is a real follow-up.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000434427, in the last 24 hours, both target systems experienced errors.
+
+SAPP720110: The error description states, "T141 Bom item status Invalid for material 6000.409.798 in plant 0780."
+SAPPOE0110: Similarly, it reports, "T141 Bom item status Invalid for material 6000.409.798 in plant 078W." However, it also notes that the Cockpit Data Model was updated.
+
+Both targets saw the same issue regarding the invalid status of the packaging material. The recommended solution is to change the packaging material's status to valid (40) on the relevant SAP system or to use a different packaging material in the specification.
+
+PS 00000000040000434427 has an active Packspec Status and has linked two Document Info Records. In total, there was one transfer attempt for each target system, both of which resulted in errors. No dependent objects were found for this PS.
+
+## Observed
+- elapsed: 10.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_status.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040000434427
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000434427" | head 200
+    window: -24h .. now  ->  2 rows

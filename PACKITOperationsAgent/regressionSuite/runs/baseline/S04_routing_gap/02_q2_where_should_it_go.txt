@@ -1,0 +1,25 @@
+# 02 q2_where_should_it_go
+
+## Query (as typed into the app)
+Then where is it supposed to go instead?
+
+## What this turn probes
+Follow-up must carry the routing answer forward without re-deriving it wrongly.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724 — it was found to have no records in the last 15 minutes. This means it either didn't exist in that timeframe or didn't attempt to reach any Target System at all. Unfortunately, I can't confirm where it's supposed to go based on the routing check, as no relevant entries appeared in the system. You may need to consult with the PST team for more detailed routing information.
+
+## Observed
+- elapsed: 5.9s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_where_should_it_go.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: SAPP870110  -- not found in reply
+- [ok  ] absent: SAPP790110 (?:is|was) (?:the )?correct
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -15m .. now  ->  0 rows

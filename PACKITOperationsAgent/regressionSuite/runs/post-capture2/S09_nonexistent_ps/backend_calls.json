@@ -1,0 +1,99 @@
+[
+  {
+    "query": "q1_fake_ps",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786084029.994460.25",
+        "spl": "search index=pdbb sourcetype=Native \"00000000099999999999\" | head 200",
+        "earliest": "-7d",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:27:10.109573+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786084029.994460.25",
+        "failed": false,
+        "at": "2026-08-07T06:27:10.112584+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786084029.994460.25",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:27:10.114563+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786084029.994460.25",
+        "at": "2026-08-07T06:27:10.116560+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_are_you_sure",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786084041.296072.26",
+        "spl": "search index=pdbb sourcetype=Native \"00000000099999999999\" host=\"*SAPP870110*\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" \"SNR13\" | head 200",
+        "earliest": "-7d",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:27:21.347191+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786084041.296072.26",
+        "failed": false,
+        "at": "2026-08-07T06:27:21.354707+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786084041.296072.26",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:27:21.358725+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786084041.296072.26",
+        "at": "2026-08-07T06:27:21.366625+00:00"
+      },
+      {
+        "api": "splunk.create_job",
+        "sid": "1786084041.379633.27",
+        "spl": "search index=pdbb sourcetype=Native \"00000000099999999999\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" \"SNR13\" | head 200",
+        "earliest": "-7d",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:27:21.501460+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786084041.379633.27",
+        "failed": false,
+        "at": "2026-08-07T06:27:21.505486+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786084041.379633.27",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:27:21.510391+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786084041.379633.27",
+        "at": "2026-08-07T06:27:21.513486+00:00"
+      }
+    ]
+  }
+]

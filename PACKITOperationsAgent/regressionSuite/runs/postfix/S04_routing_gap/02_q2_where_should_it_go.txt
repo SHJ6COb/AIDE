@@ -1,0 +1,21 @@
+# 02 q2_where_should_it_go
+
+## Query (as typed into the app)
+Then where is it supposed to go instead?
+
+## What this turn probes
+Follow-up must carry the routing answer forward without re-deriving it wrongly.
+
+## Reply (verbatim, as rendered in the browser)
+PS 00000000040001253724 is routed to the target system SAPP870110 instead of SAPP790110. If you need more details about the status or any issues regarding the transfer to that system, please ask!
+
+## Observed
+- elapsed: 2.5s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_where_should_it_go.png
+
+## Verdict: PASS
+- [ok  ] contains_all: SAPP870110
+- [ok  ] absent: SAPP790110 (?:is|was) (?:the )?correct

@@ -1,0 +1,35 @@
+# 01 q1_short_name_resolves
+
+## Query (as typed into the app)
+Can you provide the latest successful PackITPackagingSpecification transfer to target system P87?
+
+## What this turn probes
+P87 must reach Splunk as SAPP870110. The SPL assertion is the real check -- an answer can read plausibly while the filter it claims to have applied was never in the query at all, which is exactly how this defect stayed invisible.
+
+## Reply (verbatim, as rendered in the browser)
+No records were found in the last 15 minutes for any successful PackITPackagingSpecification transfer to target system P87. This absence doesn't indicate that no transfer has ever happened; it may be outside this time window. Please try searching with a wider timeframe or provide a more specific PS ID or plant.
+
+Widen the search to which?
+
+last 1 hour
+last 4 hours
+last 24 hours
+last 7 days
+
+Reply with one of those (or name your own window, e.g. "last 3 hours"), and I'll re-run the same question over it.
+
+## Observed
+- elapsed: 7.8s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_short_name_resolves.png
+
+## Verdict: PASS
+- [ok  ] spl_contains: host="*SAPP870110*"
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -15m
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native host="*SAPP870110*" "<d:BusinessStatus>SUCCESS</d:BusinessStatus>" | head 200
+    window: -15m .. now  ->  0 rows

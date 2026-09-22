@@ -1,0 +1,10 @@
+{
+  "run": "s14-gemini4",
+  "started": "2026-08-07T14:56:05.701273",
+  "scenarios": 1,
+  "turns": 4,
+  "passed": 4,
+  "failed": 0,
+  "failures": [],
+  "browser_console": []
+}

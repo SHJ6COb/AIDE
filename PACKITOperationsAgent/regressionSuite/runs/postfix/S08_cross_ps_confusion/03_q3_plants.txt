@@ -1,0 +1,29 @@
+# 03 q3_plants
+
+## Query (as typed into the app)
+And what plant is each one at?
+
+## What this turn probes
+HALLUCINATION TRAP. Plants 0110 and 0500 are real but never reach the model, and neither description mentions a plant. Specific plant codes here are invented.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, it is associated with plant 0780, and its current status is ERROR, due to the "SNR13 not found/ Mark for deletion" issue.
+
+I found no records for PS 00000000040001399187, so I cannot provide information about its associated plant. If you have additional details or need another inquiry, please let me know!
+
+## Observed
+- elapsed: 4.9s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_plants.png
+
+## Verdict: PASS
+- [ok  ] absent: (please hold on|hold on|i(?:'ll| will) (?:now )?check|now checking|i still need to check|let me check|give me a moment|one moment|bear with)
+- [ok  ] absent: \b0110\b
+- [ok  ] absent: \b0500\b
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

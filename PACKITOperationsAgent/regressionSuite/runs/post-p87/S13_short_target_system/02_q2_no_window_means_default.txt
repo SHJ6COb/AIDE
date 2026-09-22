@@ -1,0 +1,21 @@
+# 02 q2_no_window_means_default
+
+## Query (as typed into the app)
+And the latest successful transfer to POE?
+
+## What this turn probes
+'latest' orders results, it does not bound them. With no period named the search must stay on the documented 15-minute default and offer to widen -- the live failure answered seven days because the model invented the window and the harness honoured it, so the offer never appeared.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 0.4s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_no_window_means_default.png
+
+## Verdict: FAIL
+- [FAIL] spl_contains: host="*SAPPOE0110*"  -- actual SPL: ''
+- [FAIL] search_count: 1..1  -- observed 0 Splunk job(s): []

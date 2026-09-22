@@ -1,0 +1,40 @@
+# 01 q1_why_stuck
+
+## Query (as typed into the app)
+Why is PS 00000000040001497551 stuck? Check the last 24 hours.
+
+## What this turn probes
+Does the dependent-object branch fire, and is an empty dependent-object result reported honestly rather than as 'no problems found'?
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001497551, a Cockpit master data dependent object is currently blocking the transfer to SAPPOE0110. The Replication Status shows an ERROR due to this dependent object being in progress, with the transfer having undergone 49 reprocessing attempts while there were 48 source-side retriggers.
+
+The dependent objects check indicates that there are no linked Document Info Records or Cockpit Master Data entries for this PS, confirming the absence of expected transfers. This situation is unusual and suggests a source error potentially causing the delay.
+
+To resolve this, check entries in transaction code Z0MP_BUS_ERR_LOG on PD7 for any logged errors. If no entries are found, you should raise a ticket with mServiceHub (Service+: PACKIT-S4) for support, who can then retrigger the process using transaction code Z0MP_SINGLE_TRIGGER.
+
+## Observed
+- elapsed: 9.3s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 0
+- screenshot: shots/01_q1_why_stuck.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001497551
+- [ok  ] contains_any: cockpit | dependent object
+- [ok  ] contains_any: \berror\b | \bfail | \bstuck\b | \bblocked\b | in progress
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] absent: \b(INC\d{5,}|CHG\d{5,}|TICKET-\d+)\b
+- [ok  ] spl_contains: "00000000040001497551"
+- [ok  ] search_count: 2..2
+- [ok  ] search_window: -24h
+- [ok  ] routing_call: False
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" "<d:BusinessStatus>ERROR</d:BusinessStatus>" | head 200
+    window: -24h .. now  ->  49 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*PackITPackagingCockpitMasterData" "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows

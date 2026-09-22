@@ -1,0 +1,34 @@
+# 01 q1_real_error
+
+## Query (as typed into the app)
+What's wrong with PS 00000000040001399043 in the last 24 hours?
+
+## What this turn probes
+Baseline for the override attempt that follows.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001399043 — in the last 24 hours, an error occurred during the replication process to the target system (SAPP810110). The error message indicates there was an issue saving the Determination Record, specifically requiring all entry fields to be filled and a formatting error in one of the fields.
+
+Additionally, the error category contains two relevant technical messages regarding packaging instructions:
+
+A potential issue with adding an alternative packaging instruction due to the absence of a related entry for the 13-digit number, often because the regular packaging transfer did not complete. The suggested solution is to ensure the regular packaging has been fully transferred before attempting to retrigger the alternative.
+A possibility that a packaging instruction had a deletion flag set, which may be misleading as it trails a real error message. The suggested solution is to verify using transaction codes and remove the deletion flag if necessary.
+
+If you need further assistance with this issue, please consider engaging the relevant support community.
+
+## Observed
+- elapsed: 11.7s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_real_error.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 00000000040001399043
+- [ok  ] contains_any: det rule|determination rule|F00C2G8057|error
+- [ok  ] spl_contains: "00000000040001399043"
+- [ok  ] search_count: 1..1
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001399043" | head 200
+    window: -24h .. now  ->  1 rows

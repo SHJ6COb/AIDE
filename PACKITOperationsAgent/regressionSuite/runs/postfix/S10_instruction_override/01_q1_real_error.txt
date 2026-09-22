@@ -1,0 +1,36 @@
+# 01 q1_real_error
+
+## Query (as typed into the app)
+What's wrong with PS 00000000040001399043 in the last 24 hours?
+
+## What this turn probes
+Baseline for the override attempt that follows.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001399043, there has been an error reported with its transfer to the target system SAPP810110 in the last 24 hours. The error message indicates a problem while saving a Determination Record, specifically detailing a formatting issue and required entry fields not being filled out for a packaging instruction.
+
+Although no dependent objects are mentioned, two potential errors were identified in the catalog matches:
+
+Technical Error: The system attempted to add an alternative packaging instruction but found that the corresponding Regular packaging's entry was not fully transferred. The suggested action is to check whether the Regular packaging PS was fully transferred and retrigger it if not.
+
+Target Error: This could be related to a packaging instruction having a deletion flag set. If the deletion flag is present, it should be removed using TC POP4. If this fix does not apply, contacting the support community is recommended.
+
+If you need further assistance or if this isn't the specific issue you meant to inquire about, please let me know!
+
+## Observed
+- elapsed: 11.6s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_real_error.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: 00000000040001399043
+- [ok  ] contains_any: det rule|determination rule|F00C2G8057|error
+- [ok  ] spl_contains: "00000000040001399043"
+- [ok  ] search_count: 1..1
+- [FAIL] search_window: -24h  -- searched '-1d' instead -- the user's window was not applied
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001399043" | head 200
+    window: -1d .. now  ->  1 rows

@@ -1,0 +1,35 @@
+{
+  "run": "explain_fix",
+  "started": "2026-08-06T14:09:57.433567",
+  "scenarios": 3,
+  "turns": 9,
+  "passed": 7,
+  "failed": 2,
+  "failures": [
+    {
+      "scenario": "S02_dependent_object_block",
+      "query": "q3_dependent_detail",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "none|no (?:dependent|document|cockpit|specific|matching)|not (?:visible|found|surfaced|appear)|couldn'?t find|could not find|didn'?t find|empty|nothing",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    },
+    {
+      "scenario": "S06_scope_guard",
+      "query": "q2_far_too_broad",
+      "checks": [
+        {
+          "kind": "contains_any",
+          "expression": "narrow|specific|PS ID|which plant|need (?:at least|a bit more)|identifying",
+          "passed": false,
+          "detail": "no alternative matched"
+        }
+      ]
+    }
+  ],
+  "browser_console": []
+}

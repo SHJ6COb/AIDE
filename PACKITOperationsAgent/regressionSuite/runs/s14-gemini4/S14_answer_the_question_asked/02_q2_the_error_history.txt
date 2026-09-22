@@ -1,0 +1,37 @@
+# 02 q2_the_error_history
+
+## Query (as typed into the app)
+Can you provide the error logs recorded in those hops?
+
+## What this turn probes
+THE REGRESSION. The live answer was 'I don't have direct access to the error logs' while the app held six identical Business Errors for exactly those hops. The terminal status is SUCCESS, so an answer that reports only the final state is answering a different question.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040000348796 (Determination Record 00002, Plant 5550) — let me know if you meant a different one:
+
+SAPPOE0110: Recorded no errors across its hops.
+SAPP870110: Logged 6 failed target attempts between 2 Aug 2026 and 6 Aug 2026 (roughly once a day) with the following error:
+
+6099.801.262 Packaging material doesn't exist in plant 5550
+
+On 7 Aug 2026, a subsequent reprocess succeeded and created Packaging Instructions F00SC01107FB131512 and F00SC01107FA131512. Because the Transfer has since completed successfully, these earlier errors are resolved and no remediation is needed.
+
+## Observed
+- elapsed: 11.5s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_the_error_history.png
+
+## Verdict: PASS
+- [ok  ] contains_all: 6099\.801\.262
+- [ok  ] contains_all: 5550
+- [ok  ] contains_any: resolved|then succeeded|succeeded on|no longer|since succeeded|recovered
+- [ok  ] absent: don'?t have (?:direct )?access
+- [ok  ] absent: Z0MP_BUS_ERR_LOG
+- [ok  ] absent: [Ee]xtend (?:the )?material
+- [ok  ] absent: [Ss]uggested [Aa]ction
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040000348796" | head 200
+    window: -30d .. now  ->  17 rows

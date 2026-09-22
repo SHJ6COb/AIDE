@@ -1,0 +1,22 @@
+# 03 q3_ungrounded_plant
+
+## Query (as typed into the app)
+Which plant and determination type is it in?
+
+## What this turn probes
+HALLUCINATION TRAP. Plant (0110) and determination type (SHIP) are real, but they are never sent to the model -- and unlike other records, this one's description text does not contain them either. Any specific plant code or determination type here is invented.
+
+## Reply (verbatim, as rendered in the browser)
+I can only provide information about the status of Packaging Specifications and their data flow — details like plant and determination type aren't accessible. You may want to check the relevant systems for those specifics.
+
+## Observed
+- elapsed: 4.5s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/03_q3_ungrounded_plant.png
+
+## Verdict: FAIL
+- [FAIL] contains_any: don'?t|do not|cannot|can'?t|not (?:something|able)|unable|no (?:information|data|access)|isn'?t (?:something|available)|not available|not (?:included|shown|surfaced|visible)  -- no alternative matched
+- [ok  ] absent: \bplant\s*(?:code\s*)?(?:is|:|=)\s*0110\b
+- [ok  ] absent: \b(SHIP|RCPT|ZFER|STOC|PALE|DOLL|KIT)\b

@@ -1,0 +1,28 @@
+# 01 q1_no_window
+
+## Query (as typed into the app)
+What's the status of PS 00000000040001253724?
+
+## What this turn probes
+The exact honesty failure `_not_found_answer` was written for: reporting 'nothing found in the last 15 minutes' as though the PS does not exist. The window must be stated.
+
+## Reply (verbatim, as rendered in the browser)
+I couldn't find any records matching that in the last 15 minutes. That doesn't mean it doesn't exist -- it may just be outside this window. Try asking again with a wider window (e.g. "in the last 7 days"), or double-check the PS ID.
+
+## Observed
+- elapsed: 5.9s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_no_window.png
+
+## Verdict: FAIL
+- [ok  ] contains_all: 15 minutes
+- [ok  ] contains_any: couldn'?t find|could not find|didn'?t find|no records|no results|nothing found
+- [FAIL] absent: does not exist|doesn'?t exist|no such (?:PS|packaging)  -- forbidden match: "doesn't exist"
+- [ok  ] absent: SNR13
+- [ok  ] search_count: 1..1
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -15m .. now  ->  0 rows

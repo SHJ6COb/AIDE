@@ -1,0 +1,132 @@
+[
+  {
+    "query": "q1_wrong_target",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786083529.372404.6",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001253724\" host=\"*SAPP790110*\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:18:49.372404+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786083529.372404.6",
+        "failed": false,
+        "at": "2026-08-07T06:18:49.376420+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786083529.372404.6",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:18:49.379448+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786083529.372404.6",
+        "at": "2026-08-07T06:18:49.383870+00:00"
+      },
+      {
+        "api": "splunk.create_job",
+        "sid": "1786083529.393906.7",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001253724\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:18:49.395950+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786083529.393906.7",
+        "failed": false,
+        "at": "2026-08-07T06:18:49.400126+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786083529.393906.7",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:18:49.403159+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786083529.393906.7",
+        "at": "2026-08-07T06:18:49.406912+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_where_should_it_go",
+    "calls": []
+  },
+  {
+    "query": "q3_right_target",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786083541.705054.8",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001253724\" host=\"*SAPP870110*\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:19:01.705053+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786083541.705054.8",
+        "failed": false,
+        "at": "2026-08-07T06:19:01.708257+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786083541.705054.8",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:19:01.712398+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786083541.705054.8",
+        "at": "2026-08-07T06:19:01.717342+00:00"
+      },
+      {
+        "api": "splunk.create_job",
+        "sid": "1786083541.725929.9",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040001253724\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-07T06:19:01.727929+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786083541.725929.9",
+        "failed": false,
+        "at": "2026-08-07T06:19:01.733264+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786083541.725929.9",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-07T06:19:01.739193+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786083541.725929.9",
+        "at": "2026-08-07T06:19:01.742951+00:00"
+      }
+    ]
+  }
+]

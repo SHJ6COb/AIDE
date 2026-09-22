@@ -1,0 +1,70 @@
+[
+  {
+    "query": "q1_success",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786005921.091457.7",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040000588527\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 3,
+        "emulator_error": null,
+        "at": "2026-08-06T08:45:21.167971+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786005921.091457.7",
+        "failed": false,
+        "at": "2026-08-06T08:45:21.170021+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786005921.091457.7",
+        "offset": 0,
+        "count": 200,
+        "returned": 3,
+        "at": "2026-08-06T08:45:21.170976+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786005921.091457.7",
+        "at": "2026-08-06T08:45:21.173977+00:00"
+      }
+    ]
+  },
+  {
+    "query": "q2_any_errors",
+    "calls": [
+      {
+        "api": "splunk.create_job",
+        "sid": "1786005925.319687.8",
+        "spl": "search index=pdbb sourcetype=Native \"00000000040000588527\" \"<d:BusinessStatus>ERROR</d:BusinessStatus>\" | head 200",
+        "earliest": "-24h",
+        "latest": "now",
+        "matched_count": 0,
+        "emulator_error": null,
+        "at": "2026-08-06T08:45:25.416520+00:00"
+      },
+      {
+        "api": "splunk.job_status",
+        "sid": "1786005925.319687.8",
+        "failed": false,
+        "at": "2026-08-06T08:45:25.419114+00:00"
+      },
+      {
+        "api": "splunk.results",
+        "sid": "1786005925.319687.8",
+        "offset": 0,
+        "count": 200,
+        "returned": 0,
+        "at": "2026-08-06T08:45:25.422144+00:00"
+      },
+      {
+        "api": "splunk.delete_job",
+        "sid": "1786005925.319687.8",
+        "at": "2026-08-06T08:45:25.423144+00:00"
+      }
+    ]
+  }
+]

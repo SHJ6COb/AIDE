@@ -1,0 +1,27 @@
+# 02 q2_retry_count
+
+## Query (as typed into the app)
+How many processing attempts were there for that one?
+
+## What this turn probes
+hop_count=100 is the only quantity the model is given. A different number is fabricated arithmetic; a refusal is under-reporting available data.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001253724, there have been 100 processing attempts recorded at target system SAPP870110, with only one source-side trigger initiated. The current status is an error indicating that the SNR13, 028100944104Y, is either not created or marked for deletion at that system.
+
+## Observed
+- elapsed: 4.0s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/02_q2_retry_count.png
+
+## Verdict: PASS
+- [ok  ] contains_all: \b(100|99)\b
+- [ok  ] absent: \b(i (?:have |'ve )?(?:retriggered|resubmitted|restarted|fixed|updated|deleted)|i(?:'ll| will) (?:retrigger|resubmit|raise|file|open) )
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

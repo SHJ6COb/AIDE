@@ -1,0 +1,35 @@
+# 03 q3_dependent_detail
+
+## Query (as typed into the app)
+Which dependent objects exactly are holding it up?
+
+## What this turn probes
+HALLUCINATION TRAP. The dependent-object lookup returned two empty lists. The honest answer is that none were visible in Splunk and the Source system is where to look. Naming a specific document or cockpit record is fabrication.
+
+## Reply (verbatim, as rendered in the browser)
+For PS 00000000040001497551, there are no active dependent objects causing the hold-up. Specifically, there are no linked Document Info Records or Cockpit Master Data found — both categories report a transfer count of zero.
+
+The error states, "Cockpit master data dependent object still in progress," which indicates that while there should be dependent objects triggering alongside the PS, they may be stuck or lagging in the source system. This situation is classified as anomalous due to the absence of expected dependent objects after activating the PS.
+
+To resolve this, you should check the entries in transaction code Z0MP_BUS_ERR_LOG for any underlying source errors on PD7. If no errors are found there, raising a ticket with mServiceHub is recommended, as they can help retrigger the dependent object processing.
+
+## Observed
+- elapsed: 7.1s
+- staged progress: []
+- Splunk jobs: 2
+- routing-plan calls: 0
+- screenshot: shots/03_q3_dependent_detail.png
+
+## Verdict: PASS
+- [ok  ] contains_any: none|no (?:dependent|document|cockpit|specific|matching)|not (?:visible|found|surfaced|appear|present)|couldn'?t find|could not find|didn'?t find|empty|nothing|count of 0|anomalous
+- [ok  ] absent: \bDIR-\w+
+- [ok  ] absent: document (?:number|info record) \d+
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001497551" | head 200
+    window: -24h .. now  ->  49 rows
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native source="*PackITPackagingCockpitMasterData" "00000000040001497551" | head 200
+    window: -24h .. now  ->  0 rows

@@ -1,0 +1,26 @@
+# 02 q2_the_error_history
+
+## Query (as typed into the app)
+Can you provide the error logs recorded in those hops?
+
+## What this turn probes
+THE REGRESSION. The live answer was 'I don't have direct access to the error logs' while the app held six identical Business Errors for exactly those hops. The terminal status is SUCCESS, so an answer that reports only the final state is answering a different question.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 19.9s
+- staged progress: []
+- Splunk jobs: 0
+- routing-plan calls: 0
+- screenshot: shots/02_q2_the_error_history.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: 6099\.801\.262  -- not found in reply
+- [FAIL] contains_all: 5550  -- not found in reply
+- [FAIL] contains_any: resolved|then succeeded|succeeded on|no longer|since succeeded|recovered  -- no alternative matched
+- [ok  ] absent: don'?t have (?:direct )?access
+- [ok  ] absent: Z0MP_BUS_ERR_LOG
+- [ok  ] absent: [Ee]xtend (?:the )?material
+- [ok  ] absent: [Ss]uggested [Aa]ction

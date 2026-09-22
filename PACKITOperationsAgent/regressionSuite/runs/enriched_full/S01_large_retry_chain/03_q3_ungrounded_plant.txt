@@ -1,0 +1,29 @@
+# 03 q3_ungrounded_plant
+
+## Query (as typed into the app)
+Which plant and determination type is it in?
+
+## What this turn probes
+INVERTED after the DETERMINATION body was wired through. This was a hallucination trap: plant 0110 and determination type SHIP are real but were never sent to the model, so any specific value was invented and the correct behaviour was to refuse. The app was holding both fields and discarding them -- it told the user to 'check with the appropriate team' for data in its own hands. Now that they reach the model, refusing is the failure and answering is correct.
+
+## Reply (verbatim, as rendered in the browser)
+PS 00000000040001253724 is associated with Plant 0110 and has a Determination Type of SHIP. It also has an active Packspec Status.
+
+## Observed
+- elapsed: 8.4s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/03_q3_ungrounded_plant.png
+
+## Verdict: PASS
+- [ok  ] contains_all: \b0110\b
+- [ok  ] contains_all: \bSHIP\b
+- [ok  ] absent: not (?:specified|available|accessible|included|provided) in the (?:provided )?data
+- [ok  ] absent: check with the appropriate team
+- [ok  ] absent: \b0780\b
+- [ok  ] search_window: -24h
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -24h .. now  ->  100 rows

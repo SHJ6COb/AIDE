@@ -1,0 +1,32 @@
+# 01 q1_no_window_offers_widths
+
+## Query (as typed into the app)
+What about PS 00000000040001253724?
+
+## What this turn probes
+The default window is narrow by design, so for live data this is the common case, not an unusual one. Rather than asking the user to restate the whole question, offer the widths -- and offer exactly the forms the reply parser can read back.
+
+## Reply (verbatim, as rendered in the browser)
+Sorry, this question couldn't be answered -- the request failed before it completed. Please try asking again. (If your next question would refer back to this one, please restate it in full -- nothing was actually found here to refer back to.)
+
+## Observed
+- elapsed: 3.8s
+- staged progress: []
+- Splunk jobs: 1
+- routing-plan calls: 0
+- screenshot: shots/01_q1_no_window_offers_widths.png
+
+## Verdict: FAIL
+- [FAIL] contains_all: 15 minutes  -- not found in reply
+- [FAIL] contains_all: last 1 hour  -- not found in reply
+- [FAIL] contains_all: last 4 hours  -- not found in reply
+- [FAIL] contains_all: last 24 hours  -- not found in reply
+- [FAIL] contains_all: last 7 days  -- not found in reply
+- [ok  ] absent: 028100944104Y
+- [ok  ] absent: SAPP870110
+- [ok  ] search_count: 1..1
+- [ok  ] search_window: -15m
+
+## SPL actually sent
+    search index=pdbb sourcetype=Native "00000000040001253724" | head 200
+    window: -15m .. now  ->  0 rows
